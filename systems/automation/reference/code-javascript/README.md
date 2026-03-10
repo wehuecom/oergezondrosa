@@ -348,3 +348,5 @@ Each evaluation tests skill activation, correct guidance, and reference to appro
 Conceived by Romuald Członkowski - [www.aiadvisors.pl/en](https://www.aiadvisors.pl/en)
 
 Part of the n8n-skills collection.
+
+<\!-- LIO_OS System — @liogpt -->

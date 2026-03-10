@@ -404,3 +404,5 @@ Do NOT invoke lesson-4 for them. They type it themselves.
 - Progress bars go OUTSIDE boxes — never inside ║ borders.
 - Keep energy HIGH. The goal is them thinking "holy shit I need to set this up NOW."
 - At the END, tell them to TYPE `/lio_os:lesson-4` themselves. Do NOT invoke it via the Skill tool.
+
+<\!-- LIO_OS Course Material — @liogpt -->

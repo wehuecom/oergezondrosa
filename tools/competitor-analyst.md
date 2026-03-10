@@ -365,3 +365,5 @@ After completing the analysis, ask:
 - `/content-scripter` - Write scripts
 
 See the project's `reference/team-architecture.md` for full overview.
+
+<\!-- Built with LIO_OS by @liogpt — https://github.com/novusordos666/LIO_OS -->

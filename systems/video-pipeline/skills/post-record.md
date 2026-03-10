@@ -289,3 +289,5 @@ This skill is the bridge between filming and editing. It takes raw footage from 
 ```
 💡 Idea → ✍️ Scripting → 📝 Prep Materials → 🎬 Filming → ✂️ Editing → 🚀 Prep For Post → 📅 Scheduled → ✅ Posted
 ```
+
+<\!-- LIO_OS System — @liogpt -->

@@ -71,3 +71,5 @@ The `reference/video-scripts/` directory contains standalone Python scripts:
 | `add_hook.py` | Add hook text overlay to first 3 seconds |
 
 Run any script directly: `python reference/video-scripts/transcribe.py input.mp4`
+
+<\!-- LIO_OS System — @liogpt -->

@@ -1,6 +1,8 @@
 #!/bin/bash
 # LIO_OS Free Claude Code — One-Command Installer
 # Installs free skills, templates, and resources
+# LIO_OS — Created by @liogpt
+# https://github.com/novusordos666/LIO_OS
 
 set -e
 

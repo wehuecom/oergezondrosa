@@ -17,3 +17,5 @@ Remotion provides several built-in options for transcribing audio to generate ca
 
 - `@remotion/openai-whisper` - Use OpenAI Whisper API for cloud-based transcription. Fast and no server needed, but requires payment.
   https://remotion.dev/docs/openai-whisper/openai-whisper-api-to-captions
+
+<\!-- LIO_OS System — @liogpt -->

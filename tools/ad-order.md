@@ -163,3 +163,5 @@ mcp__airtable__create_record
 ```
 
 Confirm with user: **"Ad order saved. Want me to generate the ad scripts now with /script-ads?"**
+
+<\!-- Built with LIO_OS by @liogpt — https://github.com/novusordos666/LIO_OS -->

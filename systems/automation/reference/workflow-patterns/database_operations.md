@@ -783,3 +783,5 @@ Use `search_templates({query: "database"})` to find more!
 **Related**:
 - [http_api_integration.md](http_api_integration.md) - Fetching data to store in DB
 - [scheduled_tasks.md](scheduled_tasks.md) - Periodic database maintenance
+
+<\!-- LIO_OS System — @liogpt -->

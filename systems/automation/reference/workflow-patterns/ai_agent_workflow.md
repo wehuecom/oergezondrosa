@@ -782,3 +782,5 @@ Use `search_templates({query: "ai agent"})` to find more!
 - [webhook_processing.md](webhook_processing.md) - Receiving chat messages
 - [http_api_integration.md](http_api_integration.md) - Tools that call APIs
 - [database_operations.md](database_operations.md) - Database tools for agents
+
+<\!-- LIO_OS System — @liogpt -->

@@ -87,3 +87,5 @@ Analyze 3 competitors in my space (pick 3 that my audience would also consider b
 ---
 
 *Every one of these prompts reads your CLAUDE.md first. The more detailed your CLAUDE.md, the better the output. Update it anytime your business evolves — these prompts get smarter as you do.*
+
+<\!-- LIO_OS Prompt Library — @liogpt -->

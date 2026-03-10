@@ -133,3 +133,5 @@ If the user wants to save, write scripts to the project's `ad-scripts/` director
 | Meta Stories/Reels | 90s | 15-30s | 9:16 |
 | TikTok | 180s | 15-60s | 9:16 |
 | YouTube Shorts | 60s | 30-60s | 9:16 |
+
+<\!-- LIO_OS System — @liogpt -->

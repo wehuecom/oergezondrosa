@@ -462,3 +462,5 @@ Then output:
 <!-- Leon will provide meme URLs to randomly open during the course for surprise laughs -->
 <!-- Example: after an achievement, randomly open a celebration meme 1 in 3 times -->
 <!-- open "MEME_URL" -->
+
+<\!-- LIO_OS Course Material — @liogpt -->

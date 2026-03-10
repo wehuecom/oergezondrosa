@@ -718,3 +718,5 @@ When accepting a warning, document why:
 **Related Files**:
 - **[SKILL.md](SKILL.md)** - Main validation guide
 - **[ERROR_CATALOG.md](ERROR_CATALOG.md)** - Error types and fixes
+
+<\!-- LIO_OS System — @liogpt -->

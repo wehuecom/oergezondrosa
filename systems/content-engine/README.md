@@ -60,3 +60,5 @@ The content engine works best with a data layer. Options:
 3. Pick a topic and run `/content-ideator` to generate video ideas
 4. Run `/content-scripter` to write the script
 5. After posting, use `/content-analyst` to review performance
+
+<\!-- LIO_OS System — @liogpt -->

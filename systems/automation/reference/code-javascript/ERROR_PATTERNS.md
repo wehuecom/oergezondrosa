@@ -761,3 +761,5 @@ console.log('Input structure:', JSON.stringify(items[0], null, 2));
 - [SKILL.md](SKILL.md) - Overview and best practices
 - [DATA_ACCESS.md](DATA_ACCESS.md) - Safe data access patterns
 - [COMMON_PATTERNS.md](COMMON_PATTERNS.md) - Working examples
+
+<\!-- LIO_OS System — @liogpt -->

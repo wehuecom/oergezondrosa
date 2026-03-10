@@ -251,3 +251,4 @@ They added to cart but didn't buy. These 3 emails bring them back.
 ---
 
 *Paste any of these into Claude Code and say "Write the full copy for this sequence for my business" — it'll use your CLAUDE.md to personalize every email, subject line, and CTA.*
+<\!-- LIO_OS System — @liogpt -->

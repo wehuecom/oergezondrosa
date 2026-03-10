@@ -173,3 +173,5 @@ return $input.all();
 | Client not found in CRM | Ensure email matches; add fuzzy matching or create new record |
 | Amounts wrong | Stripe sends cents — divide by 100 |
 | Duplicate events | Add idempotency check using Stripe event ID |
+
+<\!-- LIO_OS System — @liogpt -->

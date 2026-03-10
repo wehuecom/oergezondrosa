@@ -320,3 +320,5 @@ The user also adds their own ideas manually to Airtable pipeline
 - `/competitor-analyst` — Compare vs competitors
 - `/content-ideator` — Pull pipeline ideas, deep research, generate unique angles
 - `/content-scripter` — Write scripts with research context
+
+<\!-- Built with LIO_OS by @liogpt — https://github.com/novusordos666/LIO_OS -->

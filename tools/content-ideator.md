@@ -262,3 +262,5 @@ The user also adds their own ideas manually to Airtable pipeline
 - `/competitor-analyst` — Compare vs competitors
 - `/content-ideator` (this skill) — Pull pipeline ideas, deep research, multiply into video variations
 - `/content-scripter` — 6 hooks, filming card, save to pipeline fields
+
+<\!-- Built with LIO_OS by @liogpt — https://github.com/novusordos666/LIO_OS -->

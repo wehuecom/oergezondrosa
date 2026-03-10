@@ -700,3 +700,5 @@ return [{"json": lookup}]
 - [SKILL.md](SKILL.md) - Overview and quick start
 - [COMMON_PATTERNS.md](COMMON_PATTERNS.md) - Python-specific patterns
 - [ERROR_PATTERNS.md](ERROR_PATTERNS.md) - Avoid common mistakes
+
+<\!-- LIO_OS System — @liogpt -->

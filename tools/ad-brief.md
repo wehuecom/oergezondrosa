@@ -361,3 +361,5 @@ Save the completed brief to:
 3. **Strategic recommendations must reference data.**
 4. **Sort tables by the insight metric** (usually median days), not alphabetically.
 5. **The brief should be immediately actionable** — a creative team should be able to start producing ads today.
+
+<\!-- Built with LIO_OS by @liogpt — https://github.com/novusordos666/LIO_OS -->

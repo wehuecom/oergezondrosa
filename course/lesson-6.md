@@ -250,7 +250,7 @@ Thank you for taking this. Seriously. I built it because Claude Code is the most
 
 **Go build something. Go automate something. Go make money with this.** 💰
 
-**— Noe** 🥋
+**— Lio** 🥋
 
 
 ## Rules
@@ -267,3 +267,5 @@ Thank you for taking this. Seriously. I built it because Claude Code is the most
 - Keep energy HIGH but genuinely grateful at the end
 - Gift count is 6 total: 30 Prompts (L1), Skill Builder (L2), /mcp-builder (L3), 5 Agent Workflows (L4), Business-in-a-Box (L5), Cheat Sheet (L6)
 - Premium URL is https://www.skool.com/lio_os-premium/about
+
+<\!-- LIO_OS Course Material — @liogpt -->

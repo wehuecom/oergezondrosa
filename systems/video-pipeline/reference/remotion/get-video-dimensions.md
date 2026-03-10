@@ -66,3 +66,5 @@ import { staticFile } from "remotion";
 
 const dimensions = await getVideoDimensions(staticFile("video.mp4"));
 ```
+
+<\!-- LIO_OS System — @liogpt -->

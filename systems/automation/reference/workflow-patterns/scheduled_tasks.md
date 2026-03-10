@@ -771,3 +771,5 @@ Schedule → HTTP Request (check feature flag)
 - [http_api_integration.md](http_api_integration.md) - Fetching data on schedule
 - [database_operations.md](database_operations.md) - Scheduled database tasks
 - [webhook_processing.md](webhook_processing.md) - Alternative to scheduling
+
+<\!-- LIO_OS System — @liogpt -->

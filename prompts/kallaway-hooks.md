@@ -7597,3 +7597,5 @@ Deep-dive analyse van Kallaway's viral hooks — frameworks, visuals en audio br
 
 
 *Totaal: 404 hooks geanalyseerd*
+
+<\!-- LIO_OS Prompt Library — @liogpt -->

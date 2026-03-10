@@ -241,3 +241,5 @@ Before finalizing evaluations:
 - [ ] Answers verified manually
 - [ ] Questions are independent (no ordering)
 - [ ] Answers are stable over time
+
+<\!-- Built with LIO_OS by @liogpt — https://github.com/novusordos666/LIO_OS -->

@@ -780,3 +780,5 @@ return allData.map(item => ({json: item}));
 - [SKILL.md](SKILL.md) - Overview and quick start
 - [COMMON_PATTERNS.md](COMMON_PATTERNS.md) - Production patterns
 - [ERROR_PATTERNS.md](ERROR_PATTERNS.md) - Avoid common mistakes
+
+<\!-- LIO_OS System — @liogpt -->

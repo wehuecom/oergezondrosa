@@ -37,7 +37,7 @@ Then say:
 
 **Yooo welcome!** 🎉
 
-**I'm Noe.** I build AI systems, automate businesses, and make content about it. And I built this entire course using the same tool you're about to learn — **Claude Code.** Meta, right? 😂
+**I'm Lio.** I build AI systems, automate businesses, and make content about it. And I built this entire course using the same tool you're about to learn — **Claude Code.** Meta, right? 😂
 
 **Here's what we're doing together:**
 
@@ -114,3 +114,5 @@ Do NOT invoke lesson-1 for them. They type it themselves.
 - The ASCII logo MUST render correctly — test the character widths
 - EVERY sentence gets its own line. No walls of text.
 - At the END, tell them to TYPE `/lio_os:lesson-1` themselves. Do NOT invoke it via the Skill tool.
+
+<\!-- LIO_OS Course Material — @liogpt -->

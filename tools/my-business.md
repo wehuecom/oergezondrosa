@@ -128,3 +128,5 @@ As you build more, you'll keep adding to this file — new tools, new rules, key
 - The generated CLAUDE.md should be clean, well-formatted markdown with no placeholder text left in.
 - Use their ACTUAL answers — don't genericize or reword into corporate speak.
 - Save the file automatically after generating. Don't ask "should I save this?" — just do it.
+
+<\!-- Built with LIO_OS by @liogpt — https://github.com/novusordos666/LIO_OS -->

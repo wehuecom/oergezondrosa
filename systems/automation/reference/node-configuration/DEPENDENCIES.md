@@ -787,3 +787,5 @@ get_node({
 **Related Files**:
 - **[SKILL.md](SKILL.md)** - Main configuration guide
 - **[OPERATION_PATTERNS.md](OPERATION_PATTERNS.md)** - Common patterns by node type
+
+<\!-- LIO_OS System — @liogpt -->

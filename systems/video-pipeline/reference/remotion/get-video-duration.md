@@ -56,3 +56,5 @@ import { staticFile } from "remotion";
 
 const duration = await getVideoDuration(staticFile("video.mp4"));
 ```
+
+<\!-- LIO_OS System — @liogpt -->

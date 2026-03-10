@@ -216,3 +216,5 @@ If the user wants to test multiple creatives:
 | `(#100) Invalid parameter` | Verify targeting fields exist in the API |
 | `(#2446) Ad account disabled` | Account needs reactivation in Business Manager |
 | `(#1487534) Budget too low` | Minimum $1/day for most objectives |
+
+<\!-- LIO_OS System — @liogpt -->

@@ -15,7 +15,7 @@ FROM account_stats
 ORDER BY avg_views DESC
 ```
 
-### Noe vs All Competitors Summary
+### Lio vs All Competitors Summary
 ```sql
 SELECT
   CASE WHEN handle = 'your-handle' THEN 'your-handle' ELSE 'Competitors (avg)' END as account,
@@ -57,7 +57,7 @@ GROUP BY handle
 ORDER BY outlier_pct DESC
 ```
 
-### Noe's Outliers Only
+### Lio's Outliers Only
 ```sql
 SELECT spoken_hook, hook_framework, visual_format, topic, views, url,
   ROUND(calc_outlier_score::numeric, 2) as outlier_score
@@ -72,7 +72,7 @@ ORDER BY calc_outlier_score DESC
 
 ## Visual Format Analysis
 
-### Noe's Visual Format Performance
+### Lio's Visual Format Performance
 ```sql
 SELECT
   c.visual_format,
@@ -122,7 +122,7 @@ ORDER BY avg_views DESC
 LIMIT 20
 ```
 
-### Noe's Top Hooks
+### Lio's Top Hooks
 ```sql
 SELECT spoken_hook, hook_framework, views, url
 FROM content
@@ -159,7 +159,7 @@ ORDER BY avg_views DESC
 LIMIT 20
 ```
 
-### Topics Noe Hasn't Covered
+### Topics Lio Hasn't Covered
 ```sql
 WITH competitor_topics AS (
   SELECT topic, COUNT(*) as videos, ROUND(AVG(views)::numeric, 0) as avg_views
@@ -167,18 +167,18 @@ WITH competitor_topics AS (
   WHERE handle != 'your-handle' AND topic IS NOT NULL
   GROUP BY topic
 ),
-noe_topics AS (
+lio_topics AS (
   SELECT DISTINCT topic FROM content WHERE handle = 'your-handle' AND topic IS NOT NULL
 )
 SELECT ct.topic, ct.videos, ct.avg_views
 FROM competitor_topics ct
-LEFT JOIN noe_topics nt ON LOWER(ct.topic) = LOWER(nt.topic)
+LEFT JOIN lio_topics nt ON LOWER(ct.topic) = LOWER(nt.topic)
 WHERE nt.topic IS NULL
 ORDER BY ct.avg_views DESC
 LIMIT 15
 ```
 
-### Noe's Top Topics
+### Lio's Top Topics
 ```sql
 SELECT topic, COUNT(*) as videos, ROUND(AVG(views)::numeric, 0) as avg_views
 FROM content
@@ -192,7 +192,7 @@ LIMIT 10
 
 ## Competitor Comparison
 
-### Specific Competitor vs Noe
+### Specific Competitor vs Lio
 ```sql
 SELECT
   handle,
@@ -327,7 +327,7 @@ ORDER BY week DESC, handle
 
 **CRITICAL: Use EXACT topic matching, not keyword matching.**
 
-### Find Competitor Videos on EXACT Same Topic as Noe's
+### Find Competitor Videos on EXACT Same Topic as Lio's
 ```sql
 -- This is the PRIMARY comparison query - exact topic match only
 SELECT
@@ -354,7 +354,7 @@ LIMIT 10
 
 ### Learning Opportunities (Exact Topic Match Only)
 ```sql
--- Find topics where Noe underperformed but competitors crushed it
+-- Find topics where Lio underperformed but competitors crushed it
 SELECT
   n.topic,
   n.views as your_views,
@@ -418,5 +418,7 @@ SELECT
   url
 FROM content c
 JOIN content_with_scores cws ON c.id = cws.id
-WHERE c.id IN ('NOE_VIDEO_ID', 'COMPETITOR_VIDEO_ID')
+WHERE c.id IN ('LIO_VIDEO_ID', 'COMPETITOR_VIDEO_ID')
 ```
+
+<\!-- Built with LIO_OS by @liogpt — https://github.com/novusordos666/LIO_OS -->

@@ -316,3 +316,5 @@ dependencies = [
 - [ ] Error messages are actionable
 - [ ] No sensitive data in error responses
 - [ ] README with installation and usage examples
+
+<\!-- Built with LIO_OS by @liogpt — https://github.com/novusordos666/LIO_OS -->

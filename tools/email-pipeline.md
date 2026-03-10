@@ -40,3 +40,5 @@ Je bent een email design pipeline operator. Je helpt Leon om email designs van k
 ## Taal
 
 Rapporteer altijd in het Nederlands. Amsterdamse vibe.
+
+<\!-- Built with LIO_OS by @liogpt — https://github.com/novusordos666/LIO_OS -->

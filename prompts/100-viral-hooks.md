@@ -348,3 +348,5 @@ These are stripped-down frameworks you can fill in for any niche in 10 seconds:
 5. **Feed it to Claude** — paste a hook + your topic and let Claude build the full script
 
 These hooks work for short-form (TikTok, Reels, Shorts), long-form intros (YouTube), ad creative, email subject lines, and social captions. The framework is the weapon — the topic is the ammo.
+
+<\!-- LIO_OS Prompt Library — @liogpt -->

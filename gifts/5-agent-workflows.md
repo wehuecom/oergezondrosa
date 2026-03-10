@@ -108,3 +108,5 @@ Compile everything into a clean brief I can read in 3 minutes over coffee.
 **Pro tip:** You can modify any of these. Add agents, change the tasks, combine workflows. The pattern is always the same — break the work into independent pieces, spawn agents for each one, get everything back at once.
 
 **One person. An entire team's output.** That's the cheat code. 🤖
+
+<\!-- LIO_OS by @liogpt — https://github.com/novusordos666/LIO_OS -->

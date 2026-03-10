@@ -177,3 +177,5 @@ const value1 = interpolate(frame, [0, 100], [0, 1], {
   extrapolateRight: 'clamp',
 });
 ```
+
+<\!-- LIO_OS System — @liogpt -->

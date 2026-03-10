@@ -202,3 +202,4 @@ Things that signal the onboarding needs attention:
 ---
 
 *Paste this into Claude Code and say "Customize this onboarding flow for my business" — it'll use your CLAUDE.md to fill in tools, timelines, and messaging that match how you actually work.*
+<\!-- LIO_OS Template — @liogpt -->

@@ -288,3 +288,5 @@ if (preview.fixCount > 0) {
 Conceived by Romuald Członkowski - [www.aiadvisors.pl/en](https://www.aiadvisors.pl/en)
 
 Part of the n8n-skills meta-skill collection.
+
+<\!-- LIO_OS System — @liogpt -->

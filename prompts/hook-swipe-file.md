@@ -5980,3 +5980,5 @@ REPOSTING
 
 
 *Totaal: 355 hooks in dit swipe file*
+
+<\!-- LIO_OS Prompt Library — @liogpt -->

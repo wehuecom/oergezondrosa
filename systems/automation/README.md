@@ -80,3 +80,5 @@ Add to your Claude settings:
 - **Payment tracking:** Stripe webhook → Database update → Email receipt
 - **Daily reports:** Schedule → Query data → Format → Send email
 - **Form processing:** Webhook → Validate → Store → Auto-respond
+
+<\!-- LIO_OS System — @liogpt -->

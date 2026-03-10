@@ -93,3 +93,4 @@
 ---
 
 *Delete this line after filling in: The more detail you add about your clients, services, and tools, the better Claude can help with proposals, SOPs, ad copy, client communication, and scaling strategy. If you manage ad accounts, include platform details and typical budgets.*
+<\!-- LIO_OS Template — @liogpt -->

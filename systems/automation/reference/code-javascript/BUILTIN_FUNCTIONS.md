@@ -762,3 +762,5 @@ return [{
 - [SKILL.md](SKILL.md) - Overview
 - [COMMON_PATTERNS.md](COMMON_PATTERNS.md) - Real usage examples
 - [ERROR_PATTERNS.md](ERROR_PATTERNS.md) - Error prevention
+
+<\!-- LIO_OS System — @liogpt -->

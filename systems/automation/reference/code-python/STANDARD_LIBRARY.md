@@ -972,3 +972,5 @@ return [{
 - [DATA_ACCESS.md](DATA_ACCESS.md) - Data access patterns
 - [COMMON_PATTERNS.md](COMMON_PATTERNS.md) - Production patterns
 - [ERROR_PATTERNS.md](ERROR_PATTERNS.md) - Avoid common mistakes
+
+<\!-- LIO_OS System — @liogpt -->

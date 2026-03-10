@@ -130,3 +130,5 @@ The `/onboard`, `/ad-order`, `/respond-to-leads`, and `/launch-ads` skills read 
 - [ ] Configure Airtable MCP server (see `mcp-configs/airtable.json`)
 - [ ] Add base/table IDs to CLAUDE.md
 - [ ] Test with `/onboard` on a test client
+
+<\!-- LIO_OS System — @liogpt -->

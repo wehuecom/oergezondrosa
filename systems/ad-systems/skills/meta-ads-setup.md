@@ -291,3 +291,5 @@ Tell the user:
    - Import errors → Check venv activation and pip install
 5. **Use absolute paths** everywhere in `.mcp.json`. Never use `~` or relative paths.
 6. **Always prepend `act_`** to the ad account ID if the user provides just the number.
+
+<\!-- LIO_OS System — @liogpt -->

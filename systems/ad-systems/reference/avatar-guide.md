@@ -144,3 +144,5 @@ Framework for building customer avatars for ad targeting. Use this when onboardi
 | Behaviors | `flexible_spec.behaviors` |
 
 **Pro tip:** Start broad with demographics, then narrow with interests. Let Meta's algorithm find the converters within your audience. Over-targeting kills delivery.
+
+<\!-- LIO_OS System — @liogpt -->

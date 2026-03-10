@@ -434,3 +434,5 @@ Do NOT invoke lesson-6 for them. They type it themselves — they learned this i
 - If you can't find a "Current Focus" section in their CLAUDE.md, just ASK them: "What's the one thing you'd want Claude to build for your business right now?"
 - Step 3 is about ITERATING on the page they just saw — not building something new. Suggest tweaks (colors, sections, copy). Each tweak reinforces the Describe→Build→Iterate pattern.
 - If they ask for changes, edit the HTML and run `open index.html` again. Multiple rounds of tweaks are great — each one is a mini wow moment.
+
+<\!-- LIO_OS Course Material — @liogpt -->

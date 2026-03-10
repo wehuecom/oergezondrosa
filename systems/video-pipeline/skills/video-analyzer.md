@@ -125,3 +125,5 @@ The Gemini API key should be available as `GEMINI_API_KEY` environment variable.
 ## Output Format
 
 Always structure the output with clear headers matching the analysis type. Include timestamps where relevant. End with actionable takeaways — what can the user learn or apply from this video.
+
+<\!-- LIO_OS System — @liogpt -->

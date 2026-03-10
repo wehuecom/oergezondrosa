@@ -59,7 +59,7 @@ Two different prefixes for different tools:
 
 The references are organized with their own supporting docs:
 
-- **workflow-patterns/** — 6 sub-files: ai_agent_workflow.md, database_operations.md, webhook_processing.md, http_api_integration.md, scheduled_tasks.md, noe_build_patterns.md
+- **workflow-patterns/** — 6 sub-files: ai_agent_workflow.md, database_operations.md, webhook_processing.md, http_api_integration.md, scheduled_tasks.md, lio_build_patterns.md
 - **mcp-tools/** — 3 sub-files: SEARCH_GUIDE.md, VALIDATION_GUIDE.md, WORKFLOW_GUIDE.md
 - **node-configuration/** — 2 sub-files: DEPENDENCIES.md, OPERATION_PATTERNS.md
 - **validation/** — 2 sub-files: ERROR_CATALOG.md, FALSE_POSITIVES.md
@@ -68,3 +68,5 @@ The references are organized with their own supporting docs:
 - **code-python/** — 4 sub-files: DATA_ACCESS.md, COMMON_PATTERNS.md, STANDARD_LIBRARY.md, ERROR_PATTERNS.md
 
 Read sub-files only when the main reference points to them or when deeper detail is needed.
+
+<\!-- Built with LIO_OS by @liogpt — https://github.com/novusordos666/LIO_OS -->

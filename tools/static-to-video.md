@@ -4,3 +4,5 @@ description: Converts static ad images into short video ads (5-15 sec) using AI 
 ---
 
 $ARGUMENTS
+
+<\!-- Built with LIO_OS by @liogpt — https://github.com/novusordos666/LIO_OS -->

@@ -366,3 +366,5 @@ Top hooks discovered:
 9. **Status tracking on re-scrapes:** Ads that disappear from the Ad Library between scrapes should be marked `Is Active = false` with `End Date = today`. This tracks when competitors kill ads.
 
 10. **Facebook Page ID vs Profile ID:** The Competitors table stores the Ad Library page ID (from Apify `pageAdLibrary.id`), NOT the profile ID. The Ad Library URL uses `view_all_page_id={this_id}`.
+
+<\!-- LIO_OS System — @liogpt -->

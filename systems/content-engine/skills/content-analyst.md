@@ -488,3 +488,5 @@ After completing the full analysis, ask:
 - `/content-scripter` - Write scripts
 
 See the project's `reference/team-architecture.md` for full overview.
+
+<\!-- LIO_OS System — @liogpt -->

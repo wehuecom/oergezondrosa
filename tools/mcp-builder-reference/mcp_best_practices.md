@@ -369,3 +369,5 @@ This server respects {Service}'s rate limits:
 - 100 requests per minute
 - Automatic retry with backoff on 429 responses
 ```
+
+<\!-- Built with LIO_OS by @liogpt — https://github.com/novusordos666/LIO_OS -->

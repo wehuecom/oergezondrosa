@@ -1,5 +1,7 @@
 # LIO_OS Free Claude Code — One-Command Installer (Windows)
 # Installs free skills, templates, and resources
+# LIO_OS — Created by @liogpt
+# https://github.com/novusordos666/LIO_OS
 
 $REPO = "novusordos666/LIO_OS"
 $REPO_URL = "https://github.com/$REPO.git"

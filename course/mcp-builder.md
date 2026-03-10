@@ -152,3 +152,5 @@ Always return:
 - [ ] Prevent directory traversal
 - [ ] Don't expose internal error details
 - [ ] Log security-relevant events
+
+<\!-- LIO_OS Course Material — @liogpt -->

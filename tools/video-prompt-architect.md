@@ -4,3 +4,5 @@ description: Generates detailed JSON prompts for image-to-video conversion. Take
 ---
 
 $ARGUMENTS
+
+<\!-- Built with LIO_OS by @liogpt — https://github.com/novusordos666/LIO_OS -->

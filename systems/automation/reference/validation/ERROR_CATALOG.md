@@ -941,3 +941,5 @@ info.properties.forEach(prop => {
 - **[FALSE_POSITIVES.md](FALSE_POSITIVES.md)** - When to ignore warnings
 - **n8n Expression Syntax** - Fix expression errors
 - **n8n MCP Tools Expert** - Use validation tools correctly
+
+<\!-- LIO_OS System — @liogpt -->

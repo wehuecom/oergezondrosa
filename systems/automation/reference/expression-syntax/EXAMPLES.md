@@ -481,3 +481,5 @@ Conditions: {{$node["Weather API"].json.properties.shortForecast}}
 ---
 
 **Related**: See [COMMON_MISTAKES.md](COMMON_MISTAKES.md) for error examples and fixes.
+
+<\!-- LIO_OS System — @liogpt -->

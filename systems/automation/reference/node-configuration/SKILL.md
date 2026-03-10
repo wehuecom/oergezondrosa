@@ -783,3 +783,5 @@ For comprehensive guides on specific topics:
 - **n8n Validation Expert** - Interpret validation errors
 - **n8n Expression Syntax** - Configure expression fields
 - **n8n Workflow Patterns** - Apply patterns with proper configuration
+
+<\!-- LIO_OS System — @liogpt -->

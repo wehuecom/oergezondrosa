@@ -237,3 +237,5 @@ NEXT STEPS:
 5. Launch first campaign → /launch-ads
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
+
+<\!-- Built with LIO_OS by @liogpt — https://github.com/novusordos666/LIO_OS -->

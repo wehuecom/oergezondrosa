@@ -376,3 +376,5 @@ Do NOT invoke lesson-5 for them. They type it themselves.
 - 2-3 blank lines between SECTIONS. 1 blank line between sentences within a section.
 - Keep energy HIGH. The reaction should be "wait... that just happened??"
 - At the END, tell them to TYPE `/lio_os:lesson-5` themselves. Do NOT invoke it via the Skill tool.
+
+<\!-- LIO_OS Course Material — @liogpt -->

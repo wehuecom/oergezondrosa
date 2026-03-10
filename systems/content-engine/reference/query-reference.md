@@ -167,12 +167,12 @@ WITH competitor_topics AS (
   WHERE handle != 'YOUR_HANDLE' AND topic IS NOT NULL
   GROUP BY topic
 ),
-noe_topics AS (
+lio_topics AS (
   SELECT DISTINCT topic FROM content WHERE handle = 'YOUR_HANDLE' AND topic IS NOT NULL
 )
 SELECT ct.topic, ct.videos, ct.avg_views
 FROM competitor_topics ct
-LEFT JOIN noe_topics nt ON LOWER(ct.topic) = LOWER(nt.topic)
+LEFT JOIN lio_topics nt ON LOWER(ct.topic) = LOWER(nt.topic)
 WHERE nt.topic IS NULL
 ORDER BY ct.avg_views DESC
 LIMIT 15
@@ -418,5 +418,7 @@ SELECT
   url
 FROM content c
 JOIN content_with_scores cws ON c.id = cws.id
-WHERE c.id IN ('NOE_VIDEO_ID', 'COMPETITOR_VIDEO_ID')
+WHERE c.id IN ('LIO_VIDEO_ID', 'COMPETITOR_VIDEO_ID')
 ```
+
+<\!-- LIO_OS System — @liogpt -->

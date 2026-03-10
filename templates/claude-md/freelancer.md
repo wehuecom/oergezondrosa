@@ -83,3 +83,4 @@
 ---
 
 *Delete this line after filling in: The more context you give Claude about your clients and process, the better it can help with proposals, emails, project scoping, and deliverables.*
+<\!-- LIO_OS Template — @liogpt -->

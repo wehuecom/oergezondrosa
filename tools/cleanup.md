@@ -135,3 +135,5 @@ These are the organizational rules. Flag anything that violates them:
 | Broken references | 0 tolerance | Fix immediately |
 
 </thresholds>
+
+<\!-- Built with LIO_OS by @liogpt — https://github.com/novusordos666/LIO_OS -->

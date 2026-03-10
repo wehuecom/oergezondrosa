@@ -163,3 +163,5 @@ mcp__airtable__create_record
 ```
 
 Confirm with user: **"Ad order saved. Want me to generate the ad scripts now with /script-ads?"**
+
+<\!-- LIO_OS System — @liogpt -->

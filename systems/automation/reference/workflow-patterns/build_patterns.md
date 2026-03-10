@@ -426,3 +426,5 @@ When building n8n workflows:
 | Schedule trigger | `n8n-nodes-base.scheduleTrigger` | 1.2 |
 | HTTP Request | `n8n-nodes-base.httpRequest` | 4.2 |
 | No operation | `n8n-nodes-base.noOp` | 1 |
+
+<\!-- LIO_OS System — @liogpt -->

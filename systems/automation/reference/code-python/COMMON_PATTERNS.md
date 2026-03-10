@@ -792,3 +792,5 @@ import numpy as np  # ModuleNotFoundError!
 - [DATA_ACCESS.md](DATA_ACCESS.md) - Data access patterns
 - [STANDARD_LIBRARY.md](STANDARD_LIBRARY.md) - Available modules
 - [ERROR_PATTERNS.md](ERROR_PATTERNS.md) - Avoid common mistakes
+
+<\!-- LIO_OS System — @liogpt -->

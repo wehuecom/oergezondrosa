@@ -91,3 +91,4 @@ Copy-paste any of these. Watch what happens.
 ---
 
 *These prompts get better every time you update your CLAUDE.md. The more Claude knows about you, the more personalized every response becomes.*
+<\!-- LIO_OS Prompt Library — @liogpt -->

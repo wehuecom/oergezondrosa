@@ -319,3 +319,5 @@ The ideator saves research + angle to the Content Pipeline. This skill reads tha
 - `/daily-content-researcher` — Agentic morning research, pipeline save
 - `/content-ideator` — Pull pipeline ideas, deep research, unique angles
 - `/content-scripter` (this skill) — Read research, hooks, filming card, pipeline save
+
+<\!-- LIO_OS System — @liogpt -->

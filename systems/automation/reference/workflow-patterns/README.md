@@ -249,3 +249,5 @@ Use `search_templates` to find examples for your use case!
 
 **Part of**: n8n-skills repository
 **Conceived by**: Romuald Członkowski - [www.aiadvisors.pl/en](https://www.aiadvisors.pl/en)
+
+<\!-- LIO_OS System — @liogpt -->

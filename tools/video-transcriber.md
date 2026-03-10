@@ -61,3 +61,5 @@ Tell the user:
 1. Where the trimmed video is
 2. How much time was saved
 3. Show transcript preview
+
+<\!-- Built with LIO_OS by @liogpt — https://github.com/novusordos666/LIO_OS -->

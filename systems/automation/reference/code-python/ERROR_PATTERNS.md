@@ -599,3 +599,5 @@ return all_items if all_items else [{"json": {"message": "No data"}}]
 - [DATA_ACCESS.md](DATA_ACCESS.md) - Data access patterns
 - [STANDARD_LIBRARY.md](STANDARD_LIBRARY.md) - Available modules
 - [COMMON_PATTERNS.md](COMMON_PATTERNS.md) - Production patterns
+
+<\!-- LIO_OS System — @liogpt -->

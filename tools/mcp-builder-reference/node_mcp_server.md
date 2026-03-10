@@ -463,3 +463,5 @@ main().catch(console.error);
 - [ ] No `any` types - full type coverage
 - [ ] `npm run build` produces working `dist/index.js`
 - [ ] README with installation and usage examples
+
+<\!-- Built with LIO_OS by @liogpt — https://github.com/novusordos666/LIO_OS -->

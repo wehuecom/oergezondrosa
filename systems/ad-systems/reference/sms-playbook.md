@@ -188,3 +188,5 @@ Know when to stop pursuing:
 - Be pushy or desperate
 - Use salesy language ("limited time offer!", "act now!")
 - Send more than 3 follow-ups without a response
+
+<\!-- LIO_OS System — @liogpt -->

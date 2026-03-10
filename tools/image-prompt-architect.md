@@ -4,3 +4,5 @@ description: Generates detailed JSON prompts for Nano Banana 2 (Google Gemini) i
 ---
 
 $ARGUMENTS
+
+<\!-- Built with LIO_OS by @liogpt — https://github.com/novusordos666/LIO_OS -->

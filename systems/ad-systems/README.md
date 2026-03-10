@@ -81,3 +81,5 @@ Research Competitors → Scrape Ads → Generate Brief → Script Ads → Launch
 6. Write ad scripts with `/script-ads`
 7. Launch the campaign with `/launch-ads`
 8. Respond to leads with `/respond-to-leads`
+
+<\!-- LIO_OS System — @liogpt -->

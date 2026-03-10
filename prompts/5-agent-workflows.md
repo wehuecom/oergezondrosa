@@ -144,3 +144,5 @@ Compile everything into a clean brief with clear sections. This should take me 5
 ---
 
 *Agents are the difference between "using AI" and "running AI." One Claude is helpful. Five Claudes working simultaneously is a team.*
+
+<\!-- LIO_OS Prompt Library — @liogpt -->

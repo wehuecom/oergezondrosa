@@ -30,7 +30,7 @@ After the user answers the 5 questions, use their answers to **customize the res
 
 ## FUN FACT CONNECTION RULE
 
-Read `~/.lio_os/course/fun-facts.md` at the start. As the user answers the 5 questions (or says ANYTHING throughout the course), look for natural connections to Noe's fun facts. If something they say relates to a fun fact, drop it in casually to build rapport — like a real conversation, not a scripted moment.
+Read `~/.lio_os/course/fun-facts.md` at the start. As the user answers the 5 questions (or says ANYTHING throughout the course), look for natural connections to Lio's fun facts. If something they say relates to a fun fact, drop it in casually to build rapport — like a real conversation, not a scripted moment.
 
 Examples:
 - They say they run a marketing agency → "No way — I run a marketing agency too! Claude Code literally helps me automate the whole thing lol"
@@ -366,3 +366,5 @@ Do NOT invoke lesson-2 for them. They type it themselves.
 <!-- Leon will provide meme URLs to randomly open during the course for surprise laughs -->
 <!-- Example: after an achievement, randomly open a celebration meme 1 in 3 times -->
 <!-- open "MEME_URL" -->
+
+<\!-- LIO_OS Course Material — @liogpt -->

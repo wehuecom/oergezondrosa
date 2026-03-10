@@ -211,3 +211,5 @@ To update later, just run /setup again.
 - Running it again will re-interview and overwrite customizations
 - The CLAUDE.md it generates is the single source of truth for all other skills
 - All skills read from CLAUDE.md at runtime — keep it updated
+
+<\!-- Built with LIO_OS by @liogpt — https://github.com/novusordos666/LIO_OS -->

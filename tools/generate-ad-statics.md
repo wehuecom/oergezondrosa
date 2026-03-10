@@ -4,3 +4,5 @@ description: Generates ad static images using Nano Banana 2 (Google Gemini). Tak
 ---
 
 $ARGUMENTS
+
+<\!-- Built with LIO_OS by @liogpt — https://github.com/novusordos666/LIO_OS -->

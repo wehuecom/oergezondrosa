@@ -155,3 +155,5 @@ See [mcp_best_practices.md](reference/mcp_best_practices.md) for complete guidel
 - [ ] Prevent directory traversal
 - [ ] Don't expose internal error details
 - [ ] Log security-relevant events
+
+<\!-- Built with LIO_OS by @liogpt — https://github.com/novusordos666/LIO_OS -->

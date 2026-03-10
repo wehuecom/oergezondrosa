@@ -177,3 +177,5 @@ Ask: **"Want to send follow-ups to any of these?"**
 6. **Sound human** — no corporate speak, no "Dear valued customer"
 7. **Have a CTA** — every message moves toward a booking or next step
 8. **Track everything** — log every touchpoint in the CRM
+
+<\!-- Built with LIO_OS by @liogpt — https://github.com/novusordos666/LIO_OS -->

@@ -173,3 +173,5 @@ Based on my tools and what I do daily, identify 10 tasks I'm probably doing manu
 ---
 
 **These work because of your CLAUDE.md.** Every prompt pulls from your business context, your audience, your voice, and your tools. That's not generic AI — that's YOUR AI. 🧠
+
+<\!-- LIO_OS by @liogpt — https://github.com/novusordos666/LIO_OS -->

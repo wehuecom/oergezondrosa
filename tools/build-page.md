@@ -125,3 +125,5 @@ If no brand colors specified, use a clean default:
 ```
 
 Override with brand colors from CLAUDE.md if available.
+
+<\!-- Built with LIO_OS by @liogpt — https://github.com/novusordos666/LIO_OS -->

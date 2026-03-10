@@ -197,3 +197,5 @@ Ensure video is in `public/` folder and path in props is relative to `public/`.
 4. [ ] Props configured
 5. [ ] Preview looks good (`npm run dev`)
 6. [ ] Render final (`npx remotion render ...`)
+
+<\!-- LIO_OS System — @liogpt -->

@@ -362,3 +362,5 @@ get_node_essentials({nodeType: "nodes-base.slack"});
 Conceived by Romuald Członkowski - [www.aiadvisors.pl/en](https://www.aiadvisors.pl/en)
 
 Part of the n8n-skills meta-skill collection.
+
+<\!-- LIO_OS System — @liogpt -->
