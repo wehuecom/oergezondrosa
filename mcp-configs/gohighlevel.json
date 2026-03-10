@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "gohighlevel": {
+      "command": "npx",
+      "args": ["-y", "ghl-mcp-server"],
+      "env": {
+        "GHL_API_KEY": "your-gohighlevel-api-key",
+        "GHL_BASE_URL": "https://services.leadconnectorhq.com"
+      }
+    }
+  }
+}

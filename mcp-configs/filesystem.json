@@ -1,0 +1,22 @@
+{
+  "_name": "Filesystem",
+  "_setup": "No API keys needed — this one works out of the box. Just update the paths in 'args' to the directories you want Claude to have access to. Only directories listed here will be readable/writable. Add or remove paths as needed.",
+  "_examples": [
+    "List all files in my projects folder",
+    "Read the contents of a config file",
+    "Create a new file in my templates directory",
+    "Search for files matching a pattern"
+  ],
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@anthropic/mcp-filesystem",
+        "~/Desktop",
+        "~/Documents",
+        "~/Downloads"
+      ]
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "_name": "Notion",
+  "_setup": "1. Go to notion.so/my-integrations → Create new integration 2. Give it a name like 'Claude Code' 3. Copy the Internal Integration Secret (starts with ntn_) 4. In Notion, go to each page/database you want Claude to access → Click '...' menu → Connections → Add your integration 5. Without step 4, Claude won't be able to see anything even with a valid key",
+  "_examples": [
+    "Search my Notion for client meeting notes",
+    "List all pages in my workspace",
+    "Find the content calendar database",
+    "Read my SOPs page in Notion"
+  ],
+  "mcpServers": {
+    "notion": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-notion"],
+      "env": {
+        "NOTION_API_KEY": "YOUR_NOTION_INTEGRATION_SECRET"
+      }
+    }
+  }
+}

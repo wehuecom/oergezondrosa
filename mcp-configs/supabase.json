@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "supabase": {
+      "command": "npx",
+      "args": ["-y", "@supabase/mcp-server-supabase@latest", "--url", "https://your-project.supabase.co", "--service-role-key", "your-supabase-service-role-key"]
+    }
+  }
+}

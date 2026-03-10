@@ -1,0 +1,19 @@
+{
+  "_name": "Airtable",
+  "_setup": "Get your API key at airtable.com/create/tokens → Create token → Scopes: data.records:read, data.records:write, schema.bases:read → Give access to the specific bases you want Claude to see",
+  "_examples": [
+    "Show me all active clients from Airtable",
+    "Add a row to my content pipeline",
+    "Update the status of client X to 'Onboarding'",
+    "List all records in the Ad Campaigns table"
+  ],
+  "mcpServers": {
+    "airtable": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-airtable"],
+      "env": {
+        "AIRTABLE_API_KEY": "YOUR_AIRTABLE_PERSONAL_ACCESS_TOKEN"
+      }
+    }
+  }
+}
