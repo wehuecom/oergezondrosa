@@ -1,0 +1,342 @@
+{
+  "name": "Oergezond — Complete Email Support v2",
+  "nodes": [
+    {
+      "id": "node-001",
+      "name": "📧 Nieuwe Email (Outlook)",
+      "type": "n8n-nodes-base.microsoftOutlookTrigger",
+      "typeVersion": 1,
+      "position": [100, 300],
+      "parameters": {
+        "pollTimes": {"item": [{"mode": "everyMinute"}]},
+        "output": "simple",
+        "filters": {
+          "readStatus": "unread",
+          "folderId": "inbox"
+        }
+      },
+      "credentials": {
+        "microsoftOutlookOAuth2Api": {
+          "id": "ZwwbasVlSoVeGABX",
+          "name": "Microsoft Outlook — contact@oergezond.com"
+        }
+      }
+    },
+    {
+      "id": "node-002",
+      "name": "📋 Haal Email Data Op",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [300, 300],
+      "parameters": {
+        "jsCode": "const email = $input.first().json;\n\nconst sender = email.from?.emailAddress?.address || email.from || 'onbekend';\nconst senderName = email.from?.emailAddress?.name || sender.split('@')[0] || 'Klant';\nconst subject = email.subject || '(geen onderwerp)';\nconst body = email.body?.content || email.bodyPreview || '';\n\n// Strip HTML tags\nconst bodyText = body.replace(/<[^>]*>/g, ' ').replace(/\\s+/g, ' ').trim();\n\n// Filter: sla puur automatische systeem-mails over (alleen op afzender, nooit op onderwerp)\nconst autoSenders = ['noreply', 'no-reply', 'mailer-daemon', 'postmaster', 'donotreply', 'do-not-reply', '@shopify.com', '@klaviyo.com', '@mailchimp.com', '@notifications.', 'notifications@'];\nconst senderLower = sender.toLowerCase();\nconst isAuto = autoSenders.some(s => senderLower.includes(s));\n\nif (isAuto) return [];\n\n// Build Airtable formula for duplicate check (zelfde afzender, laatste 24u, nog open)\nconst formula = `AND({Afzender} = \"${sender.replace(/\"/g, '')}\", IS_AFTER({Datum}, DATEADD(NOW(), -24, 'hours')), OR({Status} = \"Nieuw\", {Status} = \"In behandeling\"))`;\n\nreturn [{\n  json: {\n    sender,\n    senderName,\n    subject,\n    bodyText,\n    duplicateFormula: formula\n  }\n}];"
+      }
+    },
+    {
+      "id": "node-002b",
+      "name": "\uD83E\uDD16 Classificeer Email (Haiku)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [300, 200],
+      "continueOnFail": true,
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "x-api-key", "value": "{{ $env.ANTHROPIC_API_KEY }}"},
+            {"name": "anthropic-version", "value": "2023-06-01"}
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 5, messages: [{ role: 'user', content: 'Is dit een klantvraag aan Oergezond (Nederlandse webshop voor natuurlijke huidverzorging, tallow crème, shampoo bars)? Antwoord alleen JA of NEE.\\n\\nVan: ' + $json.sender + '\\nOnderwerp: ' + $json.subject + '\\n\\n' + $json.bodyText.substring(0, 400) }] }) }}"
+      }
+    },
+    {
+      "id": "node-002c",
+      "name": "\uD83D\uDD00 Klantvraag?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [420, 200],
+      "parameters": {
+        "conditions": {
+          "options": {"caseSensitive": false, "leftValue": "", "typeValidation": "loose"},
+          "conditions": [
+            {
+              "leftValue": "={{ $json.content && $json.content[0] ? $json.content[0].text.trim().toUpperCase() : 'NEE' }}",
+              "rightValue": "JA",
+              "operator": {"type": "string", "operation": "equals"}
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "node-002d",
+      "name": "\uD83D\uDED1 Stop \u2014 Geen Klantvraag",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [540, 350],
+      "parameters": {}
+    },
+    {
+      "id": "node-003",
+      "name": "🔎 Zoek Duplicaat (Airtable)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [500, 300],
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.airtable.com/v0/appIutbR42CAuWBCM/tblUKJd9sWxLaL8UM?filterByFormula={{ encodeURIComponent($('📋 Haal Email Data Op').first().json.duplicateFormula) }}&maxRecords=1",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "Bearer {{ $env.AIRTABLE_API_KEY }}"}
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "node-004",
+      "name": "🔀 Duplicaat?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [700, 300],
+      "parameters": {
+        "conditions": {
+          "options": {"caseSensitive": false, "leftValue": "", "typeValidation": "loose"},
+          "conditions": [
+            {
+              "leftValue": "={{ $json.records.length }}",
+              "rightValue": "0",
+              "operator": {"type": "number", "operation": "equals"}
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "node-004b",
+      "name": "\uD83D\uDED2 Zoek Shopify Order",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [700, 200],
+      "continueOnFail": true,
+      "parameters": {
+        "method": "GET",
+        "url": "=https://f34a22-c0.myshopify.com/admin/api/2024-04/orders.json?email={{ encodeURIComponent($('📋 Haal Email Data Op').first().json.sender) }}&status=any&limit=3&fields=name,id,fulfillment_status,fulfillments,created_at,financial_status,line_items",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "X-Shopify-Access-Token", "value": "{{ $env.SHOPIFY_ACCESS_TOKEN }}"}
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "node-004c",
+      "name": "\uD83D\uDCE6 Verwerk Order Info",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [820, 200],
+      "parameters": {
+        "jsCode": "let orders = [];\ntry {\n  const data = $input.first().json;\n  orders = data.orders || [];\n} catch(e) {\n  orders = [];\n}\n\nif (orders.length === 0) {\n  return [{ json: { hasOrder: false, orderInfo: 'Geen order gevonden voor dit e-mailadres.' } }];\n}\n\nconst o = orders[0];\nconst orderNumber = o.name || 'onbekend';\nconst orderDate = o.created_at ? new Date(o.created_at).toLocaleDateString('nl-NL') : 'onbekend';\nconst financialStatus = o.financial_status === 'paid' ? 'Betaald' : (o.financial_status || 'onbekend');\n\nconst statusMap = { fulfilled: 'Verstuurd', partial: 'Gedeeltelijk verstuurd', unfulfilled: 'Nog niet verstuurd', restocked: 'Teruggestuurd' };\nconst fulfillmentStatusNL = statusMap[o.fulfillment_status] || 'Nog niet verstuurd';\n\nconst products = (o.line_items || []).map(i => i.title + (i.variant_title && i.variant_title !== 'Default Title' ? ' (' + i.variant_title + ')' : '')).join(', ');\n\nlet trackingNumber = '';\nlet trackingUrl = '';\nlet carrier = '';\nlet shippedDate = '';\n\nif (o.fulfillments && o.fulfillments.length > 0) {\n  const f = o.fulfillments[0];\n  trackingNumber = f.tracking_number || '';\n  trackingUrl = f.tracking_url || '';\n  carrier = f.tracking_company || '';\n  shippedDate = f.created_at ? new Date(f.created_at).toLocaleDateString('nl-NL') : '';\n}\n\nlet orderInfo = `Order: ${orderNumber} (geplaatst op ${orderDate})\\nProducten: ${products}\\nBetaalstatus: ${financialStatus}\\nVerzendstatus: ${fulfillmentStatusNL}`;\nif (shippedDate) orderInfo += ` (verstuurd op ${shippedDate})`;\nif (carrier) orderInfo += `\\nVervoerder: ${carrier}`;\nif (trackingNumber) orderInfo += `\\nTrackingnummer: ${trackingNumber}`;\nif (trackingUrl) orderInfo += `\\nTracking link: ${trackingUrl}`;\n\nreturn [{ json: { hasOrder: true, orderInfo, orderNumber, fulfillmentStatusNL, trackingUrl, trackingNumber, carrier } }];"
+      }
+    },
+    {
+      "id": "node-005",
+      "name": "✍️ Bouw Prompt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 200],
+      "parameters": {
+        "jsCode": "const emailData = $('📋 Haal Email Data Op').first().json;\nconst orderData = (() => { try { return $('\uD83D\uDCE6 Verwerk Order Info').first().json; } catch(e) { return { hasOrder: false, orderInfo: 'Shopify niet bereikbaar.' }; } })();\n\nconst prompt = `Je bent de customer support assistent van Oergezond. Je schrijft conceptantwoorden die Jorn of Rosa controleren en versturen.\n\n## ROL\nOergezond is een Nederlands merk gericht op:\n- ancestraal leven\n- onbewerkte, natuurlijke producten\n- orthomoleculair denken\n- praktische gezondheidsverbetering\n- eerlijke, directe educatie\n- hoog vertrouwen klantcommunicatie\n\n## TOON\nSchrijf zoals een echt teamlid van Oergezond:\n- warm maar direct\n- duidelijk\n- praktisch\n- eerlijk\n- rustig\n- nooit wollig\n- nooit corporate\n- nooit overdreven formeel\n- nooit robotachtig\n- geen overdreven hype\n- geen nep-empathie\n- geen smileys\n- geen bold tekst in klantmails\n\n## TAALREGELS\n- Altijd in het Nederlands, tenzij klant duidelijk een andere taal schrijft\n- Korte, leesbare zinnen\n- Korte alinea's\n- Vriendelijk maar niet zacht of vaag\n- Beknopt tenzij klant uitleg nodig heeft\n- Geen markdown in de uiteindelijke mail\n- Geen bullets tenzij nodig voor overzicht\n- Nooit smileys\n- Nooit bold tekst\n\n## VERBODEN ZINNEN\n- \"Wat ontzettend vervelend\"\n- \"Ik hoop dat het goed met je gaat\"\n- \"Geen zorgen\"\n- \"Wij begrijpen volledig hoe frustrerend dit moet zijn\"\n- \"Superleuk\" / \"Amazing\"\n- \"We are sorry for the inconvenience\"\n\nVoorkeur:\n- \"Vervelend om te horen\"\n- \"Dank voor je bericht\"\n- \"We kijken graag met je mee\"\n- \"Dat pakken we graag voor je op\"\n\n## MEDISCHE REGELS\nVeilige formuleringen:\n- \"kan ondersteunend zijn\"\n- \"wordt vaak gebruikt bij\"\n- \"veel mensen ervaren\"\n- \"kan helpen om\"\n- \"is bedoeld om te ondersteunen\"\n- \"bij medische klachten raden we aan dit met een deskundige te bespreken\"\n\nNOOIT gebruiken:\n- \"geneest\" / \"verhelpt gegarandeerd\" / \"werkt altijd\" / \"vervangt medische zorg\"\n\n## PRODUCTEN\n- Oercrème Naturel (zonder essentiële olie) → gevoelige huid, eczeem, acne, baby's\n- Oercrème Regulier (vanille of sinaasappel essentiële olie) → normale huid dagelijks\n- Oercrème Vitamine E → huidherstel, littekens, droge/beschadigde huid\n- Shampoo Bar: sulfaatvrij, siliconenvrij, pH-neutraal. Gewenning ~2-4 weken\n- Conditioner Bar: siliconenvrij\n- Haarolie: jojoba, rozemarijn, brandnetel, kamille, calendula, vitamine E\n- Luierzalf: tallow, jojoba, zinc oxide\n- Oerbril: blauwlichtfilter, ALLEEN avond/nacht, NIET voor autorijden\n\n## KENNISBANK\n\n1. HARDE/KORRELIGE CRÈME\nTallow is een natuurproduct zonder chemische zachtmakers. Hard bij kou, zachter bij warmte. Korreligheid = normale vetzuren, geen kwaliteitsprobleem. Tip: opwarmen in handpalm.\n\n2. 2+1 ACTIE\nTWEE SCENARIO'S:\\n\\nSCENARIO A — Eerste melding (klant ontving maar 2 potten):\\nSchrijf email die: (1) kort uitlegt hoe de bundel werkt, (2) aanbiedt: wij sturen het 3e potje voor €4,95 verzendkosten, (3) vraagt welke variant: Naturel, Regulier Vanille, Regulier Sinaasappel of Vitamine E, (4) sluit af met een natuurlijke, vriendelijke vraag of ze akkoord gaan en welk potje ze willen — schrijf dit als een mens, niet als instructie. Gebruik intent: order_2plus1_issue\\n\\nSCENARIO B — Bevestiging (klant reageert met ja + variant):\\nKlant gaat akkoord. Schrijf korte bevestiging dat je het betaalverzoek verstuurt voor het gekozen potje. Gebruik intent: order_2plus1_confirmation\\n\\nSCENARIO C — Klant gaat niet akkoord (zegt nee op het voorstel):\\nSchrijf een vriendelijke maar duidelijke afsluiting. De strekking: wij komen de klant al tegemoet met dit aanbod — de bundel werkt zoals omschreven en het derde potje was niet besteld. We kunnen dit niet anders oplossen. Verwoord dit warm maar zonder excuses te maken voor het beleid. Geen valse hoop, geen verdere onderhandeling. Gebruik intent: order_2plus1_confirmation\\nVoeg toe aan output na CONCEPT:\\nVARIANT: [naturel / reguliervanille / reguliersinaasappel / vitamineE / onbekend]\\nKLANT_AKKOORD: [ja / nee / onbekend]\n\n3. WELKE CRÈME VOOR WELKE HUID\nDroge huid → Regulier. Eczeem/gevoelig → Naturel. Acne/onzuiver → Naturel of Vitamine E. Huidherstel/littekens → Vitamine E. Baby's → Naturel.\n\n4. HUIDREACTIE PROTOCOL\nStap 1: Vraag welk product. Stap 2: Vraag naar overgevoeligheden. Stap 3: Mét essentiële olie + reactie → stel Naturel voor (pas NA stap 1&2). Stap 4: Acne/whiteheads erger → huidcyclus uitleggen (28 dagen gewenning, mits geen roodheid). Stap 5: Roodheid/irritatie → MARKEER URGENT.\n\n5. VERZENDKOSTEN\n€4,95 voor de hele BENELUX (Nederland, België, Luxemburg). Gratis verzending vanaf €45. Wij verzenden niet buiten de BENELUX.\n\n6. ORDERSTATUS\nDe Shopify order data staat onderaan dit bericht. Als de klant vraagt naar hun pakket of levering: gebruik deze data direct. Vermeld het ordernummer en stuur de tracking link mee als die beschikbaar is. Spreek de status in gewone taal uit (niet 'fulfilled' maar 'verstuurd'). Als er geen order gevonden is of geen tracking: vraag om het ordernummer en laat weten dat je het nakijkt.\n\n7. RETOUREN\nVerwijs naar www.oergezond.com → Retouren.\n\n8. BETAALPROBLEEM\nAltijd URGENT. Geen acties zonder goedkeuring Jorn/Rosa.\n\n## URGENTIE\nMarkeer als URGENT wanneer:\n- Klant is boos, agressief of gefrustreerd\n- Allergische reactie of roodheid/irritatie gemeld\n- Pakket kwijt of beschadigd\n- Dreigt met negatieve review of social media post\n- Betaalprobleem (dubbel afgeschreven, niet teruggestort)\n- Media of influencer neemt contact op\n- Klant wacht al lang zonder reactie\n\nAlle andere vragen: NORMAAL.\n\n## EMAIL STRUCTUUR\n- Korte begroeting met voornaam\n- Direct antwoord in eerste alinea\n- Praktische uitleg of oplossing\n- Volgende stap indien relevant\n- Korte afsluiting\n- Ondertekening: Groet, Team Oergezond\n\n## OUTPUT FORMAT\nBEGIN JE ANTWOORD EXACT ZO:\nINTENT: [product_question / order_status / shipping_delay / return_request / refund_request / damaged_product / complaint / skin_reaction / usage_question / recommendation_request / payment_issue / order_2plus1_issue / order_2plus1_confirmation / general_question]\nSENTIMENT: [neutral / warm / frustrated / angry / confused / disappointed]\nRISK: [low / medium / high]\nURGENTIE: [NORMAAL / URGENT]\nREDEN_URGENTIE: [kort waarom urgent, of n.v.t.]\nVARIANT: [naturel / reguliervanille / reguliersinaasappel / vitamineE / onbekend]\nKLANT_AKKOORD: [ja / nee / onbekend]\n\nCONCEPT:\nHi ${emailData.senderName.split(' ')[0]},\n\n[jouw conceptantwoord hier]\n\nMet gezonde groet,\n\nAmy - Klantenservice\nwww.oergezond.com | @oergezond | contact@oergezond.com\n\nEMAIL VAN KLANT:\nVan: ${emailData.sender}\nOnderwerp: ${emailData.subject}\n\n${emailData.bodyText}\n\n---\nSHOPIFY ORDER DATA:\n${orderData.orderInfo}`;\n\nreturn [{\n  json: {\n    prompt,\n    sender: emailData.sender,\n    senderName: emailData.senderName,\n    subject: emailData.subject,\n    bodyText: emailData.bodyText\n  }\n}];"
+      }
+    },
+    {
+      "id": "node-006",
+      "name": "🤖 Claude — Schrijf Concept",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1100, 200],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "x-api-key", "value": "{{ $env.ANTHROPIC_API_KEY }}"},
+            {"name": "anthropic-version", "value": "2023-06-01"}
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 2000, messages: [{ role: 'user', content: $json.prompt }] }) }}"
+      }
+    },
+    {
+      "id": "node-007",
+      "name": "📝 Verwerk Antwoord",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1300, 200],
+      "parameters": {
+        "jsCode": "const claudeResponse = $input.first().json;\nconst text = claudeResponse.content[0].text;\n\nconst emailData = $('✍️ Bouw Prompt').first().json;\n\n// Parse intent\nconst intentMatch = text.match(/INTENT:\\s*([^\\n]+)/);\nconst intent = intentMatch ? intentMatch[1].trim() : 'general_question';\n\n// Parse sentiment\nconst sentimentMatch = text.match(/SENTIMENT:\\s*([^\\n]+)/);\nconst sentiment = sentimentMatch ? sentimentMatch[1].trim() : 'neutral';\n\n// Parse risk\nconst riskMatch = text.match(/RISK:\\s*([^\\n]+)/);\nconst risk = riskMatch ? riskMatch[1].trim() : 'low';\n\n// Parse urgentie\nconst urgencyMatch = text.match(/URGENTIE:\\s*([^\\n]+)/);\nconst urgency = urgencyMatch ? urgencyMatch[1].trim() : 'NORMAAL';\nconst isUrgent = urgency === 'URGENT' || risk === 'high';\n\n// Parse reden urgentie\nconst reasonMatch = text.match(/REDEN_URGENTIE:\\s*([^\\n]+)/);\nconst urgencyReason = reasonMatch ? reasonMatch[1].trim() : 'n.v.t.';\n\n// Parse 2+1 variant en akkoord\nconst variantMatch = text.match(/VARIANT:\\s*([^\\n]+)/);\nconst akkoordMatch = text.match(/KLANT_AKKOORD:\\s*([^\\n]+)/);\nconst rawVariant = variantMatch ? variantMatch[1].trim().toLowerCase().replace(/\\s+/g, '').replace(/-/g, '') : 'onbekend';\nconst klantAkkoord = akkoordMatch ? akkoordMatch[1].trim().toLowerCase() : 'onbekend';\nconst is2plus1Confirmation = (intent === 'order_2plus1_confirmation') && (klantAkkoord === 'ja');\nconst variantLabels = { naturel: 'Naturel', reguliervanille: 'Regulier \\u2014 Vanille', reguliersinaasappel: 'Regulier \\u2014 Sinaasappel', vitaminee: 'Vitamine E', vitamine_e: 'Vitamine E' };\nconst betaalverzoekVariant = rawVariant;\nconst variantLabel = variantLabels[rawVariant] || rawVariant;\n\n// Parse concept (alles na CONCEPT:)\nconst draftMatch = text.match(/CONCEPT:[\\s\\S]*?(Hi [\\s\\S]+)/);\nconst draft = draftMatch ? draftMatch[1].trim() : text;\n\n// Bouw Telegram berichten (hier in Code node, niet in expressie)\nconst cleanDraft = String(draft).replace(/</g, '&lt;').replace(/>/g, '&gt;').substring(0, 3000);\n\nlet telegramMsgNormaal = '\\uD83D\\uDFE1 <b>NIEUW CONCEPT \\u2014 ' + intent.toUpperCase() + '</b>\\n\\n\\uD83D\\uDC64 <b>Van:</b> ' + emailData.senderName + ' (' + emailData.sender + ')\\n\\uD83D\\uDCCB <b>Onderwerp:</b> ' + emailData.subject + '\\n\\n\\u2015\\u2015\\u2015\\u2015\\u2015\\u2015\\n\\uD83D\\uDCDD <b>CONCEPT:</b>\\n\\n' + cleanDraft + '\\n\\u2015\\u2015\\u2015\\u2015\\u2015\\u2015\\n\\n\\u2705 Controleer en stuur door naar klant als het klopt.';\n\nconst telegramMsgUrgent = '\\uD83D\\uDD34 <b>URGENT \\u2014 ' + intent.toUpperCase() + '</b>\\n\\n\\uD83D\\uDC64 <b>Van:</b> ' + emailData.senderName + ' (' + emailData.sender + ')\\n\\uD83D\\uDCCB <b>Onderwerp:</b> ' + emailData.subject + '\\n\\u26A0\\uFE0F <b>Reden:</b> ' + urgencyReason + '\\n\\n\\u2015\\u2015\\u2015\\u2015\\u2015\\u2015\\n\\uD83D\\uDCDD <b>CONCEPT:</b>\\n\\n' + cleanDraft + '\\n\\u2015\\u2015\\u2015\\u2015\\u2015\\u2015\\n\\n\\u2705 Controleer en stuur door naar klant als het klopt.';\n\n// Override message voor 2+1 bevestiging\nif (is2plus1Confirmation) {\n  telegramMsgNormaal = '\\u2705 <b>2+1 BEVESTIGING \\u2014 KLANT AKKOORD</b>\\n\\n\\uD83D\\uDC64 <b>Van:</b> ' + emailData.senderName + ' (' + emailData.sender + ')\\n\\uD83E\\uDDF4 <b>Variant:</b> ' + variantLabel + '\\n\\uD83D\\uDCB0 <b>Bedrag:</b> \\u20AC4,95\\n\\n\\u2015\\u2015\\u2015\\u2015\\u2015\\u2015\\n\\uD83D\\uDCDD <b>KLANT ANTWOORD:</b>\\n\\n' + cleanDraft + '\\n\\u2015\\u2015\\u2015\\u2015\\u2015\\u2015\\n\\n\\uD83D\\uDCB3 Klik \\\"Betaalverzoek + Picqer\\\" om alles automatisch te starten.';\n}\n\nreturn [{\n  json: {\n    category: intent,\n    sentiment,\n    risk,\n    urgency: isUrgent ? 'Hoog' : 'Normaal',\n    isUrgent,\n    urgencyReason,\n    draft,\n    sender: emailData.sender,\n    senderName: emailData.senderName,\n    subject: emailData.subject,\n    bodyText: emailData.bodyText,\n    telegramMsgNormaal,\n    telegramMsgUrgent,\n    betaalverzoekVariant,\n    variantLabel,\n    klantAkkoord,\n    is2plus1Confirmation\n  }\n}];"
+      }
+    },
+    {
+      "id": "node-008",
+      "name": "💾 Log naar Airtable",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1500, 200],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.airtable.com/v0/appIutbR42CAuWBCM/tblUKJd9sWxLaL8UM",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "Bearer {{ $env.AIRTABLE_API_KEY }}"},
+            {"name": "Content-Type", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ fields: { Datum: new Date().toISOString(), Afzender: $json.sender, Naam: $json.senderName, Onderwerp: $json.subject, Status: 'Nieuw', Concept: $json.draft, 'Originele Email': $json.bodyText, Notities: 'Intent: ' + $json.category + ' | Urgentie: ' + $json.urgency + ' | Sentiment: ' + ($json.sentiment || 'neutral') } }) }}"
+      }
+    },
+    {
+      "id": "node-008b",
+      "name": "🔑 Bouw Keyboard",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1600, 200],
+      "parameters": {
+        "jsCode": "const verwerk = $('\uD83D\uDCDD Verwerk Antwoord').first().json;\nconst recordId = $input.first().json.id;\n\nlet replyMarkupObj;\nif (verwerk.is2plus1Confirmation && verwerk.betaalverzoekVariant && verwerk.betaalverzoekVariant !== 'onbekend') {\n  replyMarkupObj = {\n    inline_keyboard: [[\n      { text: '\\u2705 Verstuur bevestiging', callback_data: 'send_' + recordId },\n      { text: '\\uD83D\\uDCB3 Betaalverzoek + Picqer (' + verwerk.variantLabel + ')', callback_data: 'shopify_' + verwerk.betaalverzoekVariant + '_' + recordId }\n    ]]\n  };\n} else {\n  replyMarkupObj = {\n    inline_keyboard: [[\n      { text: '\\u2705 Verstuur naar klant', callback_data: 'send_' + recordId },\n      { text: '\\u270F\\uFE0F Aanpassen', callback_data: 'edit_' + recordId },\n      { text: '\\uD83D\\uDCB3 Betaalverzoek', callback_data: 'payment_' + recordId }\n    ]]\n  };\n}\n\nreturn [{ json: { replyMarkup: JSON.stringify(replyMarkupObj), is2plus1Confirmation: verwerk.is2plus1Confirmation, variantLabel: verwerk.variantLabel } }];"
+      }
+    },
+    {
+      "id": "node-009",
+      "name": "🚨 Urgent?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1700, 200],
+      "parameters": {
+        "conditions": {
+          "options": {"caseSensitive": false, "leftValue": "", "typeValidation": "loose"},
+          "conditions": [
+            {
+              "leftValue": "={{ $json.isUrgent }}",
+              "rightValue": true,
+              "operator": {"type": "boolean", "operation": "true"}
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "node-010",
+      "name": "🔴 Telegram — URGENT",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1900, 100],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.telegram.org/bot8640244732:AAGqtmb4MITZBv9vVcY03GJeO6iWLkY3OXc/sendMessage",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ chat_id: '-1003709986337', parse_mode: 'HTML', text: $('📝 Verwerk Antwoord').first().json.telegramMsgUrgent, reply_markup: JSON.parse($('\\uD83D\\uDD11 Bouw Keyboard').first().json.replyMarkup) }) }}"
+      }
+    },
+    {
+      "id": "node-011",
+      "name": "🟡 Telegram — Normaal Concept",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1900, 320],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.telegram.org/bot8640244732:AAGqtmb4MITZBv9vVcY03GJeO6iWLkY3OXc/sendMessage",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ chat_id: '-1003709986337', parse_mode: 'HTML', text: $('📝 Verwerk Antwoord').first().json.telegramMsgNormaal, reply_markup: JSON.parse($('\\uD83D\\uDD11 Bouw Keyboard').first().json.replyMarkup) }) }}"
+      }
+    },
+    {
+      "id": "node-012",
+      "name": "🛑 Stop — Duplicaat",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [700, 450],
+      "parameters": {}
+    }
+  ],
+  "connections": {
+    "📧 Nieuwe Email (Outlook)": {
+      "main": [[{"node": "📋 Haal Email Data Op", "type": "main", "index": 0}]]
+    },
+    "📋 Haal Email Data Op": {
+      "main": [[{"node": "\uD83E\uDD16 Classificeer Email (Haiku)", "type": "main", "index": 0}]]
+    },
+    "\uD83E\uDD16 Classificeer Email (Haiku)": {
+      "main": [[{"node": "\uD83D\uDD00 Klantvraag?", "type": "main", "index": 0}]]
+    },
+    "\uD83D\uDD00 Klantvraag?": {
+      "main": [
+        [{"node": "🔎 Zoek Duplicaat (Airtable)", "type": "main", "index": 0}],
+        [{"node": "\uD83D\uDED1 Stop \u2014 Geen Klantvraag", "type": "main", "index": 0}]
+      ]
+    },
+    "🔎 Zoek Duplicaat (Airtable)": {
+      "main": [[{"node": "🔀 Duplicaat?", "type": "main", "index": 0}]]
+    },
+    "🔀 Duplicaat?": {
+      "main": [
+        [{"node": "\uD83D\uDED2 Zoek Shopify Order", "type": "main", "index": 0}],
+        [{"node": "🛑 Stop — Duplicaat", "type": "main", "index": 0}]
+      ]
+    },
+    "\uD83D\uDED2 Zoek Shopify Order": {
+      "main": [[{"node": "\uD83D\uDCE6 Verwerk Order Info", "type": "main", "index": 0}]]
+    },
+    "\uD83D\uDCE6 Verwerk Order Info": {
+      "main": [[{"node": "✍️ Bouw Prompt", "type": "main", "index": 0}]]
+    },
+    "✍️ Bouw Prompt": {
+      "main": [[{"node": "🤖 Claude — Schrijf Concept", "type": "main", "index": 0}]]
+    },
+    "🤖 Claude — Schrijf Concept": {
+      "main": [[{"node": "📝 Verwerk Antwoord", "type": "main", "index": 0}]]
+    },
+    "📝 Verwerk Antwoord": {
+      "main": [[{"node": "💾 Log naar Airtable", "type": "main", "index": 0}]]
+    },
+    "💾 Log naar Airtable": {
+      "main": [[{"node": "🔑 Bouw Keyboard", "type": "main", "index": 0}]]
+    },
+    "🔑 Bouw Keyboard": {
+      "main": [[{"node": "🚨 Urgent?", "type": "main", "index": 0}]]
+    },
+    "🚨 Urgent?": {
+      "main": [
+        [{"node": "🔴 Telegram — URGENT", "type": "main", "index": 0}],
+        [{"node": "🟡 Telegram — Normaal Concept", "type": "main", "index": 0}]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

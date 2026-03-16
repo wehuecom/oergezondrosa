@@ -1,0 +1,1267 @@
+{
+  "name": "Oergezond \u2014 Telegram Approval Handler",
+  "nodes": [
+    {
+      "id": "tel-001",
+      "name": "\u23f1\ufe0f Poll Telegram (elke 30 sec)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [0, 300],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "seconds",
+              "secondsInterval": 30
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "tel-002",
+      "name": "\ud83d\udce5 Haal Telegram Updates Op",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [220, 300],
+      "parameters": {
+        "jsCode": "const sd = $getWorkflowStaticData('global');\nconst offset = sd.telegramOffset || 0;\nreturn [{ json: { offset } }];"
+      }
+    },
+    {
+      "id": "tel-003",
+      "name": "\ud83c\udf10 getUpdates (Telegram API)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [440, 300],
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.telegram.org/bot8640244732:AAGqtmb4MITZBv9vVcY03GJeO6iWLkY3OXc/getUpdates?offset={{ $json.offset }}&limit=10&allowed_updates=[\"message\",\"callback_query\"]",
+        "options": {}
+      }
+    },
+    {
+      "id": "tel-004",
+      "name": "\ud83d\udccb Verwerk Updates",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [660, 300],
+      "parameters": {
+        "jsCode": "const data = $input.first().json;\nconst updates = data.result || [];\n\nif (updates.length === 0) return [];\n\nconst sd = $getWorkflowStaticData('global');\nconst maxId = Math.max(...updates.map(u => u.update_id));\nsd.telegramOffset = maxId + 1;\n\nconst relevant = [];\nfor (const update of updates) {\n  if (update.callback_query) {\n    const cq = update.callback_query;\n    const callbackData = cq.data || '';\n    const underscoreIdx = callbackData.indexOf('_');\n    const action = underscoreIdx !== -1 ? callbackData.substring(0, underscoreIdx) : callbackData;\n    const recordId = underscoreIdx !== -1 ? callbackData.substring(underscoreIdx + 1) : '';\n    relevant.push({\n      json: {\n        type: 'callback',\n        callbackData,\n        callbackQueryId: cq.id,\n        chatId: String(cq.message && cq.message.chat ? cq.message.chat.id : ''),\n        action,\n        recordId,\n        messageText: ''\n      }\n    });\n  } else if (update.message && update.message.text) {\n    const msg = update.message;\n    relevant.push({\n      json: {\n        type: 'message',\n        callbackData: '',\n        callbackQueryId: '',\n        chatId: String(msg.chat ? msg.chat.id : ''),\n        action: '',\n        recordId: '',\n        messageText: msg.text\n      }\n    });\n  }\n}\n\nreturn relevant;"
+      }
+    },
+    {
+      "id": "tel-005",
+      "name": "\ud83d\udd00 Callback of Bericht?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [880, 300],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "cond-001",
+              "leftValue": "={{ $json.type }}",
+              "rightValue": "callback",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "tel-006",
+      "name": "\ud83d\udd00 Verzenden?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1100, 160],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "cond-002",
+              "leftValue": "={{ $json.action }}",
+              "rightValue": "send",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "tel-R2",
+      "name": "\ud83d\udd00 Betaalverzoek?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1100, 360],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "cond-r2",
+              "leftValue": "={{ $json.action }}",
+              "rightValue": "payment",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "tel-R3",
+      "name": "\ud83d\udd00 Variant?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1100, 560],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "cond-r3",
+              "leftValue": "={{ $json.action }}",
+              "rightValue": "v",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "tel-R4",
+      "name": "\ud83d\udd00 Picqer?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1100, 760],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "cond-r4",
+              "leftValue": "={{ $json.action }}",
+              "rightValue": "picqer",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "tel-R5",
+      "name": "\uD83D\uDD00 Direct Shopify?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1100, 960],
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict" },
+          "conditions": [{
+            "id": "cond-r5",
+            "leftValue": "={{ $json.action }}",
+            "rightValue": "shopify",
+            "operator": { "type": "string", "operation": "equals" }
+          }],
+          "combinator": "and"
+        }
+      }
+    },
+    {
+      "id": "tel-007",
+      "name": "\ud83d\udce6 Haal Record Op (Send)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1320, 80],
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.airtable.com/v0/appIutbR42CAuWBCM/tblUKJd9sWxLaL8UM/{{ $json.recordId }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.AIRTABLE_API_KEY }}"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "tel-008",
+      "name": "\ud83d\udce7 Bereid Email Voor",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1540, 80],
+      "parameters": {
+        "jsCode": "const record = $input.first().json;\nconst fields = record.fields || {};\nconst toEmail = fields.Afzender || '';\nconst subject = 'Re: ' + (fields.Onderwerp || '');\nconst draftText = fields.Concept || '';\nconst bodyHtml = draftText.replace(/\\n/g, '<br>');\nreturn [{ json: { toEmail, subject, bodyHtml, recordId: record.id } }];"
+      }
+    },
+    {
+      "id": "tel-009",
+      "name": "\ud83d\udce4 Verstuur Email (Outlook)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1760, 80],
+      "parameters": {
+        "method": "POST",
+        "url": "https://graph.microsoft.com/v1.0/me/sendMail",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "microsoftOutlookOAuth2Api",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({message:{subject:$json.subject,body:{contentType:'HTML',content:$json.bodyHtml},toRecipients:[{emailAddress:{address:$json.toEmail}}]},saveToSentItems:true}) }}",
+        "options": {}
+      },
+      "credentials": {
+        "microsoftOutlookOAuth2Api": {
+          "id": "ZwwbasVlSoVeGABX",
+          "name": "Microsoft Outlook"
+        }
+      }
+    },
+    {
+      "id": "tel-010",
+      "name": "\u2705 Update Notities \u2014 Verzonden",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1980, 80],
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://api.airtable.com/v0/appIutbR42CAuWBCM/tblUKJd9sWxLaL8UM/{{ $('\ud83d\udce7 Bereid Email Voor').first().json.recordId }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.AIRTABLE_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "{\"fields\":{\"Notities\":\"STATUS: Verzonden\"}}",
+        "options": {}
+      }
+    },
+    {
+      "id": "tel-011",
+      "name": "\ud83d\udce3 Bevestig \u2014 Verstuurd",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2200, 80],
+      "continueOnFail": true,
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.telegram.org/bot8640244732:AAGqtmb4MITZBv9vVcY03GJeO6iWLkY3OXc/answerCallbackQuery",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({callback_query_id: $('\ud83d\udccb Verwerk Updates').first().json.callbackQueryId, text: '\u2705 Email verstuurd!', show_alert: false}) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "tel-P1",
+      "name": "\ud83d\udce3 Bevestig \u2014 Betaalverzoek",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1320, 280],
+      "continueOnFail": true,
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.telegram.org/bot8640244732:AAGqtmb4MITZBv9vVcY03GJeO6iWLkY3OXc/answerCallbackQuery",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({callback_query_id: $('\ud83d\udccb Verwerk Updates').first().json.callbackQueryId, text: '\ud83d\udcb3 Betaalverzoek gestart!', show_alert: false}) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "tel-P2",
+      "name": "\ud83d\udcbe Sla Pending Payment Op",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1540, 280],
+      "parameters": {
+        "jsCode": "const sd = $getWorkflowStaticData('global');\nsd.pendingPaymentRecordId = $json.recordId;\nsd.pendingPaymentChatId = $json.chatId;\nreturn [{ json: $json }];"
+      }
+    },
+    {
+      "id": "tel-P3",
+      "name": "\ud83d\udcac Kies Variant",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1760, 280],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.telegram.org/bot8640244732:AAGqtmb4MITZBv9vVcY03GJeO6iWLkY3OXc/sendMessage",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "{\"chat_id\":\"-1003709986337\",\"text\":\"Welke variant Oercr\\u00E8me wil de klant als derde potje?\\n\\nVerzendkosten zijn inbegrepen bij het bedrag van \\u20AC4,95.\",\"reply_markup\":{\"inline_keyboard\":[[{\"text\":\"Naturel\",\"callback_data\":\"v_naturel\"},{\"text\":\"Regulier - Vanille\",\"callback_data\":\"v_regulier_vanille\"}],[{\"text\":\"Regulier - Sinaasappel\",\"callback_data\":\"v_regulier_sinaasappel\"},{\"text\":\"Vitamine E\",\"callback_data\":\"v_vitamineE\"}]]}}",
+        "options": {}
+      }
+    },
+    {
+      "id": "tel-V1",
+      "name": "\ud83d\udd11 Haal Variant + Record Op",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1320, 480],
+      "parameters": {
+        "jsCode": "const sd = $getWorkflowStaticData('global');\nconst airtableRecordId = sd.pendingPaymentRecordId;\ndelete sd.pendingPaymentRecordId;\ndelete sd.pendingPaymentChatId;\nconst variantName = $json.recordId;\nconst labels = {\n  naturel: 'Naturel',\n  regulier_vanille: 'Regulier - Vanille',\n  regulier_sinaasappel: 'Regulier - Sinaasappel',\n  vitamineE: 'Vitamine E'\n};\nconst variantLabel = labels[variantName] || variantName;\nreturn [{ json: { airtableRecordId, variantName, variantLabel, chatId: $json.chatId } }];"
+      }
+    },
+    {
+      "id": "tel-V2",
+      "name": "\ud83d\udce6 Haal Record Op (Shopify)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1540, 480],
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.airtable.com/v0/appIutbR42CAuWBCM/tblUKJd9sWxLaL8UM/{{ $json.airtableRecordId }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.AIRTABLE_API_KEY }}"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "tel-V3",
+      "name": "\ud83d\uded2 Bereid Shopify Order Voor",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1760, 480],
+      "parameters": {
+        "jsCode": "const record = $input.first().json;\nconst prevData = $('\ud83d\udd11 Haal Variant + Record Op').first().json;\nreturn [{ json: {\n  customerEmail: record.fields.Afzender,\n  customerName: record.fields.Naam || record.fields.Afzender,\n  variantLabel: prevData.variantLabel,\n  variantName: prevData.variantName,\n  orderTitle: 'Derde Potje Oercr\\u00E8me \\u2014 ' + prevData.variantLabel,\n  airtableRecordId: prevData.airtableRecordId,\n  chatId: prevData.chatId\n} }];"
+      }
+    },
+    {
+      "id": "tel-V4",
+      "name": "\ud83c\udfea Maak Draft Order (Shopify)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1980, 480],
+      "parameters": {
+        "method": "POST",
+        "url": "https://f34a22-c0.myshopify.com/admin/api/2024-04/draft_orders.json",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Shopify-Access-Token",
+              "value": "{{ $env.SHOPIFY_ACCESS_TOKEN }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({draft_order:{line_items:[{title:$json.orderTitle,price:'4.95',quantity:1,taxable:false}],email:$json.customerEmail,use_customer_default_address:true,tags:'2plus1',note:'2+1 actie - derde potje'}}) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "tel-V5",
+      "name": "\ud83d\udcec Bereid Factuur Voor",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2200, 480],
+      "parameters": {
+        "jsCode": "const order = $input.first().json.draft_order;\nconst prev = $('\ud83d\uded2 Bereid Shopify Order Voor').first().json;\nreturn [{ json: {\n  draftOrderId: order.id,\n  invoiceUrl: order.invoice_url,\n  customerEmail: prev.customerEmail,\n  variantLabel: prev.variantLabel,\n  variantName: prev.variantName,\n  airtableRecordId: prev.airtableRecordId,\n  chatId: prev.chatId\n} }];"
+      }
+    },
+    {
+      "id": "tel-V6",
+      "name": "\ud83d\udce8 Verstuur Shopify Factuur",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2420, 480],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://f34a22-c0.myshopify.com/admin/api/2024-04/draft_orders/{{ $json.draftOrderId }}/send_invoice.json",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Shopify-Access-Token",
+              "value": "{{ $env.SHOPIFY_ACCESS_TOKEN }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({draft_order_invoice:{to:$json.customerEmail,subject:'Betaalverzoek \\u2014 Derde Potje Oercr\\u00E8me \\u2014 '+$json.variantLabel,custom_message:'Bedankt voor je bestelling bij Oergezond! Hieronder vind je je betaalverzoek voor het derde potje Oercr\\u00E8me.'}}) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "tel-V7",
+      "name": "\ud83d\udce3 Bevestig \u2014 Variant",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2640, 480],
+      "continueOnFail": true,
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.telegram.org/bot8640244732:AAGqtmb4MITZBv9vVcY03GJeO6iWLkY3OXc/answerCallbackQuery",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({callback_query_id: $('\ud83d\udccb Verwerk Updates').first().json.callbackQueryId, text: '\u2705 Betaalverzoek onderweg!', show_alert: false}) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "tel-V8",
+      "name": "\ud83d\udcac Bevestig Betaalverzoek (Telegram)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2860, 480],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.telegram.org/bot8640244732:AAGqtmb4MITZBv9vVcY03GJeO6iWLkY3OXc/sendMessage",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({chat_id: '-1003709986337', parse_mode: 'HTML', text: '\ud83d\udcb3 <b>Betaalverzoek verstuurd!</b>\\n\\n\ud83d\udc64 <b>Klant:</b> ' + $('\ud83d\udcec Bereid Factuur Voor').first().json.customerEmail + '\\n\ud83e\uddf4 <b>Variant:</b> ' + $('\ud83d\udcec Bereid Factuur Voor').first().json.variantLabel + '\\n\ud83d\udcb6 <b>Bedrag:</b> \\u20AC4,95\\n\\nZodra de klant betaalt, klik voor de Picqer order:', reply_markup: {inline_keyboard: [[{text: '\ud83d\udce6 Maak Picqer Order', callback_data: 'picqer_' + $('\ud83d\udcec Bereid Factuur Voor').first().json.airtableRecordId + '_' + $('\ud83d\udcec Bereid Factuur Voor').first().json.variantName}]]}}) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "tel-PC1",
+      "name": "\ud83c\udfed Verwerk Picqer Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1320, 680],
+      "continueOnFail": true,
+      "parameters": {
+        "jsCode": "const rd = $json.recordId;\nconst lastUnderscore = rd.lastIndexOf('_');\nconst airtableRecordId = rd.substring(0, lastUnderscore);\nconst variantName = rd.substring(lastUnderscore + 1);\nconst codes = {\n  naturel: 'OERCREME-NATUREL',\n  regulier_vanille: 'OERCREME-REGULIER-VANILLE',\n  regulier_sinaasappel: 'OERCREME-REGULIER-SINAASAPPEL',\n  vitamineE: 'OERCREME-VITAMINE-E'\n};\nconst picqerProductCode = codes[variantName] || variantName;\nreturn [{ json: { airtableRecordId, variantName, picqerProductCode, chatId: $json.chatId } }];"
+      }
+    },
+    {
+      "id": "tel-PC2",
+      "name": "\ud83d\udce6 Haal Record Op (Picqer)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1540, 680],
+      "continueOnFail": true,
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.airtable.com/v0/appIutbR42CAuWBCM/tblUKJd9sWxLaL8UM/{{ $json.airtableRecordId }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.AIRTABLE_API_KEY }}"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "tel-PC3",
+      "name": "\ud83d\udd0d Zoek Picqer Klant",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1760, 680],
+      "continueOnFail": true,
+      "parameters": {
+        "method": "GET",
+        "url": "=https://oergezond.picqer.com/api/v1/customers?search={{ $('\ud83d\udce6 Haal Record Op (Picqer)').first().json.fields.Afzender }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Basic OXlaenpWNU9oTWJUS1BXVTFWWUpuR0dMZjY4ZUVEMlp2T3VOaU1QM2swSFA3Q1pCOg=="
+            },
+            {
+              "name": "User-Agent",
+              "value": "Oergezond-Support/1.0"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "tel-PC4",
+      "name": "\ud83d\udd0d Zoek Laatste Picqer Order",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1980, 680],
+      "continueOnFail": true,
+      "parameters": {
+        "method": "GET",
+        "url": "=https://oergezond.picqer.com/api/v1/orders?idcustomer={{ $input.first().json[0].idcustomer }}&limit=1",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Basic OXlaenpWNU9oTWJUS1BXVTFWWUpuR0dMZjY4ZUVEMlp2T3VOaU1QM2swSFA3Q1pCOg=="
+            },
+            {
+              "name": "User-Agent",
+              "value": "Oergezond-Support/1.0"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "tel-PC5",
+      "name": "\ud83d\udcdd Maak Nieuwe Picqer Order",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2200, 680],
+      "continueOnFail": true,
+      "parameters": {
+        "method": "POST",
+        "url": "https://oergezond.picqer.com/api/v1/orders",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Basic OXlaenpWNU9oTWJUS1BXVTFWWUpuR0dMZjY4ZUVEMlp2T3VOaU1QM2swSFA3Q1pCOg=="
+            },
+            {
+              "name": "User-Agent",
+              "value": "Oergezond-Support/1.0"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({idcustomer: $('\ud83d\udd0d Zoek Picqer Klant').first().json[0].idcustomer, reference: '2+1 actie - ' + $('\ud83c\udfed Verwerk Picqer Data').first().json.variantName}) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "tel-PC6",
+      "name": "\ud83d\udce6 Voeg Product Toe (Picqer)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2420, 680],
+      "continueOnFail": true,
+      "parameters": {
+        "method": "POST",
+        "url": "=https://oergezond.picqer.com/api/v1/orders/{{ $json.idorder }}/products",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Basic OXlaenpWNU9oTWJUS1BXVTFWWUpuR0dMZjY4ZUVEMlp2T3VOaU1QM2swSFA3Q1pCOg=="
+            },
+            {
+              "name": "User-Agent",
+              "value": "Oergezond-Support/1.0"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({productcode: $('\ud83c\udfed Verwerk Picqer Data').first().json.picqerProductCode, amount: 1}) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "tel-PC7",
+      "name": "\ud83d\udcac Bevestig Picqer Order",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2640, 680],
+      "continueOnFail": true,
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.telegram.org/bot8640244732:AAGqtmb4MITZBv9vVcY03GJeO6iWLkY3OXc/sendMessage",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({chat_id: '-1003709986337', text: '\ud83d\udce6 Picqer order aangemaakt voor ' + $('\ud83c\udfed Verwerk Picqer Data').first().json.variantName + '!\\n\\nProductcode: ' + $('\ud83c\udfed Verwerk Picqer Data').first().json.picqerProductCode + '\\n\\nUpdate de productcode in Picqer als de placeholder niet klopt.'}) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "tel-DS1",
+      "name": "\uD83D\uDD11 Haal Direct Shopify Data Op",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1320, 960],
+      "parameters": {
+        "jsCode": "const callbackData = $json.callbackData;\nconst recIdx = callbackData.indexOf('_rec');\nconst variantKey = callbackData.substring('shopify_'.length, recIdx);\nconst airtableRecordId = callbackData.substring(recIdx + 1);\nconst variantLabels = { naturel: 'Naturel', reguliervanille: 'Regulier \\u2014 Vanille', reguliersinaasappel: 'Regulier \\u2014 Sinaasappel', vitaminee: 'Vitamine E' };\nconst variantLabel = variantLabels[variantKey] || variantKey;\nconst picqerCodes = { naturel: 'OERCREME-NATUREL', reguliervanille: 'OERCREME-REGULIER-VANILLE', reguliersinaasappel: 'OERCREME-REGULIER-SINAASAPPEL', vitaminee: 'OERCREME-VITAMINE-E' };\nconst picqerProductCode = picqerCodes[variantKey] || variantKey;\nreturn [{ json: { airtableRecordId, variantKey, variantLabel, picqerProductCode, chatId: $json.chatId, callbackQueryId: $json.callbackQueryId } }];"
+      }
+    },
+    {
+      "id": "tel-DS2",
+      "name": "\uD83D\uDCE3 Bevestig \u2014 Direct Shopify",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1540, 960],
+      "continueOnFail": true,
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.telegram.org/bot8640244732:AAGqtmb4MITZBv9vVcY03GJeO6iWLkY3OXc/answerCallbackQuery",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({callback_query_id: $('\uD83D\uDD11 Haal Direct Shopify Data Op').first().json.callbackQueryId, text: '\uD83D\uDCB3 Betaalverzoek + Picqer worden gestart!', show_alert: false}) }}"
+      }
+    },
+    {
+      "id": "tel-DS3",
+      "name": "\uD83D\uDCE6 Haal Record Op (Direct Shopify)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1760, 960],
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.airtable.com/v0/appIutbR42CAuWBCM/tblUKJd9sWxLaL8UM/{{ $('\uD83D\uDD11 Haal Direct Shopify Data Op').first().json.airtableRecordId }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [{"name": "Authorization", "value": "Bearer {{ $env.AIRTABLE_API_KEY }}"}]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "tel-DS4",
+      "name": "\uD83C\uDFEA Maak Draft Order (Direct Shopify)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1980, 960],
+      "parameters": {
+        "method": "POST",
+        "url": "https://f34a22-c0.myshopify.com/admin/api/2024-04/draft_orders.json",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "X-Shopify-Access-Token", "value": "{{ $env.SHOPIFY_ACCESS_TOKEN }}"},
+            {"name": "Content-Type", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({draft_order:{line_items:[{title:'Derde Potje Oercr\\u00E8me \\u2014 ' + $('\uD83D\uDD11 Haal Direct Shopify Data Op').first().json.variantLabel,price:'4.95',quantity:1,taxable:false}],email:$('\uD83D\uDCE6 Haal Record Op (Direct Shopify)').first().json.fields.Afzender,use_customer_default_address:true,tags:'2plus1',note:'2+1 actie - derde potje'}}) }}"
+      }
+    },
+    {
+      "id": "tel-DS5",
+      "name": "\uD83D\uDCEC Bereid Factuur Voor (Direct)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2200, 960],
+      "parameters": {
+        "jsCode": "const order = $input.first().json.draft_order;\nconst prev = $('\uD83D\uDD11 Haal Direct Shopify Data Op').first().json;\nconst record = $('\uD83D\uDCE6 Haal Record Op (Direct Shopify)').first().json;\nreturn [{ json: {\n  draftOrderId: order.id,\n  customerEmail: record.fields.Afzender,\n  variantLabel: prev.variantLabel,\n  variantKey: prev.variantKey,\n  picqerProductCode: prev.picqerProductCode,\n  airtableRecordId: prev.airtableRecordId\n} }];"
+      }
+    },
+    {
+      "id": "tel-DS6",
+      "name": "\uD83D\uDCE8 Verstuur Shopify Factuur (Direct)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2420, 960],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://f34a22-c0.myshopify.com/admin/api/2024-04/draft_orders/{{ $json.draftOrderId }}/send_invoice.json",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "X-Shopify-Access-Token", "value": "{{ $env.SHOPIFY_ACCESS_TOKEN }}"},
+            {"name": "Content-Type", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({draft_order_invoice:{to:$json.customerEmail,subject:'Betaalverzoek \\u2014 Derde Potje Oercr\\u00E8me \\u2014 ' + $json.variantLabel,custom_message:'Bedankt voor je bevestiging! Betaal hieronder de verzendkosten van \\u20AC4,95 voor je derde potje Oercr\\u00E8me ' + $json.variantLabel + '.'}}) }}"
+      }
+    },
+    {
+      "id": "tel-DS7",
+      "name": "\uD83D\uDD0D Zoek Picqer Klant (Direct)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "continueOnFail": true,
+      "position": [2640, 960],
+      "parameters": {
+        "method": "GET",
+        "url": "=https://oergezond.picqer.com/api/v1/customers?search={{ $('\uD83D\uDCEC Bereid Factuur Voor (Direct)').first().json.customerEmail }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "Basic OXlaenpWNU9oTWJUS1BXVTFWWUpuR0dMZjY4ZUVEMlp2T3VOaU1QM2swSFA3Q1pCOg=="},
+            {"name": "User-Agent", "value": "Oergezond-Support/1.0"}
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "tel-DS8",
+      "name": "\uD83D\uDCDD Maak Picqer Order (Direct)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "continueOnFail": true,
+      "position": [2860, 960],
+      "parameters": {
+        "method": "POST",
+        "url": "https://oergezond.picqer.com/api/v1/orders",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "Basic OXlaenpWNU9oTWJUS1BXVTFWWUpuR0dMZjY4ZUVEMlp2T3VOaU1QM2swSFA3Q1pCOg=="},
+            {"name": "User-Agent", "value": "Oergezond-Support/1.0"},
+            {"name": "Content-Type", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({idcustomer: $input.first().json[0] ? $input.first().json[0].idcustomer : null, reference: '2+1 actie - ' + $('\uD83D\uDCEC Bereid Factuur Voor (Direct)').first().json.variantKey}) }}"
+      }
+    },
+    {
+      "id": "tel-DS9",
+      "name": "\uD83D\uDCE6 Voeg Product Toe Picqer (Direct)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "continueOnFail": true,
+      "position": [3080, 960],
+      "parameters": {
+        "method": "POST",
+        "url": "=https://oergezond.picqer.com/api/v1/orders/{{ $json.idorder }}/products",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "Basic OXlaenpWNU9oTWJUS1BXVTFWWUpuR0dMZjY4ZUVEMlp2T3VOaU1QM2swSFA3Q1pCOg=="},
+            {"name": "User-Agent", "value": "Oergezond-Support/1.0"},
+            {"name": "Content-Type", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({productcode: $('\uD83D\uDCEC Bereid Factuur Voor (Direct)').first().json.picqerProductCode, amount: 1}) }}"
+      }
+    },
+    {
+      "id": "tel-DS10",
+      "name": "\uD83D\uDCAC Betaalverzoek + Picqer Verstuurd",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "continueOnFail": true,
+      "position": [3300, 960],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.telegram.org/bot8640244732:AAGqtmb4MITZBv9vVcY03GJeO6iWLkY3OXc/sendMessage",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({chat_id: '-1003709986337', parse_mode: 'HTML', text: '\uD83D\uDCB3 <b>BETAALVERZOEK VERSTUURD</b>\\n\uD83D\uDCE6 <b>PICQER ORDER AANGEMAAKT</b>\\n\\n\uD83D\uDC64 <b>Klant:</b> ' + $('\uD83D\uDCEC Bereid Factuur Voor (Direct)').first().json.customerEmail + '\\n\uD83E\uDDF4 <b>Variant:</b> ' + $('\uD83D\uDCEC Bereid Factuur Voor (Direct)').first().json.variantLabel + '\\n\uD83D\uDCB0 <b>Bedrag:</b> \\u20AC4,95\\n\\n\u2705 Shopify betaalverzoek is verstuurd naar de klant.\\n\u2705 Picqer order aangemaakt voor fulfillment.'}) }}"
+      }
+    },
+    {
+      "id": "tel-012",
+      "name": "\u270f\ufe0f Sla Record ID Op (Static Data)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1320, 1160],
+      "parameters": {
+        "jsCode": "const sd = $getWorkflowStaticData('global');\nsd.pendingRevisionRecordId = $json.recordId;\nsd.pendingRevisionChatId = $json.chatId;\nreturn [{ json: $json }];"
+      }
+    },
+    {
+      "id": "tel-013",
+      "name": "\ud83d\udce3 Bevestig \u2014 Aanpassen",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1540, 1160],
+      "continueOnFail": true,
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.telegram.org/bot8640244732:AAGqtmb4MITZBv9vVcY03GJeO6iWLkY3OXc/answerCallbackQuery",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({callback_query_id: $('\ud83d\udccb Verwerk Updates').first().json.callbackQueryId, text: '\u270f\ufe0f Aanpassen gestart!', show_alert: false}) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "tel-014",
+      "name": "\ud83d\udcac Vraag om Feedback",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1760, 1160],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.telegram.org/bot8640244732:AAGqtmb4MITZBv9vVcY03GJeO6iWLkY3OXc/sendMessage",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "{\"chat_id\":\"-1003709986337\",\"text\":\"Wat moet er anders aan het concept? Typ je feedback en ik pas het aan.\"}",
+        "options": {}
+      }
+    },
+    {
+      "id": "tel-015",
+      "name": "\ud83d\udd0e Lees Pending Record (Static Data)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1100, 1260],
+      "parameters": {
+        "jsCode": "const sd = $getWorkflowStaticData('global');\nconst recordId = sd.pendingRevisionRecordId;\nconst chatId = sd.pendingRevisionChatId;\nif (!recordId) return [];\nreturn [{ json: { recordId, chatId } }];"
+      }
+    },
+    {
+      "id": "tel-015b",
+      "name": "\ud83d\udce6 Haal Pending Record Op",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1320, 1260],
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.airtable.com/v0/appIutbR42CAuWBCM/tblUKJd9sWxLaL8UM/{{ $json.recordId }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.AIRTABLE_API_KEY }}"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "tel-016",
+      "name": "\u270d\ufe0f Bouw Revisie Prompt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1540, 1260],
+      "parameters": {
+        "jsCode": "const record = $input.first().json;\nconst fields = record.fields || {};\nconst feedback = $('\ud83d\udccb Verwerk Updates').first().json.messageText;\nconst sd = $getWorkflowStaticData('global');\nconst recordId = sd.pendingRevisionRecordId;\nconst chatId = sd.pendingRevisionChatId;\ndelete sd.pendingRevisionRecordId;\ndelete sd.pendingRevisionChatId;\n\nconst senderName = fields.Naam || fields.Afzender || 'Klant';\nconst sender = fields.Afzender || '';\nconst subject = fields.Onderwerp || '';\nconst originalEmail = fields['Originele Email'] || fields.Bericht || '';\nconst currentDraft = fields.Concept || '';\n\nconst prompt = `Je bent een klantenservice medewerker van Oergezond. Pas het volgende concept-antwoord aan op basis van de feedback.\\n\\nOriginele email van klant (${senderName}):\\n${originalEmail}\\n\\nHuidig concept-antwoord:\\n${currentDraft}\\n\\nFeedback / aanpassing:\\n${feedback}\\n\\nSchrijf alleen het aangepaste antwoord, zonder uitleg of inleiding. Gebruik de Oergezond brand voice: direct, eerlijk, mensgericht. Sluit af met:\\n\\nMet vriendelijke groet,\\nHet Oergezond team`;\n\nreturn [{ json: { prompt, recordId, senderName, sender, subject, chatId } }];"
+      }
+    },
+    {
+      "id": "tel-017",
+      "name": "\ud83e\udd16 Claude \u2014 Pas Concept Aan",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1760, 1260],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "{{ $env.ANTHROPIC_API_KEY }}"
+            },
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({model: 'claude-opus-4-5', max_tokens: 1024, messages: [{role: 'user', content: $json.prompt}]}) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "tel-018",
+      "name": "\ud83d\udcdd Verwerk Nieuw Concept",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1980, 1260],
+      "parameters": {
+        "jsCode": "const claudeResponse = $input.first().json;\nconst prevData = $('\u270d\ufe0f Bouw Revisie Prompt').first().json;\nconst newDraft = claudeResponse.content && claudeResponse.content[0] ? claudeResponse.content[0].text : '';\n\nconst truncated = newDraft.length > 3000 ? newDraft.substring(0, 3000) + '...' : newDraft;\nconst escaped = truncated\n  .replace(/&/g, '&amp;')\n  .replace(/</g, '&lt;')\n  .replace(/>/g, '&gt;');\n\nconst telegramMsg = '\\uD83D\\uDFE1 <b>Aangepast concept voor ' + prevData.senderName + '</b>\\n\\n' + escaped + '\\n\\n<i>Klaar om te verzenden?</i>';\n\nreturn [{ json: {\n  newDraft,\n  telegramMsg,\n  recordId: prevData.recordId,\n  sender: prevData.sender,\n  subject: prevData.subject,\n  chatId: prevData.chatId\n} }];"
+      }
+    },
+    {
+      "id": "tel-019",
+      "name": "\ud83d\udcbe Update Airtable \u2014 Nieuw Concept",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2200, 1260],
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://api.airtable.com/v0/appIutbR42CAuWBCM/tblUKJd9sWxLaL8UM/{{ $json.recordId }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer {{ $env.AIRTABLE_API_KEY }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({fields: {Concept: $json.newDraft}}) }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "tel-020",
+      "name": "\ud83d\udcac Nieuw Concept + Knoppen",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2420, 1260],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.telegram.org/bot8640244732:AAGqtmb4MITZBv9vVcY03GJeO6iWLkY3OXc/sendMessage",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({chat_id: '-1003709986337', parse_mode: 'HTML', text: $('\ud83d\udcdd Verwerk Nieuw Concept').first().json.telegramMsg, reply_markup: {inline_keyboard: [[{text: '\\u2705 Verstuur', callback_data: 'send_' + $('\ud83d\udcdd Verwerk Nieuw Concept').first().json.recordId}, {text: '\\u270F\\uFE0F Aanpassen', callback_data: 'edit_' + $('\ud83d\udcdd Verwerk Nieuw Concept').first().json.recordId}], [{text: '\\uD83D\\uDCB3 Betaalverzoek', callback_data: 'payment_' + $('\ud83d\udcdd Verwerk Nieuw Concept').first().json.recordId}]]}}) }}",
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "\u23f1\ufe0f Poll Telegram (elke 30 sec)": {
+      "main": [
+        [{ "node": "\ud83d\udce5 Haal Telegram Updates Op", "type": "main", "index": 0 }]
+      ]
+    },
+    "\ud83d\udce5 Haal Telegram Updates Op": {
+      "main": [
+        [{ "node": "\ud83c\udf10 getUpdates (Telegram API)", "type": "main", "index": 0 }]
+      ]
+    },
+    "\ud83c\udf10 getUpdates (Telegram API)": {
+      "main": [
+        [{ "node": "\ud83d\udccb Verwerk Updates", "type": "main", "index": 0 }]
+      ]
+    },
+    "\ud83d\udccb Verwerk Updates": {
+      "main": [
+        [{ "node": "\ud83d\udd00 Callback of Bericht?", "type": "main", "index": 0 }]
+      ]
+    },
+    "\ud83d\udd00 Callback of Bericht?": {
+      "main": [
+        [{ "node": "\ud83d\udd00 Verzenden?", "type": "main", "index": 0 }],
+        [{ "node": "\ud83d\udd0e Lees Pending Record (Static Data)", "type": "main", "index": 0 }]
+      ]
+    },
+    "\ud83d\udd00 Verzenden?": {
+      "main": [
+        [{ "node": "\ud83d\udce6 Haal Record Op (Send)", "type": "main", "index": 0 }],
+        [{ "node": "\ud83d\udd00 Betaalverzoek?", "type": "main", "index": 0 }]
+      ]
+    },
+    "\ud83d\udce6 Haal Record Op (Send)": {
+      "main": [
+        [{ "node": "\ud83d\udce7 Bereid Email Voor", "type": "main", "index": 0 }]
+      ]
+    },
+    "\ud83d\udce7 Bereid Email Voor": {
+      "main": [
+        [{ "node": "\ud83d\udce4 Verstuur Email (Outlook)", "type": "main", "index": 0 }]
+      ]
+    },
+    "\ud83d\udce4 Verstuur Email (Outlook)": {
+      "main": [
+        [{ "node": "\u2705 Update Notities \u2014 Verzonden", "type": "main", "index": 0 }]
+      ]
+    },
+    "\u2705 Update Notities \u2014 Verzonden": {
+      "main": [
+        [{ "node": "\ud83d\udce3 Bevestig \u2014 Verstuurd", "type": "main", "index": 0 }]
+      ]
+    },
+    "\ud83d\udd00 Betaalverzoek?": {
+      "main": [
+        [{ "node": "\ud83d\udce3 Bevestig \u2014 Betaalverzoek", "type": "main", "index": 0 }],
+        [{ "node": "\ud83d\udd00 Variant?", "type": "main", "index": 0 }]
+      ]
+    },
+    "\ud83d\udce3 Bevestig \u2014 Betaalverzoek": {
+      "main": [
+        [{ "node": "\ud83d\udcbe Sla Pending Payment Op", "type": "main", "index": 0 }]
+      ]
+    },
+    "\ud83d\udcbe Sla Pending Payment Op": {
+      "main": [
+        [{ "node": "\ud83d\udcac Kies Variant", "type": "main", "index": 0 }]
+      ]
+    },
+    "\ud83d\udd00 Variant?": {
+      "main": [
+        [{ "node": "\ud83d\udd11 Haal Variant + Record Op", "type": "main", "index": 0 }],
+        [{ "node": "\ud83d\udd00 Picqer?", "type": "main", "index": 0 }]
+      ]
+    },
+    "\ud83d\udd11 Haal Variant + Record Op": {
+      "main": [
+        [{ "node": "\ud83d\udce6 Haal Record Op (Shopify)", "type": "main", "index": 0 }]
+      ]
+    },
+    "\ud83d\udce6 Haal Record Op (Shopify)": {
+      "main": [
+        [{ "node": "\ud83d\uded2 Bereid Shopify Order Voor", "type": "main", "index": 0 }]
+      ]
+    },
+    "\ud83d\uded2 Bereid Shopify Order Voor": {
+      "main": [
+        [{ "node": "\ud83c\udfea Maak Draft Order (Shopify)", "type": "main", "index": 0 }]
+      ]
+    },
+    "\ud83c\udfea Maak Draft Order (Shopify)": {
+      "main": [
+        [{ "node": "\ud83d\udcec Bereid Factuur Voor", "type": "main", "index": 0 }]
+      ]
+    },
+    "\ud83d\udcec Bereid Factuur Voor": {
+      "main": [
+        [{ "node": "\ud83d\udce8 Verstuur Shopify Factuur", "type": "main", "index": 0 }]
+      ]
+    },
+    "\ud83d\udce8 Verstuur Shopify Factuur": {
+      "main": [
+        [{ "node": "\ud83d\udce3 Bevestig \u2014 Variant", "type": "main", "index": 0 }]
+      ]
+    },
+    "\ud83d\udce3 Bevestig \u2014 Variant": {
+      "main": [
+        [{ "node": "\ud83d\udcac Bevestig Betaalverzoek (Telegram)", "type": "main", "index": 0 }]
+      ]
+    },
+    "\ud83d\udd00 Picqer?": {
+      "main": [
+        [{ "node": "\ud83c\udfed Verwerk Picqer Data", "type": "main", "index": 0 }],
+        [{ "node": "\uD83D\uDD00 Direct Shopify?", "type": "main", "index": 0 }]
+      ]
+    },
+    "\ud83c\udfed Verwerk Picqer Data": {
+      "main": [
+        [{ "node": "\ud83d\udce6 Haal Record Op (Picqer)", "type": "main", "index": 0 }]
+      ]
+    },
+    "\ud83d\udce6 Haal Record Op (Picqer)": {
+      "main": [
+        [{ "node": "\ud83d\udd0d Zoek Picqer Klant", "type": "main", "index": 0 }]
+      ]
+    },
+    "\ud83d\udd0d Zoek Picqer Klant": {
+      "main": [
+        [{ "node": "\ud83d\udd0d Zoek Laatste Picqer Order", "type": "main", "index": 0 }]
+      ]
+    },
+    "\ud83d\udd0d Zoek Laatste Picqer Order": {
+      "main": [
+        [{ "node": "\ud83d\udcdd Maak Nieuwe Picqer Order", "type": "main", "index": 0 }]
+      ]
+    },
+    "\ud83d\udcdd Maak Nieuwe Picqer Order": {
+      "main": [
+        [{ "node": "\ud83d\udce6 Voeg Product Toe (Picqer)", "type": "main", "index": 0 }]
+      ]
+    },
+    "\ud83d\udce6 Voeg Product Toe (Picqer)": {
+      "main": [
+        [{ "node": "\ud83d\udcac Bevestig Picqer Order", "type": "main", "index": 0 }]
+      ]
+    },
+    "\uD83D\uDD00 Direct Shopify?": {
+      "main": [
+        [{ "node": "\uD83D\uDD11 Haal Direct Shopify Data Op", "type": "main", "index": 0 }],
+        [{ "node": "\u270f\ufe0f Sla Record ID Op (Static Data)", "type": "main", "index": 0 }]
+      ]
+    },
+    "\uD83D\uDD11 Haal Direct Shopify Data Op": {
+      "main": [
+        [{ "node": "\uD83D\uDCE3 Bevestig \u2014 Direct Shopify", "type": "main", "index": 0 }]
+      ]
+    },
+    "\uD83D\uDCE3 Bevestig \u2014 Direct Shopify": {
+      "main": [
+        [{ "node": "\uD83D\uDCE6 Haal Record Op (Direct Shopify)", "type": "main", "index": 0 }]
+      ]
+    },
+    "\uD83D\uDCE6 Haal Record Op (Direct Shopify)": {
+      "main": [
+        [{ "node": "\uD83C\uDFEA Maak Draft Order (Direct Shopify)", "type": "main", "index": 0 }]
+      ]
+    },
+    "\uD83C\uDFEA Maak Draft Order (Direct Shopify)": {
+      "main": [
+        [{ "node": "\uD83D\uDCEC Bereid Factuur Voor (Direct)", "type": "main", "index": 0 }]
+      ]
+    },
+    "\uD83D\uDCEC Bereid Factuur Voor (Direct)": {
+      "main": [
+        [{ "node": "\uD83D\uDCE8 Verstuur Shopify Factuur (Direct)", "type": "main", "index": 0 }]
+      ]
+    },
+    "\uD83D\uDCE8 Verstuur Shopify Factuur (Direct)": {
+      "main": [
+        [{ "node": "\uD83D\uDD0D Zoek Picqer Klant (Direct)", "type": "main", "index": 0 }]
+      ]
+    },
+    "\uD83D\uDD0D Zoek Picqer Klant (Direct)": {
+      "main": [
+        [{ "node": "\uD83D\uDCDD Maak Picqer Order (Direct)", "type": "main", "index": 0 }]
+      ]
+    },
+    "\uD83D\uDCDD Maak Picqer Order (Direct)": {
+      "main": [
+        [{ "node": "\uD83D\uDCE6 Voeg Product Toe Picqer (Direct)", "type": "main", "index": 0 }]
+      ]
+    },
+    "\uD83D\uDCE6 Voeg Product Toe Picqer (Direct)": {
+      "main": [
+        [{ "node": "\uD83D\uDCAC Betaalverzoek + Picqer Verstuurd", "type": "main", "index": 0 }]
+      ]
+    },
+    "\u270f\ufe0f Sla Record ID Op (Static Data)": {
+      "main": [
+        [{ "node": "\ud83d\udce3 Bevestig \u2014 Aanpassen", "type": "main", "index": 0 }]
+      ]
+    },
+    "\ud83d\udce3 Bevestig \u2014 Aanpassen": {
+      "main": [
+        [{ "node": "\ud83d\udcac Vraag om Feedback", "type": "main", "index": 0 }]
+      ]
+    },
+    "\ud83d\udd0e Lees Pending Record (Static Data)": {
+      "main": [
+        [{ "node": "\ud83d\udce6 Haal Pending Record Op", "type": "main", "index": 0 }]
+      ]
+    },
+    "\ud83d\udce6 Haal Pending Record Op": {
+      "main": [
+        [{ "node": "\u270d\ufe0f Bouw Revisie Prompt", "type": "main", "index": 0 }]
+      ]
+    },
+    "\u270d\ufe0f Bouw Revisie Prompt": {
+      "main": [
+        [{ "node": "\ud83e\udd16 Claude \u2014 Pas Concept Aan", "type": "main", "index": 0 }]
+      ]
+    },
+    "\ud83e\udd16 Claude \u2014 Pas Concept Aan": {
+      "main": [
+        [{ "node": "\ud83d\udcdd Verwerk Nieuw Concept", "type": "main", "index": 0 }]
+      ]
+    },
+    "\ud83d\udcdd Verwerk Nieuw Concept": {
+      "main": [
+        [{ "node": "\ud83d\udcbe Update Airtable \u2014 Nieuw Concept", "type": "main", "index": 0 }]
+      ]
+    },
+    "\ud83d\udcbe Update Airtable \u2014 Nieuw Concept": {
+      "main": [
+        [{ "node": "\ud83d\udcac Nieuw Concept + Knoppen", "type": "main", "index": 0 }]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-16T00:00:00.000Z",
+  "versionId": "1"
+}
