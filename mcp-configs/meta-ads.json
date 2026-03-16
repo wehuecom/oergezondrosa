@@ -1,0 +1,21 @@
+{
+  "mcpServers": {
+    "meta-ads": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/meta-ads-mcp-server"],
+      "env": {
+        "META_APP_ID": "YOUR_META_APP_ID",
+        "META_APP_SECRET": "YOUR_META_APP_SECRET",
+        "META_ACCESS_TOKEN": "YOUR_META_ACCESS_TOKEN",
+        "META_AD_ACCOUNT_ID": "YOUR_AD_ACCOUNT_ID"
+      },
+      "_setup_notes": {
+        "1_get_credentials": "Go to https://developers.facebook.com/apps/ → Create or select your app",
+        "2_get_token": "Use the Access Token Tool or generate a System User token in Business Manager",
+        "3_permissions": "Token needs: ads_management, ads_read, pages_manage_ads, pages_read_engagement",
+        "4_ad_account": "Format: act_XXXXXXXXX (include the 'act_' prefix)",
+        "5_install": "Copy this config into ~/.claude/settings.json under mcpServers, then restart Claude Code"
+      }
+    }
+  }
+}

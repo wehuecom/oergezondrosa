@@ -1,0 +1,19 @@
+{
+  "_name": "Slack",
+  "_setup": "1. Go to api.slack.com/apps → Create New App → From scratch 2. Name it 'Claude Code' and pick your workspace 3. Go to OAuth & Permissions → Add these Bot Token Scopes: channels:read, channels:history, chat:write, users:read, groups:read, groups:history, im:read, im:history 4. Click 'Install to Workspace' and authorize 5. Copy the Bot User OAuth Token (starts with xoxb-) 6. Invite the bot to channels you want it to access: /invite @Claude Code",
+  "_examples": [
+    "Read the latest messages in #general",
+    "Send a message to #client-updates",
+    "List all channels in the workspace",
+    "Search Slack for messages about ad performance"
+  ],
+  "mcpServers": {
+    "slack": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-slack"],
+      "env": {
+        "SLACK_BOT_TOKEN": "YOUR_SLACK_BOT_TOKEN"
+      }
+    }
+  }
+}

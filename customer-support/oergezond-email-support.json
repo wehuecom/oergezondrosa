@@ -1,0 +1,98 @@
+{
+  "name": "Oergezond — Email Support Automatie",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [{ "mode": "everyMinute" }]
+        },
+        "mailbox": "INBOX",
+        "options": {}
+      },
+      "id": "node-001",
+      "name": "📧 Nieuwe Email",
+      "type": "n8n-nodes-base.emailReadImap",
+      "typeVersion": 2,
+      "position": [180, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const email = $input.first().json;\n\nconst prompt = `Je bent klantenservice van Oergezond, een Nederlands gezondheids- en huidverzorgingsmerk. Opgericht door Jorn en Rosa.\n\nREGELS:\n- Schrijf ALTIJD in het Nederlands\n- Gebruik jij/wij, NOOIT u\n- Geen medische claims (niet: geneest, behandelt, voorkomt)\n- Direct, eerlijk, educatief - als een bevriende expert\n- Geen vage wellness-taal (geen: journey, ritual, holistic, glow up)\n- Gebruik bij voorkeur: puur, oer-, echt, gewoon, grasgevoerd, herstel van binnenuit\n- Sluit ALTIJD af met de handtekening hieronder\n\nKENNISBANK:\n1. HARDE OF KORRELIGE CRÈME: Tallow is een natuurproduct. We gebruiken geen chemische zachtmakers omdat we het zo puur mogelijk willen houden. Hard bij kou, zachter bij warmte. Korreligheid komt door de vetzuren in tallow = normaal fenomeen, geen invloed op kwaliteit. Tip: opwarmen in de handpalm.\n2. 2+1 ACTIE - SLECHTS 2 ONTVANGEN: De klant moet zelf 3 potjes in de winkelwagen doen. Wij bieden verschillende varianten en kunnen niet bepalen welk derde potje de klant wil. Twee opties voor klant: Optie 1 = €4,95 betalen via betaalverzoek (wij sturen betaalverzoek + factuur op verzoek). Optie 2 = Mailtje sturen als er geen betaalverzoek meer mogelijk is.\n3. WELKE OERCRÈME VOOR WELKE HUID: Droge huid = reguliere Oercrème. Eczeem of gevoelige huid = Naturel (zonder essentiële oliën). Acne of onzuivere huid = Naturel of Vitamine E. Huidherstel of littekens = Vitamine E. Rode of geïrriteerde huid = Naturel of Vitamine E. Baby's en kinderen = Naturel. Twijfelaar = Naturel als veilige keuze.\n4. ORDERSTATUS: Als geen ordernummer vermeld, vraag dit dan op. Wij checken de tracking zelf en sturen dit naar de klant.\n5. RETOUREN: Verwijs naar www.oergezond.com kopje retouren.\n\nCLASSIFICEER de email als precies één van deze categorieën: product_question, order_status, promotion_issue, return_request, other\n\nBEGIN JE ANTWOORD EXACT ZO (inclusief de lege regels):\nCATEGORIE: [categorie]\n\nCONCEPT:\nHallo,\n\n[jouw conceptantwoord hier]\n\nMet oergroeten,\n\nRosa\nOergezond — Leven zoals de natuur het bedoeld heeft\ncontact@oergezond.com | www.oergezond.com | @oergezond\n\nEMAIL VAN KLANT:\nVan: ${email.from}\nOnderwerp: ${email.subject}\n\n${email.text || email.html || '(geen tekst gevonden)'}`;\n\nreturn [{\n  json: {\n    prompt: prompt,\n    originalFrom: email.from,\n    originalSubject: email.subject,\n    originalText: email.text || email.html || ''\n  }\n}];"
+      },
+      "id": "node-002",
+      "name": "✍️ Bouw Prompt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [380, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-api-key",
+              "value": "{{ $env.ANTHROPIC_API_KEY }}"
+            },
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 1500, messages: [{ role: 'user', content: $json.prompt }] }) }}"
+      },
+      "id": "node-003",
+      "name": "🤖 Claude — Schrijf Concept",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [580, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const claudeResponse = $input.first().json;\nconst text = claudeResponse.content[0].text;\n\n// Haal categorie op\nconst categoryMatch = text.match(/CATEGORIE:\\s*([^\\n]+)/);\nconst category = categoryMatch ? categoryMatch[1].trim() : 'other';\n\n// Haal concept op\nconst draftMatch = text.match(/CONCEPT:\\s*([\\s\\S]+)/);\nconst draft = draftMatch ? draftMatch[1].trim() : text;\n\n// Haal originele email data op\nconst originalEmail = $('✍️ Bouw Prompt').first().json;\n\nreturn [{\n  json: {\n    category: category,\n    draft: draft,\n    originalFrom: originalEmail.originalFrom,\n    originalSubject: originalEmail.originalSubject,\n    originalText: originalEmail.originalText\n  }\n}];"
+      },
+      "id": "node-004",
+      "name": "📝 Verwerk Antwoord",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [780, 300]
+    },
+    {
+      "parameters": {
+        "fromEmail": "contact@oergezond.com",
+        "toEmail": "contact@oergezond.com",
+        "subject": "=[CONCEPT] {{ $json.category }} — Re: {{ $json.originalSubject }}",
+        "emailFormat": "text",
+        "text": "=✅ CONCEPTANTWOORD KLAAR — controleer en stuur door naar klant.\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📤 AAN: {{ $json.originalFrom }}\n📋 ONDERWERP: Re: {{ $json.originalSubject }}\n🏷️ CATEGORIE: {{ $json.category }}\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n{{ $json.draft }}\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━\nORIGINELE EMAIL VAN KLANT:\n{{ $json.originalText }}"
+      },
+      "id": "node-005",
+      "name": "📨 Concept naar Rosa",
+      "type": "n8n-nodes-base.sendEmail",
+      "typeVersion": 2,
+      "position": [980, 300]
+    }
+  ],
+  "connections": {
+    "📧 Nieuwe Email": {
+      "main": [[{ "node": "✍️ Bouw Prompt", "type": "main", "index": 0 }]]
+    },
+    "✍️ Bouw Prompt": {
+      "main": [[{ "node": "🤖 Claude — Schrijf Concept", "type": "main", "index": 0 }]]
+    },
+    "🤖 Claude — Schrijf Concept": {
+      "main": [[{ "node": "📝 Verwerk Antwoord", "type": "main", "index": 0 }]]
+    },
+    "📝 Verwerk Antwoord": {
+      "main": [[{ "node": "📨 Concept naar Rosa", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

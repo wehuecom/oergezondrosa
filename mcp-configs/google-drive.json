@@ -1,0 +1,21 @@
+{
+  "_name": "Google Drive",
+  "_setup": "1. Go to console.cloud.google.com → Create a project (or use existing) 2. Enable the Google Drive API 3. Go to Credentials → Create OAuth 2.0 Client ID 4. Set application type to 'Web application' 5. Add http://localhost:3000/callback as an authorized redirect URI 6. Copy the Client ID and Client Secret below 7. On first run, it will open a browser for OAuth consent — authorize it and you're good",
+  "_examples": [
+    "Find the client onboarding doc in Google Drive",
+    "Search Drive for files containing 'ad creative'",
+    "List recent files in my shared drive",
+    "Read the contents of my SOPs folder"
+  ],
+  "mcpServers": {
+    "google-drive": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-gdrive"],
+      "env": {
+        "GOOGLE_CLIENT_ID": "YOUR_GOOGLE_CLIENT_ID",
+        "GOOGLE_CLIENT_SECRET": "YOUR_GOOGLE_CLIENT_SECRET",
+        "GOOGLE_REDIRECT_URI": "http://localhost:3000/callback"
+      }
+    }
+  }
+}
