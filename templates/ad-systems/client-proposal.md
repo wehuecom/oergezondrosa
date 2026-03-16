@@ -101,4 +101,4 @@ Here's exactly what I'll do, broken into phases:
 [YOUR NAME]
 [YOUR EMAIL]
 [YOUR PHONE — optional]
-<\!-- LIO_OS Template — @liogpt -->
+<\!-- LIO_OS System — @liogpt -->

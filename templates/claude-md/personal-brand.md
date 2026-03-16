@@ -78,4 +78,3 @@
 ---
 
 *Delete this line after filling in: The more specific you are, the better Claude's output will be. "I make tech content" is okay. "I make 30-60 second Reels showing AI tools to business owners who want to save time" is 10x better.*
-<\!-- LIO_OS Template — @liogpt -->

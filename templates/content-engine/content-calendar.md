@@ -112,4 +112,4 @@ Before generating a calendar, define your 4-5 content pillars. These are the rec
 ---
 
 *Fill in the [BRACKETS] with your actual topics, or paste this entire template into Claude Code and say "Fill this in for my business" — it'll use your CLAUDE.md to generate everything.*
-<\!-- LIO_OS Template — @liogpt -->
+<\!-- LIO_OS System — @liogpt -->
