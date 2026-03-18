@@ -53,11 +53,18 @@ const TELEGRAM_POLL_INTERVAL_MS = 5 * 1000;     // 5 seconden
 
 // Auto-senders overslaan
 const AUTO_SENDER_PATTERNS = [
+  // Systeem-afzenders
   "noreply", "no-reply", "donotreply", "do-not-reply",
   "mailer-daemon", "postmaster", "bounce@", "automated",
-  "notifications@", "shopify.com", "bol.com", "klarna",
-  "newsletter", "sendgrid", "amazonses", "info@", "sales@",
-  "marketing@", "promo@", "deals@", "offers@",
+  "notifications@", "sendgrid", "amazonses",
+  // Bekende niet-klant domeinen
+  "shopify.com", "bol.com", "klarna", "aliexpress", "amazon.",
+  "airtable.com", "klaviyo.com", "hubspot.com", "channeldock.com",
+  "faire.com", "wonnda.com", "gitguardian.io", "skool.com",
+  "creativeos", "wispr", "wisp.ai", "freepik", "linktree",
+  "openai.com", "anthropic.com", "github.com", "microsoft.com",
+  "oergezond.com", "oergezondnl@",
+  "wetracked", "1clickagency", "tapflow",
 ];
 
 // Promo/spam subject keywords overslaan
@@ -72,49 +79,94 @@ const SPAM_SUBJECT_PATTERNS = [
 // KNOWLEDGE BASE
 // ============================================================
 
-const SYSTEM_PROMPT = `Je bent Amy, de klantenservice medewerker van Oergezond.
+const SYSTEM_PROMPT = `Je bent de operationele AI-assistent voor Oergezond en ondersteunt foutloos bij:
+1. email klantenservice
+2. email marketing
+3. opvolging van klantvragen
+4. ordervragen
+5. trackingvragen
+6. conceptmails opstellen
+7. interne escalaties
+8. 2+1 bundel-vragen
+9. productvragen
+10. Telegram follow-up concepten
+11. Trello escalaties bij verzendproblemen
 
-TAAK:
-Schrijf een antwoord op de klantemail in het Nederlands.
+Je werkt alsof je een senior customer support + retention + email marketing medewerker bent die Oergezond volledig begrijpt. Je maakt geen aannames als het gaat om orderdetails, trackingstatus, productkeuze of bundels. Je bent extreem precies, klantgericht, duidelijk en praktisch. Je schrijft altijd professioneel, vriendelijk, duidelijk en menselijk Nederlands. Geen wollige taal. Geen overdreven marketingtaal in supportmails. Geen emoji's. Geen vetgedrukte tekst in klantmails.
 
-TOON:
-- Direct, rustig, duidelijk, menselijk
-- Niet wollig, niet te commercieel, niet overdreven empathisch
-- Geen smileys, geen bold tekst, korte alinea's
-- Helder antwoord zo vroeg mogelijk in de mail
+==================================================
+BEDRIJFSCONTEXT OERGEZOND
+==================================================
 
-GEBRUIK DEZE ZINNEN:
-✓ "Vervelend om te horen"
-✓ "Dank voor je bericht"
-✓ "We kijken graag met je mee"
-✓ "Dat pakken we graag voor je op"
+Oergezond is een merk rondom oervoeding, natuurlijke verzorging en een ancestral lifestyle. De merkpositionering is:
+- natuurlijk, onbewerkt, functioneel, eerlijk, helder, praktisch
+- modern probleem oplossen met natuurlijke oplossingen
 
-VERMIJD DEZE ZINNEN:
-✗ "Wat ontzettend vervelend"
-✗ "Ik hoop dat het goed met je gaat"
-✗ "Geen zorgen"
-✗ "We begrijpen volledig hoe frustrerend"
-✗ Alle marketingtaal
+Tone of voice: direct, warm, professioneel, behulpzaam, concreet, vertrouwenwekkend, nooit vaag.
 
-NOOIT:
-- Medische claims maken
-- Beloftes doen die je niet kunt nakomen
-- Beleid improviseren
+==================================================
+PRODUCTEN + INGREDIËNTEN
+==================================================
 
-SLUIT ALTIJD AF MET:
-Met gezonde groet,
+1. OERCRÈME (60 ml)
+Varianten:
+- Naturel: Tallow, Simmondsia Chinensis Seed Oil
+- Vanille/Sinaasappel: Tallow, Simmondsia Chinensis Seed Oil, Vanilla Planifolia Fruit Oil, Citrus Sinensis Peel Oil, Citrus Aurantium Amara Leaf/Twig Oil
+- Vanilla Spice: Tallow, Simmondsia Chinensis Seed Oil, Vanilla Planifolia Fruit Oil, Citrus Sinensis Peel Oil, Styrax Tonkinensis Resin Oil
+Veilige claims: helpt de huid voeden, ondersteunt droge/gevoelige huid, ondersteunt huidbarrière, maakt huid zacht en soepel, korte en natuurlijke ingrediëntenlijst.
 
-Amy - Klantenservice
-www.oergezond.com | @oergezond | contact@oergezond.com
+2. OERCRÈME VITAMINE E (60 ml)
+Ingrediënten: Grassfed Tallow, Vitamin E oil, Simmondsia Chinensis Seed Oil, Vanilla Planifolia Fruit Oil, Citrus Sinensis Peel Oil, Citrus Aurantium Amara Leaf/Twig Oil
+Veilige claims: voedt de huid, ondersteunt huidbarrière, helpt huid soepel houden, vitamine E staat bekend als verzorgend ingrediënt.
 
-FAQ KENNIS:
-- Oercrème hard/korrelig = normaal bij kou, geen kwaliteitsprobleem. Opwarmen in handpalm.
-- 2+1 actie: klant moet zelf 3 potjes in winkelwagen doen. Derde potje = €4,95 via betaalverzoek.
-- Droge huid → Regulier | Eczeem/gevoelig → Naturel | Acne → Naturel of Vit E | Baby → Naturel
-- Huidreactie: vraag welk product + overgevoeligheden. Roodheid/irritatie → ESCALEER.
-- Verzending: €4,95 BENELUX, gratis vanaf €45. Geen verzending buiten BENELUX.
-- Shampoo bar: 2-4 weken gewenning normaal.
-- Oerbril: alleen avond/nacht, niet autorijden.
+3. SHAMPOO BAR
+Ingrediënten: Sodium cocoyl isethionate, Shea butter, Moroccan lava clay, Jojoba oil, Aloe vera powder, Hydrolyzed rice protein, Moringa powder, Rosemary, Lemon.
+Veilige claims: reinigt mild, ondersteunt verzorging haar en hoofdhuid, bevat voedende ingrediënten. Gewenningsperiode 2-4 weken normaal.
+
+4. CONDITIONER BAR
+Ingrediënten: Behentrimoniummethosulfaat, Cetearyl Alcohol, Cetyl Alcohol, Shea butter, Coconut oil, Avocado, Orange, Lavender.
+Veilige claims: helpt haar verzorgen, maakt haar zachter, helpt bij doorkambaarheid.
+
+5. HAAROLIE (100 ml)
+Ingrediënten: Jojoba seed oil, Rozemarijn, Kamille, Brandnetel, Calendula, Vitamine E.
+Allergenen: Geraniol, Citronellol, Limonene, Linalool.
+Veilige claims: ondersteunt verzorging van hoofdhuid en haar, helpt haar gevoed aanvoelen.
+Niet doen: geen claim dat het gegarandeerd haargroei herstelt, geen medische claim bij haaruitval.
+
+6. OERBRIL
+Functie: blauwlichtfilterbril, blokkeert >99,9% blauw licht tot ca. 560 nm, bedoeld voor avond/nacht, niet geschikt voor overdag of autorijden.
+Veilige claims: ondersteunt vermindering blootstelling blauw licht in de avond, kan helpen bij avondrust, hulpmiddel binnen slaaproutine.
+Niet doen: niet claimen dat het slapeloosheid geneest of slaap gegarandeerd verbetert.
+
+NOOIT: medische claims, diagnoses, speculeren, beloftes die je niet kunt nakomen.
+Bij vragen over producten bij medische huidaandoening: voorzichtig reageren — uitleggen dat veel klanten het gebruiken bij gevoelige/droge huid, maar dat wij geen medisch advies geven, en bij twijfel overleg met behandelaar verstandig is.
+
+==================================================
+TRACKING / VERTRAGING – BESLISBOOM
+==================================================
+
+Vertraging max. ~2 dagen: geruststellen, aangeven dat wij op tijd hebben verzonden, vertraging bij DHL benoemen, klant vragen nog 2 dagen geduld.
+Vertraging paar dagen langer: pakket nog bij DHL, nog enkele dagen afwachten, dan opnieuw contact opnemen.
+Vertraging >5 dagen: interne escalatie. Trello-regel aanmaken met:
+  Bestelnummer: [nummer] | Naam: [naam] | Tracking: [trackingnummer] | Probleem: pakket langer dan 5 dagen vertraagd
+Belangrijk: benoem altijd dat wij op tijd hebben verstuurd als dat klopt. Vertraging ligt bij DHL, niet bij Oergezond. Blijf feitelijk.
+
+==================================================
+2+1 ACTIE / BUNDEL
+==================================================
+
+De 2+1 actie: klant bestelt via bundelpagina en kiest daadwerkelijk 3 potjes. Bundelprijs geldt voor 3 geselecteerde potjes. Alle 3 moeten echt worden aangeklikt anders staat de bundel niet volledig in de bestelling.
+Stappenplan voor klant: 1) open bundel/actiepagina, 2) kies eerste pot, 3) kies tweede pot, 4) kies derde pot, 5) controleer of alle 3 geselecteerd zijn, 6) voeg toe aan winkelmand.
+
+==================================================
+STIJLREGELS KLANTMAILS
+==================================================
+
+- Houd mails zo kort mogelijk: beantwoord de vraag direct in 2-4 zinnen. Geen onnodige inleiding, geen herhaling van de vraag, geen opvulling. Alleen wat de klant nodig heeft.
+- Vriendelijk, duidelijk, geen smileys, geen vetgedrukte tekst, professioneel, nooit defensief.
+- Gebruik: "Vervelend om te horen" / "Dank voor je bericht" / "We kijken graag met je mee" / "Dat pakken we graag voor je op" / "Wij hebben je bestelling op tijd verzonden" / "Vertraging lijkt bij DHL te zitten"
+- Vermijd: agressieve toon, speculatie, medische beloftes, vage antwoorden, te veel marketing in supportmail.
+- Sluit altijd af met: Met gezonde groet,\n\nAmy - Klantenservice\nwww.oergezond.com | @oergezond | contact@oergezond.com
 
 ESCALEER (schrijf holding reply) wanneer:
 - Ernstige allergische/medische reactie
@@ -309,8 +361,9 @@ async function fetchUnreadEmails(state) {
 
   for (const folderId of folderIds) {
     const url = `https://graph.microsoft.com/v1.0/me/mailFolders/${folderId}/messages`;
-    // Emails van de afgelopen 14 dagen, gelezen of ongelezen
-    const since = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString();
+    // Alleen emails van na de laatste check (of laatste uur bij eerste start)
+    const fallback = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+    const since = state.lastEmailSince || fallback;
     const resp = await get(url, {
       headers,
       params: {
@@ -336,6 +389,15 @@ async function markAsRead(state, emailId) {
   await patch(`https://graph.microsoft.com/v1.0/me/messages/${emailId}`, {
     headers: msHeaders(state),
     json: { isRead: true },
+  });
+}
+
+async function markEmailCategory(state, emailId, color) {
+  // color: "green" = afgehandeld, "orange" = actie nodig
+  const categoryName = color === "green" ? "Green category" : "Orange category";
+  await patch(`https://graph.microsoft.com/v1.0/me/messages/${emailId}`, {
+    headers: msHeaders(state),
+    json: { categories: [categoryName] },
   });
 }
 
@@ -401,13 +463,28 @@ const atHeaders = {
   "Content-Type": "application/json",
 };
 
-async function atFindDuplicate(emailId) {
-  // Gebruik eerste 80 chars van email ID als unieke sleutel (opgeslagen in Notities)
-  const shortId = emailId.substring(0, 80).replace(/'/g, "");
+async function atIsKnownSender(fromEmail) {
+  // Alleen echte klanten tellen: we hebben ze eerder een antwoord gestuurd (Afgehandeld)
+  const safe = fromEmail.replace(/'/g, "\\'");
   const resp = await get(AIRTABLE_URL, {
     headers: atHeaders,
     params: {
-      filterByFormula: `SEARCH('${shortId}', {Notities})`,
+      filterByFormula: `AND({Afzender} = '${safe}', {Status} = 'Afgehandeld')`,
+      maxRecords: "1",
+      "fields[]": ["Afzender"],
+    },
+  });
+  if (resp.ok) return (resp.json().records || []).length > 0;
+  return false;
+}
+
+async function atFindDuplicate(emailId) {
+  // Sla een korte hash op als unieke sleutel zodat exacte match werkt
+  const key = emailIdToKey(emailId);
+  const resp = await get(AIRTABLE_URL, {
+    headers: atHeaders,
+    params: {
+      filterByFormula: `{Notities} = '${key}'`,
       maxRecords: "1",
     },
   });
@@ -416,6 +493,11 @@ async function atFindDuplicate(emailId) {
     return records[0] || null;
   }
   return null;
+}
+
+function emailIdToKey(emailId) {
+  // Sla alleen de laatste 40 chars op — uniek genoeg, geen false positives
+  return emailId.slice(-40).replace(/'/g, "");
 }
 
 async function atCreate(fields) {
@@ -485,15 +567,22 @@ async function claudeComplete(prompt, systemPrompt = SYSTEM_PROMPT, maxTokens = 
 }
 
 function parseStructuredResponse(text) {
-  const result = { intent: "vraag", sentiment: "neutraal", risk: "low", subject: "", body: text };
+  const result = {
+    intent: "vraag", risk: "low", subject: "", body: text,
+    categorie: "", samenvatting: "", actie: "", followup: "nee", trello: "nee",
+  };
   const lines = text.split("\n");
   let inEmail = false;
   const emailLines = [];
 
   for (const line of lines) {
     if (line.startsWith("INTENT:")) result.intent = line.split(":")[1].trim().toLowerCase();
-    else if (line.startsWith("SENTIMENT:")) result.sentiment = line.split(":")[1].trim().toLowerCase();
     else if (line.startsWith("RISK:")) result.risk = line.split(":")[1].trim().toLowerCase();
+    else if (line.startsWith("CATEGORIE:")) result.categorie = line.split(":").slice(1).join(":").trim();
+    else if (line.startsWith("SAMENVATTING:")) result.samenvatting = line.split(":").slice(1).join(":").trim();
+    else if (line.startsWith("ACTIE:")) result.actie = line.split(":").slice(1).join(":").trim();
+    else if (line.startsWith("FOLLOWUP:")) result.followup = line.split(":")[1].trim().toLowerCase();
+    else if (line.startsWith("TRELLO:")) result.trello = line.split(":").slice(1).join(":").trim();
     else if (line.startsWith("SUBJECT:")) result.subject = line.split(":").slice(1).join(":").trim();
     else if (line.startsWith("EMAIL:")) inEmail = true;
     else if (inEmail) emailLines.push(line);
@@ -503,6 +592,35 @@ function parseStructuredResponse(text) {
     result.body = emailLines.join("\n").trim();
   }
   return result;
+}
+
+async function isCustomerEmail(fromEmail, subject, body) {
+  // Snelle check: is dit een echte klantvraag? Gebruik haiku voor snelheid + kosten.
+  const prompt = `Is dit een echte klantvraag/klantmail voor een webshop die huidverzorging verkoopt?
+Beantwoord ALLEEN met JA of NEE.
+
+Van: ${fromEmail}
+Onderwerp: ${subject}
+Bericht (eerste 300 tekens): ${body.substring(0, 300)}`;
+
+  try {
+    const resp = await post("https://api.anthropic.com/v1/messages", {
+      headers: {
+        "x-api-key": CLAUDE_API_KEY,
+        "anthropic-version": "2023-06-01",
+        "content-type": "application/json",
+      },
+      json: {
+        model: "claude-haiku-4-5-20251001",
+        max_tokens: 5,
+        messages: [{ role: "user", content: prompt }],
+      },
+    });
+    const answer = resp.json()?.content?.[0]?.text?.trim().toUpperCase() || "NEE";
+    return answer.startsWith("JA");
+  } catch {
+    return true; // Bij twijfel: wel verwerken
+  }
 }
 
 async function classifyAndGenerate(fromName, fromEmail, subject, body, extraInstructions = "") {
@@ -516,14 +634,18 @@ ${extra}
 
 Geef je output EXACT in dit formaat (geen extra tekst erbuiten):
 
-INTENT: <klacht|bestelling|vraag|retour|betaling|overig>
-SENTIMENT: <positief|neutraal|negatief|urgent>
+INTENT: <klacht|bestelling|vraag|retour|tracking|bundel|productvraag|escalatie|overig>
 RISK: <low|medium|high>
+CATEGORIE: <korte categorieomschrijving in het Nederlands>
+SAMENVATTING: <1-2 zinnen wat de klant vraagt of meldt>
+ACTIE: <welke stap je nu neemt>
+FOLLOWUP: <ja|nee>
+TRELLO: <nee|ja — Bestelnummer: [nr] | Naam: [naam] | Tracking: [nr] | Probleem: [beschrijving]>
 SUBJECT: Re: ${subject}
 EMAIL:
 <volledige emailtekst hier>`;
 
-  const response = await claudeComplete(prompt);
+  const response = await claudeComplete(prompt, SYSTEM_PROMPT, 2000);
   return parseStructuredResponse(response);
 }
 
@@ -588,13 +710,38 @@ function conceptKeyboard(recordId) {
   };
 }
 
-async function sendConceptToTelegram(fromName, fromEmail, subject, risk, conceptBody, recordId) {
-  const emoji = risk === "high" ? "🔴" : "🟡";
+async function sendConceptToTelegram(fromName, fromEmail, subject, risk, conceptBody, recordId, meta = {}) {
+  const emoji = risk === "high" ? "🔴" : risk === "medium" ? "🟠" : "🟡";
   const riskLabel = { low: "Laag", medium: "Medium", high: "HOOG" }[risk] || risk;
-  const preview = conceptBody.length > 700 ? conceptBody.substring(0, 700) + "..." : conceptBody;
 
-  const text = `${emoji} <b>Nieuwe email — ${fromName}</b>\n📧 ${fromEmail}\n📌 ${subject}\n⚠️ Risico: ${riskLabel}\n\n<b>Concept antwoord:</b>\n${preview}`;
-  const result = await tgSend(text, conceptKeyboard(recordId));
+  const categorieStr = meta.categorie ? `\n📂 ${meta.categorie}` : "";
+  const samenvattingStr = meta.samenvatting ? `\n💬 ${meta.samenvatting}` : "";
+  const actieStr = meta.actie ? `\n✏️ Actie: ${meta.actie}` : "";
+  const followupStr = meta.followup === "ja" ? "\n🔔 Follow-up nodig" : "";
+  const trelloStr = meta.trello && meta.trello !== "nee" ? `\n📋 Trello: ${meta.trello}` : "";
+
+  const header = `${emoji} <b>Nieuwe email — ${fromName}</b>\n📧 ${fromEmail}\n📌 ${subject}\n⚠️ Risico: ${riskLabel}${categorieStr}${samenvattingStr}${actieStr}${followupStr}${trelloStr}`;
+
+  // Telegram max = 4096 tekens per bericht. Splits header + concept als het te lang wordt.
+  const TG_MAX = 4096;
+  const combined = `${header}\n\n<b>Concept antwoord:</b>\n${conceptBody}`;
+
+  let result;
+  if (combined.length <= TG_MAX) {
+    result = await tgSend(combined, conceptKeyboard(recordId));
+  } else {
+    // Stuur header eerst, dan concept met knoppen in tweede bericht
+    await tgSend(header);
+    const chunks = [];
+    for (let i = 0; i < conceptBody.length; i += TG_MAX) {
+      chunks.push(conceptBody.substring(i, i + TG_MAX));
+    }
+    for (let i = 0; i < chunks.length - 1; i++) {
+      await tgSend(chunks[i]);
+    }
+    result = await tgSend(chunks[chunks.length - 1], conceptKeyboard(recordId));
+  }
+
   return result ? result.message_id : null;
 }
 
@@ -602,8 +749,44 @@ async function sendConceptToTelegram(fromName, fromEmail, subject, risk, concept
 // EMAIL VERWERKINGSPIPELINE
 // ============================================================
 
+// Herkent een Shopify contactformulier en haalt naam, email en bericht eruit.
+// Retourneert null als het geen contactformulier is.
+function parseContactForm(bodyText) {
+  const lower = bodyText.toLowerCase();
+  if (!lower.includes("contactformulier") && !lower.includes("contact form")) return null;
+
+  // E-mail adres — "E-mail:", "E-mailadres:", "Email:"
+  const emailMatch = bodyText.match(/e-?mail(?:adres)?\s*:\s*([^\s\n,]+)/i);
+  if (!emailMatch) return null;
+
+  // Naam — probeer "Voornaam" + "Achternaam" eerst, dan "Naam:"
+  let customerName = "";
+  const voornaamMatch = bodyText.match(/voornaam\s*:\s*([^\n]+)/i);
+  const achternaamMatch = bodyText.match(/achternaam\s*:\s*([^\n]+)/i);
+  if (voornaamMatch || achternaamMatch) {
+    customerName = [(voornaamMatch?.[1] || ""), (achternaamMatch?.[1] || "")].join(" ").trim();
+  } else {
+    const naamMatch = bodyText.match(/naam\s*:\s*([^\n]+)/i) || bodyText.match(/name\s*:\s*([^\n]+)/i);
+    customerName = naamMatch?.[1]?.trim() || "";
+  }
+
+  // Bericht — meerdere mogelijke veldnamen
+  const msgMatch = bodyText.match(/laat hier een berichtje achter\s*:\s*([\s\S]+)/i) ||
+                   bodyText.match(/bericht\s*:\s*([\s\S]+)/i) ||
+                   bodyText.match(/message\s*:\s*([\s\S]+)/i) ||
+                   bodyText.match(/opmerkingen?\s*:\s*([\s\S]+)/i);
+
+  return {
+    customerEmail: emailMatch[1].trim(),
+    customerName,
+    message: msgMatch ? msgMatch[1].trim().substring(0, 2000) : bodyText,
+  };
+}
+
 function stripHtml(html) {
   return html
+    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, " ")
+    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, " ")
     .replace(/<[^>]+>/g, " ")
     .replace(/&nbsp;/g, " ")
     .replace(/&amp;/g, "&")
@@ -616,26 +799,58 @@ function stripHtml(html) {
 async function processEmail(state, email) {
   const emailId = email.id;
   const subject = email.subject || "(geen onderwerp)";
-  const fromEmail = email.from?.emailAddress?.address || "";
-  const fromName = email.from?.emailAddress?.name || fromEmail.split("@")[0];
   const received = email.receivedDateTime || "";
   const rawBody = email.body?.content || "";
-  const bodyText = stripHtml(rawBody).substring(0, 3000);
+  const fullBodyText = stripHtml(rawBody);
+
+  // 0. Shopify contactformulier — vóór auto-sender filter
+  const senderAddress = email.from?.emailAddress?.address || "";
+  const isShopifyMailer = senderAddress.toLowerCase().includes("mailer@shopify.com") ||
+                          senderAddress.toLowerCase().includes("shopify.com");
+  const contactForm = isShopifyMailer ? parseContactForm(fullBodyText) : null;
+  const isContactForm = isShopifyMailer; // Altijd contactformulier als het van Shopify komt
+
+  let fromEmail = senderAddress;
+  let fromName = email.from?.emailAddress?.name || fromEmail.split("@")[0];
+  let bodyText = fullBodyText.substring(0, 3000);
+
+  if (isContactForm && contactForm) {
+    fromEmail = contactForm.customerEmail;
+    fromName = contactForm.customerName || fromEmail.split("@")[0];
+    bodyText = contactForm.message;
+    console.log(`  Contactformulier van ${fromName} (${fromEmail})`);
+  } else if (isContactForm) {
+    // Shopify mail maar parsing mislukt — log de body voor diagnose
+    console.log(`  Contactformulier van Shopify — body parsing mislukt, body: ${fullBodyText.substring(0, 200)}`);
+  }
 
   const logTag = `[${fromName.substring(0,15)}] [${subject.substring(0,25)}]`;
 
-  // 1. Auto-sender filter
-  if (isAutoSender(email)) {
+  // 1. Harde auto-sender filter — contactformulieren worden overgeslagen
+  if (!isContactForm && isAutoSender(email)) {
     console.log(`  SKIP ${logTag} — auto-sender`);
     await markAsRead(state, emailId);
     return;
   }
 
-  // 2. Duplicate check
+  // 2. Duplicate check (zelfde email ID al verwerkt?)
   const existing = await atFindDuplicate(emailId);
   if (existing) {
     console.log(`  SKIP ${logTag} — al in Airtable (${existing.fields?.Status})`);
     return;
+  }
+
+  // 3. Bekende klant? (heeft eerder een antwoord ontvangen) → sla Claude pre-check over
+  const knownSender = await atIsKnownSender(fromEmail);
+
+  // 4. Claude pre-check: is dit een echte klantvraag? (alleen voor onbekende afzenders)
+  if (!knownSender) {
+    const isCustomer = await isCustomerEmail(fromEmail, subject, bodyText);
+    if (!isCustomer) {
+      console.log(`  SKIP ${logTag} — geen klantvraag (Claude)`);
+      await markAsRead(state, emailId);
+      return;
+    }
   }
 
   console.log(`  VERWERKEN ${logTag}`);
@@ -643,14 +858,15 @@ async function processEmail(state, email) {
   // 3. Classificeer + concept genereren
   const extra = state.extraInstructions || "";
   const result = await classifyAndGenerate(fromName, fromEmail, subject, bodyText, extra);
-  const { intent, risk, body: conceptBody } = result;
+  const { intent, risk, body: conceptBody, categorie: categorieLabel, samenvatting, actie, followup, trello } = result;
 
   // Zet intent om naar Airtable Categorie keuze
   const categorieMap = {
     klacht: "complaint", bestelling: "order_status", vraag: "product_question",
-    retour: "return_request", betaling: "other", overig: "other",
+    retour: "return_request", tracking: "order_status", bundel: "product_question",
+    productvraag: "product_question", escalatie: "complaint", betaling: "other", overig: "other",
   };
-  const categorie = categorieMap[intent] || "other";
+  const categorieAirtable = categorieMap[intent] || "other";
 
   // 4. Log naar Airtable
   const record = await atCreate({
@@ -660,10 +876,10 @@ async function processEmail(state, email) {
     "Originele Email": bodyText.substring(0, 5000),
     "Status": "In behandeling",
     "Urgentie": risk === "high" ? "?? Hoog" : "?? Normaal",
-    "Categorie": categorie,
+    "Categorie": categorieAirtable,
     "Concept": conceptBody,
     "Datum": received,
-    "Notities": emailId,  // Email ID voor duplicate check
+    "Notities": emailIdToKey(emailId),  // Unieke sleutel voor duplicate check
   });
 
   if (!record) {
@@ -673,18 +889,20 @@ async function processEmail(state, email) {
 
   const recordId = record.id;
 
-  // 5. Markeer als gelezen
+  // 5. Markeer als gelezen + oranje (concept klaar, actie nodig)
   await markAsRead(state, emailId);
+  await markEmailCategory(state, emailId, "orange");
 
   // 6. Stuur naar Telegram
   const msgId = await sendConceptToTelegram(
-    fromName, fromEmail, subject, risk, conceptBody, recordId
+    fromName, fromEmail, subject, risk, conceptBody, recordId,
+    { categorie: categorieLabel, samenvatting, actie, followup, trello }
   );
 
   if (msgId) {
     // emailId hoeft niet in pendingCallbacks — wordt opgehaald uit Airtable via recordId
     state.pendingCallbacks[String(msgId)] = {
-      recordId, emailId, fromEmail, fromName, subject, concept: conceptBody,
+      recordId, emailId, fromEmail, fromName, subject, concept: conceptBody, followup, isContactForm,
     };
     saveState(state);
     console.log(`  OK — Telegram bericht verstuurd (msg_id: ${msgId})`);
@@ -726,13 +944,34 @@ async function handleSend(state, cq, recordId) {
     return;
   }
 
-  // email_id zit in info.emailId (opgehaald uit Airtable Notities veld)
   const emailId = info.emailId;
   console.log(`  VERSTUREN naar ${info.fromEmail}...`);
-  const ok = await sendReply(state, emailId, info.fromEmail, info.subject, info.concept);
+  // Contactformulieren: stuur direct via sendMail (niet als reply op mailer@shopify.com)
+  let ok;
+  if (info.isContactForm) {
+    const headers = msHeaders(state);
+    const bodyHtml = info.concept.replace(/\n/g, "<br>");
+    const resp = await post("https://graph.microsoft.com/v1.0/me/sendMail", {
+      headers,
+      json: {
+        message: {
+          subject: `Re: ${info.subject}`,
+          body: { contentType: "HTML", content: bodyHtml },
+          toRecipients: [{ emailAddress: { address: info.fromEmail } }],
+        },
+        saveToSentItems: true,
+      },
+    });
+    ok = resp.ok;
+  } else {
+    ok = await sendReply(state, emailId, info.fromEmail, info.subject, info.concept);
+  }
 
   if (ok) {
     await atUpdate(recordId, { Status: "Afgehandeld" });
+    // Kleur: oranje als follow-up nodig, groen als volledig afgehandeld.
+    const needsFollowup = info.followup === "ja";
+    try { await markEmailCategory(state, emailId, needsFollowup ? "orange" : "green"); } catch {}
     await tgEdit(msgId, `✅ <b>Verstuurd naar ${info.fromName}</b>\n📌 ${info.subject}`);
     await tgAnswerCallback(cq.id, "✅ Email verstuurd!");
     delete state.pendingCallbacks[String(msgId)];
@@ -985,6 +1224,9 @@ async function main() {
         for (const email of emails) {
           await processEmail(state, email);
         }
+        // Alleen bijwerken als de check gelukt is — bij connectiefout blijft de oude timestamp staan
+        state.lastEmailSince = new Date().toISOString();
+        saveState(state);
       } catch (e) {
         console.log(`  [ERROR] Email check: ${e.message}`);
       }
