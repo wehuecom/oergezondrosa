@@ -95,7 +95,22 @@ Eet carnivoor, keto of paleo. Volgt Huberman Lab, Joe Rogan, Nederlandse health-
 
 ## Key Files
 
+### Content & Brand
 | File | Contents |
 |------|----------|
 | `brand voice.txt` | Volledige brand voice guide met schrijfregels, taalpatronen en voorbeelden |
 | `oercrème_competitor_research_avatars.txt` | Competitor research + 3 klantavatars met campagne-angles |
+
+### Automatisering & Bots
+| File | Contents |
+|------|----------|
+| `customer-support/amy/amy.js` | Amy klantenservice bot (Node.js) — verwerkt emails, stuurt concepts via Telegram |
+| `customer-support/amy/config.js` | Amy credentials (niet in Git) |
+| `customer-support/amy/amy_state.json` | Amy runtime state — pending callbacks, tokens |
+
+### Credentials (buiten Git)
+| File | Contents |
+|------|----------|
+| `C:\Users\rosav\.credentials\shared.env` | Gedeelde keys: Airtable API, Gemini |
+| `C:\Users\rosav\.credentials\oergezond.env` | Alle Oergezond keys: Claude, Shopify, Klaviyo, Microsoft, Meta, Google, Telegram |
+| `C:\Users\rosav\.credentials\syncwithrosa.env` | Alle SyncWithRosa keys |

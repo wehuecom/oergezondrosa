@@ -1002,13 +1002,44 @@ async function handleEdit(state, cq, recordId) {
 }
 
 async function handleFeedbackReply(state, message) {
-  const replyTo = message.reply_to_message;
-  if (!replyTo) return false;
-
-  const replyToId = replyTo.message_id;
   const feedbackText = (message.text || "").trim();
-  const cbKey = `feedback_${replyToId}`;
-  const info = state.pendingCallbacks[cbKey];
+  if (!feedbackText) return false;
+
+  let info = null;
+  let cbKey = null;
+
+  const replyTo = message.reply_to_message;
+  if (replyTo) {
+    const replyToId = replyTo.message_id;
+
+    // 1. Directe match: reply op het "Wat moet er aangepast worden?" bericht
+    const directKey = `feedback_${replyToId}`;
+    if (state.pendingCallbacks[directKey]) {
+      cbKey = directKey;
+      info = state.pendingCallbacks[cbKey];
+    }
+
+    // 2. Reply op het originele concept bericht
+    if (!info) {
+      for (const [k, v] of Object.entries(state.pendingCallbacks)) {
+        if (k.startsWith("feedback_") && v && v.originalMsgId === replyToId) {
+          cbKey = k;
+          info = v;
+          break;
+        }
+      }
+    }
+  }
+
+  // 3. Fallback: als er precies één open feedback-sessie is, gebruik die
+  if (!info) {
+    const openSessions = Object.entries(state.pendingCallbacks)
+      .filter(([k, v]) => k.startsWith("feedback_") && v && v.recordId);
+    if (openSessions.length === 1) {
+      [cbKey, info] = openSessions[0];
+    }
+  }
+
   if (!info) return false;
 
   const { recordId, emailId, originalMsgId } = info;
@@ -1171,10 +1202,9 @@ async function processTelegramUpdates(state) {
       const text = (msg.text || "").trim();
       if (!text) continue;
 
-      if (msg.reply_to_message) {
-        const handled = await handleFeedbackReply(state, msg);
-        if (handled) continue;
-      }
+      // Check op feedback (ook zonder reply_to_message via fallback)
+      const handled = await handleFeedbackReply(state, msg);
+      if (handled) continue;
 
       await handleCommand(state, text);
     }
