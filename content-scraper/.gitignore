@@ -1,0 +1,4 @@
+test_*.png
+.last-run
+node_modules/
+config.js

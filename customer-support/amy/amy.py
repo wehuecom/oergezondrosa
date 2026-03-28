@@ -740,7 +740,7 @@ def get_callback_info(state: dict, msg_id: int, record_id: str) -> dict | None:
         f = rec.get("fields", {})
         return {
             "record_id": record_id,
-            "email_id": f.get("Email ID", ""),
+            "email_id": f.get("Email ID") or f.get("Notities", ""),
             "from_email": f.get("Van", ""),
             "from_name": f.get("Klant Naam", ""),
             "subject": f.get("Onderwerp", ""),
@@ -760,7 +760,7 @@ def handle_send(state: dict, cq: dict, record_id: str, email_id: str):
 
     print(f"  VERSTUREN naar {info['from_email']}...")
 
-    ok = send_reply(state, email_id, info["from_email"], info["subject"], info["concept"])
+    ok = send_reply(state, info.get("email_id") or email_id, info["from_email"], info["subject"], info["concept"])
 
     if ok:
         airtable_update(record_id, {"Status": "Verstuurd"})

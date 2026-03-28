@@ -382,7 +382,14 @@ async function fetchUnreadEmails(state) {
     }
   }
 
-  return allEmails;
+  // Dedupliceer op conversationId — zelfde email kan in inbox én Klantvragen zitten met ander ID
+  const seen = new Set();
+  return allEmails.filter(e => {
+    const key = e.conversationId || e.id;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 }
 
 async function markAsRead(state, emailId) {
@@ -392,9 +399,30 @@ async function markAsRead(state, emailId) {
   });
 }
 
+const AMY_CAT_GREEN  = "Amy: Afgehandeld";
+const AMY_CAT_ORANGE = "Amy: Follow-up";
+
+async function ensureOutlookCategories(state) {
+  const headers = msHeaders(state);
+  const resp = await get("https://graph.microsoft.com/v1.0/me/outlook/masterCategories", { headers });
+  if (!resp.ok) return;
+  const existing = (resp.json().value || []).map(c => c.displayName);
+
+  if (!existing.includes(AMY_CAT_GREEN)) {
+    await post("https://graph.microsoft.com/v1.0/me/outlook/masterCategories", {
+      headers, json: { displayName: AMY_CAT_GREEN, color: "preset4" }, // DarkGreen
+    });
+  }
+  if (!existing.includes(AMY_CAT_ORANGE)) {
+    await post("https://graph.microsoft.com/v1.0/me/outlook/masterCategories", {
+      headers, json: { displayName: AMY_CAT_ORANGE, color: "preset1" }, // Orange
+    });
+  }
+}
+
 async function markEmailCategory(state, emailId, color) {
-  // color: "green" = afgehandeld, "orange" = actie nodig
-  const categoryName = color === "green" ? "Green category" : "Orange category";
+  if (!emailId || emailId.length < 50) return; // geen geldig email ID
+  const categoryName = color === "green" ? AMY_CAT_GREEN : AMY_CAT_ORANGE;
   await patch(`https://graph.microsoft.com/v1.0/me/messages/${emailId}`, {
     headers: msHeaders(state),
     json: { categories: [categoryName] },
@@ -404,37 +432,40 @@ async function markEmailCategory(state, emailId, color) {
 async function sendReply(state, originalEmailId, toEmail, subject, bodyText) {
   const headers = msHeaders(state);
   const bodyHtml = bodyText.replace(/\n/g, "<br>");
-  const replySubject = subject.toLowerCase().startsWith("re:") ? subject : `Re: ${subject}`;
 
-  const resp = await post(
-    `https://graph.microsoft.com/v1.0/me/messages/${originalEmailId}/reply`,
-    {
-      headers,
-      json: {
-        message: {
-          subject: replySubject,
-          body: { contentType: "HTML", content: bodyHtml },
-          toRecipients: [{ emailAddress: { address: toEmail } }],
-        },
-        comment: "",
-      },
-    }
+  // Stap 1: maak een reply-draft (Microsoft bewaart threading automatisch)
+  const createResp = await post(
+    `https://graph.microsoft.com/v1.0/me/messages/${originalEmailId}/createReply`,
+    { headers, json: {} }
   );
 
-  if (!resp.ok) {
-    console.log(`  [WARN] Reply mislukt (${resp.status}), probeer sendMail...`);
-    const resp2 = await post("https://graph.microsoft.com/v1.0/me/sendMail", {
-      headers,
-      json: {
-        message: {
-          subject: replySubject,
-          body: { contentType: "HTML", content: bodyHtml },
-          toRecipients: [{ emailAddress: { address: toEmail } }],
-        },
-        saveToSentItems: true,
-      },
-    });
-    return resp2.ok;
+  if (!createResp.ok) {
+    console.log(`  [WARN] createReply mislukt (${createResp.status}): ${createResp.text}`);
+    return false;
+  }
+
+  const draft = createResp.json();
+  const draftId = draft?.id;
+  if (!draftId) {
+    console.log(`  [WARN] createReply gaf geen draft ID terug`);
+    return false;
+  }
+
+  // Stap 2: zet de HTML body in de draft (geen subject override — threading blijft intact)
+  await patch(`https://graph.microsoft.com/v1.0/me/messages/${draftId}`, {
+    headers,
+    json: { body: { contentType: "HTML", content: bodyHtml } },
+  });
+
+  // Stap 3: verstuur de draft (precies één keer)
+  const sendResp = await post(
+    `https://graph.microsoft.com/v1.0/me/messages/${draftId}/send`,
+    { headers, json: {} }
+  );
+
+  if (!sendResp.ok) {
+    console.log(`  [WARN] Draft versturen mislukt (${sendResp.status}): ${sendResp.text}`);
+    return false;
   }
 
   return true;
@@ -681,9 +712,10 @@ async function tgSend(text, replyMarkup = null, parseMode = "HTML") {
   return null;
 }
 
-async function tgEdit(messageId, text, replyMarkup = null) {
+async function tgEdit(messageId, text, replyMarkup = null, removeKeyboard = false) {
   const payload = { chat_id: TELEGRAM_CHAT_ID, message_id: messageId, text, parse_mode: "HTML" };
   if (replyMarkup) payload.reply_markup = replyMarkup;
+  else if (removeKeyboard) payload.reply_markup = { inline_keyboard: [] };
   await post(`${TELEGRAM_API}/editMessageText`, { json: payload });
 }
 
@@ -703,10 +735,10 @@ async function tgGetUpdates(offset = 0) {
 function conceptKeyboard(recordId) {
   // Telegram callback_data max = 64 bytes. Airtable record IDs zijn ~17 chars — ruim genoeg.
   return {
-    inline_keyboard: [[
-      { text: "✅ Verstuur", callback_data: `send|${recordId}` },
-      { text: "✏️ Aanpassen", callback_data: `edit|${recordId}` },
-    ]],
+    inline_keyboard: [
+      [{ text: "✅ Verstuur", callback_data: `send|${recordId}` }],
+      [{ text: "✏️ Aanpassen", callback_data: `edit|${recordId}` }],
+    ],
   };
 }
 
@@ -720,7 +752,7 @@ async function sendConceptToTelegram(fromName, fromEmail, subject, risk, concept
   const followupStr = meta.followup === "ja" ? "\n🔔 Follow-up nodig" : "";
   const trelloStr = meta.trello && meta.trello !== "nee" ? `\n📋 Trello: ${meta.trello}` : "";
 
-  const header = `${emoji} <b>Nieuwe email — ${fromName}</b>\n📧 ${fromEmail}\n📌 ${subject}\n⚠️ Risico: ${riskLabel}${categorieStr}${samenvattingStr}${actieStr}${followupStr}${trelloStr}`;
+  const header = `${emoji} <b>Nieuwe email — ${fromName}</b>\n📧 ${fromEmail}\n📌 ${subject}\n⚠️ Risico: ${riskLabel}\n⏳ Nog versturen${categorieStr}${samenvattingStr}${actieStr}${followupStr}${trelloStr}`;
 
   // Telegram max = 4096 tekens per bericht. Splits header + concept als het te lang wordt.
   const TG_MAX = 4096;
@@ -923,6 +955,8 @@ async function getCallbackInfo(state, msgId, recordId) {
   const rec = await atGet(recordId);
   if (rec) {
     const f = rec.fields || {};
+    // Niet opnieuw versturen als al afgehandeld
+    if (f["Status"] === "Afgehandeld") return null;
     return {
       recordId,
       emailId: f["Notities"] || "",
@@ -935,20 +969,45 @@ async function getCallbackInfo(state, msgId, recordId) {
   return null;
 }
 
+const _sendingInProgress = new Set();
+
 async function handleSend(state, cq, recordId) {
   const msgId = cq.message.message_id;
+
+  // Voorkom dubbele verzending bij snelle dubbele klik
+  if (_sendingInProgress.has(msgId)) {
+    await tgAnswerCallback(cq.id, "⏳ Bezig met versturen...");
+    return;
+  }
+  _sendingInProgress.add(msgId);
+
+  try {
+    await _doSend(state, cq, recordId, msgId);
+  } finally {
+    _sendingInProgress.delete(msgId);
+  }
+}
+
+async function _doSend(state, cq, recordId, msgId) {
   const info = await getCallbackInfo(state, msgId, recordId);
 
   if (!info) {
-    await tgAnswerCallback(cq.id, "❌ Emaildata niet gevonden");
+    await tgAnswerCallback(cq.id, "✅ Al verstuurd");
     return;
   }
 
   const emailId = info.emailId;
   console.log(`  VERSTUREN naar ${info.fromEmail}...`);
-  // Contactformulieren: stuur direct via sendMail (niet als reply op mailer@shopify.com)
+  // Zorg dat het token geldig is voor versturen
+  try { await getAccessToken(state); } catch (e) {
+    await tgAnswerCallback(cq.id, "❌ Token fout — herstart Amy");
+    console.log(`  [ERROR] Token refresh mislukt: ${e.message}`);
+    return;
+  }
+  // Contactformulieren of emails zonder geldig emailId: stuur direct via sendMail
+  const hasValidEmailId = emailId && emailId.length > 50;
   let ok;
-  if (info.isContactForm) {
+  if (info.isContactForm || !hasValidEmailId) {
     const headers = msHeaders(state);
     const bodyHtml = info.concept.replace(/\n/g, "<br>");
     const resp = await post("https://graph.microsoft.com/v1.0/me/sendMail", {
@@ -972,7 +1031,9 @@ async function handleSend(state, cq, recordId) {
     // Kleur: oranje als follow-up nodig, groen als volledig afgehandeld.
     const needsFollowup = info.followup === "ja";
     try { await markEmailCategory(state, emailId, needsFollowup ? "orange" : "green"); } catch {}
-    await tgEdit(msgId, `✅ <b>Verstuurd naar ${info.fromName}</b>\n📌 ${info.subject}`);
+    const kleurLabel = needsFollowup ? "🟠 Follow-up nodig" : "🟢 Afgehandeld";
+    const sentAt = new Date().toLocaleTimeString("nl-NL", { hour: "2-digit", minute: "2-digit" });
+    await tgEdit(msgId, `✅ <b>Verstuurd — ${info.fromName}</b>\n📌 ${info.subject}\n📧 ${info.fromEmail}\n${kleurLabel} · ${sentAt}`, null, true);
     await tgAnswerCallback(cq.id, "✅ Email verstuurd!");
     delete state.pendingCallbacks[String(msgId)];
     saveState(state);
@@ -1064,7 +1125,7 @@ async function handleFeedbackReply(state, message) {
   await atUpdate(recordId, { Concept: newConcept, Status: "In behandeling" });
 
   const preview = newConcept.length > 700 ? newConcept.substring(0, 700) + "..." : newConcept;
-  const text = `✏️ <b>Herzien concept — ${fromName}</b>\n📌 ${subject}\n\n${preview}`;
+  const text = `✏️ <b>Herzien concept — ${fromName}</b>\n📌 ${subject}\n📧 ${fromEmail}\n⏳ Nog versturen\n\n${preview}`;
   const result = await tgSend(text, conceptKeyboard(recordId));
 
   if (result) {
@@ -1231,10 +1292,18 @@ async function main() {
   // Ophalen access token bij start
   try {
     await getAccessToken(state);
-    console.log("  Microsoft token OK\n");
+    console.log("  Microsoft token OK");
   } catch (e) {
     console.error(`  [ERROR] Token refresh mislukt: ${e.message}`);
     process.exit(1);
+  }
+
+  // Zorg dat Outlook categorieën bestaan met de juiste kleur
+  try {
+    await ensureOutlookCategories(state);
+    console.log("  Outlook categorieën OK\n");
+  } catch (e) {
+    console.log(`  [WARN] Outlook categorieën aanmaken mislukt: ${e.message}\n`);
   }
 
   let lastEmailCheck = 0;

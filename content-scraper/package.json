@@ -1,0 +1,16 @@
+{
+  "name": "oergezond-content-scraper",
+  "version": "1.0.0",
+  "description": "Viral Instagram content scraper voor Oergezond",
+  "main": "scraper.js",
+  "scripts": {
+    "start": "node scraper.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "form-data": "^4.0.5",
+    "puppeteer": "^24.40.0"
+  }
+}
