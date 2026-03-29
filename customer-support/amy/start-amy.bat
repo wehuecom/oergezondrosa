@@ -1,14 +1,11 @@
 @echo off
 echo ====================================
-echo  Amy (Python versie)
+echo  Amy -- Oergezond Klantenservice Bot
 echo ====================================
 echo.
-echo Zorg dat de Node.js Amy (amy.js) gestopt is
-echo voordat je dit start — anders botsen ze.
+echo Starten... Ctrl+C om te stoppen.
 echo.
-echo Druk een toets om te starten, of Ctrl+C om te annuleren.
-pause > nul
 
 cd /d "%~dp0"
-python amy.py
+node amy.js
 pause

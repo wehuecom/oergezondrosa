@@ -1002,9 +1002,11 @@ const _sendingInProgress = new Set();
 async function handleSend(state, cq, recordId) {
   const msgId = cq.message.message_id;
 
+  // Bevestig direct aan Telegram zodat hij niet opnieuw stuurt
+  await tgAnswerCallback(cq.id, _sendingInProgress.has(msgId) ? "⏳ Bezig met versturen..." : "⏳ Versturen...");
+
   // Voorkom dubbele verzending bij snelle dubbele klik
   if (_sendingInProgress.has(msgId)) {
-    await tgAnswerCallback(cq.id, "⏳ Bezig met versturen...");
     return;
   }
   _sendingInProgress.add(msgId);
@@ -1062,12 +1064,10 @@ async function _doSend(state, cq, recordId, msgId) {
     const kleurLabel = needsFollowup ? "🟠 Follow-up nodig" : "🟢 Afgehandeld";
     const sentAt = new Date().toLocaleTimeString("nl-NL", { hour: "2-digit", minute: "2-digit" });
     await tgEdit(msgId, `✅ <b>Verstuurd — ${info.fromName}</b>\n📌 ${info.subject}\n📧 ${info.fromEmail}\n${kleurLabel} · ${sentAt}`, null, true);
-    await tgAnswerCallback(cq.id, "✅ Email verstuurd!");
     delete state.pendingCallbacks[String(msgId)];
     saveState(state);
     console.log(`  OK — Email verstuurd naar ${info.fromEmail}`);
   } else {
-    await tgAnswerCallback(cq.id, "❌ Versturen mislukt!");
     console.log(`  ERROR — Versturen mislukt`);
   }
 }
