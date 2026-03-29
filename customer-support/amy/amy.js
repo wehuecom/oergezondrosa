@@ -46,6 +46,34 @@ const CLAUDE_API_KEY = cfg.CLAUDE_API_KEY;
 
 // State
 const STATE_FILE = path.join(BASE_DIR, "amy_state.json");
+const LOCK_FILE  = path.join(BASE_DIR, "amy.lock");
+
+// Voorkom meerdere instanties tegelijk
+(function acquireLock() {
+  try {
+    // Controleer of er al een lopend proces is
+    if (fs.existsSync(LOCK_FILE)) {
+      const pid = parseInt(fs.readFileSync(LOCK_FILE, "utf8").trim());
+      // Check of dat proces nog bestaat
+      try { process.kill(pid, 0); } catch {
+        // Proces bestaat niet meer — verwijder stale lock
+        fs.unlinkSync(LOCK_FILE);
+      }
+      if (fs.existsSync(LOCK_FILE)) {
+        console.error(`[STOP] Amy draait al (PID ${pid}). Stop die instantie eerst.`);
+        process.exit(1);
+      }
+    }
+    fs.writeFileSync(LOCK_FILE, String(process.pid), "utf8");
+    // Verwijder lockfile bij afsluiten
+    const cleanup = () => { try { fs.unlinkSync(LOCK_FILE); } catch {} };
+    process.on("exit", cleanup);
+    process.on("SIGINT", () => { cleanup(); process.exit(0); });
+    process.on("SIGTERM", () => { cleanup(); process.exit(0); });
+  } catch (e) {
+    console.error("[WARN] Lock aanmaken mislukt:", e.message);
+  }
+})();
 
 // Poll intervals
 const EMAIL_POLL_INTERVAL_MS = 1 * 60 * 1000;  // 1 minuut
