@@ -1120,11 +1120,12 @@ async function handleFeedbackReply(state, message) {
     }
   }
 
-  // 3. Fallback: als er precies één open feedback-sessie is, gebruik die
+  // 3. Fallback: pak de meest recente open feedback-sessie
   if (!info) {
     const openSessions = Object.entries(state.pendingCallbacks)
-      .filter(([k, v]) => k.startsWith("feedback_") && v && v.recordId);
-    if (openSessions.length === 1) {
+      .filter(([k, v]) => k.startsWith("feedback_") && v && v.recordId)
+      .sort((a, b) => parseInt(b[0].replace("feedback_", "")) - parseInt(a[0].replace("feedback_", "")));
+    if (openSessions.length > 0) {
       [cbKey, info] = openSessions[0];
     }
   }
