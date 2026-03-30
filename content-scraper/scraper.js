@@ -330,24 +330,15 @@ Geef ALLEEN de caption terug, geen uitleg. Klaar om te kopiëren naar Instagram.
 // ============================================================
 
 async function remakePost(post) {
-  const prompt = `Je bent de content creator van Oergezond (@oergezond) — een Nederlands gezondheidsplatform.
+  const prompt = `Vertaal deze Instagram post letterlijk naar het Nederlands. Behoud exact dezelfde structuur, hetzelfde format, dezelfde zinsvolgorde en dezelfde hook. Verander de inhoud niet — alleen de taal.
 
-Een competitor (@${post.account}) had deze virale post:
-Caption: "${post.caption || "(geen caption)"}"
-Type: ${post.type}
-Engagement: ${post.likes} likes, ${post.comments} reacties${post.views ? `, ${post.views} views` : ""}
-
-Maak deze post na voor Oergezond. Zelfde concept, zelfde hook-energie — maar:
-- Volledig in het Nederlands
-- In Oergezond brand voice: confronterend eerlijk, rustig zelfverzekerd, geen omhaal
-- Gebruik: troep, puur, oer-, echt, gewoon, hormoonvriendelijk, grasgevoerd, herstel van binnenuit
-- Nooit: journey, ritual, glow up, clean beauty, superfoods, revolutionair
-- Vertaal het concept naar de Oergezond wereld (huid, voeding, hormonen, toxines, circadiaans ritme)
+Originele post van @${post.account}:
+"${post.caption || "(geen caption)"}"
 
 Geef je output als JSON:
 {
-  "tweetTekst": "korte krachtige tekst voor op de tweet-post afbeelding, max 200 tekens",
-  "caption": "volledige Instagram caption met openingszin, probleem, oplossing, CTA en 8-12 hashtags"
+  "tweetTekst": "de eerste zin of hook van de post, vertaald naar Nederlands, max 200 tekens",
+  "caption": "de volledige post letterlijk vertaald naar Nederlands, inclusief eventuele hashtags ook vertaald/vervangen door Nederlandse equivalenten"
 }
 
 Alleen JSON terug, geen uitleg.`;
@@ -666,10 +657,14 @@ async function main() {
     log("Tweet post verstuurd ✅");
 
     log("Alles verstuurd naar Telegram ✅");
+    // Sla top posts op zodat Amy de knop-callbacks kan afhandelen
+    require("fs").writeFileSync(
+      require("path").join(__dirname, "top-posts.json"),
+      JSON.stringify(topPosts, null, 2),
+      "utf8"
+    );
     markRanToday();
-
-    // Luister 20 minuten naar knopreacties
-    await pollCallbacks(topPosts);
+    // Knopreacties worden afgehandeld door Amy (zelfde bot)
 
   } catch (err) {
     log(`FOUT: ${err.message}`);

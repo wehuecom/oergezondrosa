@@ -1265,6 +1265,98 @@ async function cmdInstruction(state, instruction) {
 }
 
 // ============================================================
+// CONTENT SCRAPER CALLBACKS
+// ============================================================
+
+const SCRAPER_POSTS_FILE = "C:\\Users\\rosav\\OneDrive\\Desktop\\LIO_OS\\content-scraper\\top-posts.json";
+const SCRAPER_TEMPLATES_DIR = "C:\\Users\\rosav\\OneDrive\\Desktop\\LIO_OS\\content-scraper\\templates";
+const CONTENT_CHAT_ID = "-5279920497";
+
+async function callClaude(prompt, maxTokens = 800) {
+  const body = JSON.stringify({
+    model: "claude-sonnet-4-6",
+    max_tokens: maxTokens,
+    messages: [{ role: "user", content: prompt }],
+  });
+  const resp = await post("https://api.anthropic.com/v1/messages", {
+    headers: {
+      "Content-Type": "application/json",
+      "x-api-key": CLAUDE_API_KEY,
+      "anthropic-version": "2023-06-01",
+    },
+    json: JSON.parse(body),
+  });
+  if (!resp.ok) throw new Error(`Claude API fout: ${resp.status}`);
+  return resp.json().content[0].text;
+}
+
+async function sendToContentGroup(text) {
+  await post(`${TELEGRAM_API}/sendMessage`, {
+    json: { chat_id: CONTENT_CHAT_ID, text, parse_mode: "HTML" },
+  });
+}
+
+async function handleScraperCallback(state, cq) {
+  await tgAnswerCallback(cq.id, "⏳ Bezig...");
+  const parts = (cq.data || "").split(":");
+  const action = parts[0];
+  const idx = parseInt(parts[1]);
+
+  let posts = [];
+  try {
+    posts = JSON.parse(fs.readFileSync(SCRAPER_POSTS_FILE, "utf8"));
+  } catch {
+    await sendToContentGroup("⚠️ Geen posts gevonden — draai de scraper eerst opnieuw.");
+    return;
+  }
+
+  const post = posts[idx];
+  if (!post) { await sendToContentGroup("⚠️ Post niet gevonden."); return; }
+
+  try {
+    if (action === "remake") {
+      await sendToContentGroup(`⏳ Post van @${post.account} vertalen naar Nederlands...`);
+      const raw = await callClaude(`Vertaal deze Instagram post letterlijk naar het Nederlands. Behoud exact dezelfde structuur, hetzelfde format, dezelfde zinsvolgorde en dezelfde hook. Verander de inhoud niet — alleen de taal.
+
+Originele post van @${post.account}:
+"${post.caption || "(geen caption)"}"
+
+Geef je output als JSON:
+{
+  "tweetTekst": "de eerste zin of hook van de post, vertaald naar Nederlands, max 200 tekens",
+  "caption": "de volledige post letterlijk vertaald naar Nederlands, inclusief eventuele hashtags ook vertaald/vervangen door Nederlandse equivalenten"
+}
+
+Alleen JSON terug, geen uitleg.`);
+      const jsonMatch = raw.match(/\{[\s\S]*\}/);
+      const result = JSON.parse(jsonMatch ? jsonMatch[0] : raw);
+      await sendToContentGroup(`🇳🇱 <b>Vertaalde post (@${post.account}):</b>\n\n${result.caption}`);
+
+    } else if (action === "tweet" || action === "news") {
+      const label = action === "tweet" ? "Tweet post" : "Nieuws post";
+      await sendToContentGroup(`⏳ ${label} genereren voor post van @${post.account}...`);
+      const raw = await callClaude(`Je bent de content strategist van Oergezond. Analyseer deze virale post en genereer content in Oergezond brand voice.
+
+Post van @${post.account}: "${post.caption || "(geen caption)"}"
+
+Geef ALLEEN geldige JSON:
+{
+  "tweetPost": { "text": "max 200 tekens, confronterend, geen hashtags" },
+  "newsPost": { "headline": "HOOFDLETTERS, max 18 woorden", "highlightWords": ["woord1", "woord2"], "imagePrompt": "beschrijving voor AI afbeelding" }
+}`, 600);
+      const jsonMatch = raw.match(/\{[\s\S]*\}/);
+      const idea = JSON.parse(jsonMatch ? jsonMatch[0] : raw);
+      const data = action === "tweet" ? idea.tweetPost : idea.newsPost;
+      const text = action === "tweet" ? data.text : data.headline;
+      await sendToContentGroup(`${action === "tweet" ? "🐦" : "📰"} <b>${label} tekst:</b>\n\n${text}`);
+    }
+  } catch (e) {
+    await sendToContentGroup(`⚠️ Mislukt: ${e.message}`);
+    console.log(`  [ERROR] Scraper callback: ${e.message}`);
+  }
+}
+
+// ============================================================
 // TELEGRAM UPDATES VERWERKEN
 // ============================================================
 
@@ -1284,6 +1376,7 @@ async function processTelegramUpdates(state) {
 
       if (action === "send") await handleSend(state, cq, recordId);
       else if (action === "edit") await handleEdit(state, cq, recordId);
+      else if (["tweet", "news", "remake"].includes(action)) await handleScraperCallback(state, cq);
       else await tgAnswerCallback(cq.id);
 
     } else if (update.message) {
