@@ -326,6 +326,60 @@ Geef ALLEEN de caption terug, geen uitleg. Klaar om te kopiëren naar Instagram.
 }
 
 // ============================================================
+// POST NAMAKEN IN HET NEDERLANDS
+// ============================================================
+
+async function remakePost(post) {
+  const prompt = `Je bent de content creator van Oergezond (@oergezond) — een Nederlands gezondheidsplatform.
+
+Een competitor (@${post.account}) had deze virale post:
+Caption: "${post.caption || "(geen caption)"}"
+Type: ${post.type}
+Engagement: ${post.likes} likes, ${post.comments} reacties${post.views ? `, ${post.views} views` : ""}
+
+Maak deze post na voor Oergezond. Zelfde concept, zelfde hook-energie — maar:
+- Volledig in het Nederlands
+- In Oergezond brand voice: confronterend eerlijk, rustig zelfverzekerd, geen omhaal
+- Gebruik: troep, puur, oer-, echt, gewoon, hormoonvriendelijk, grasgevoerd, herstel van binnenuit
+- Nooit: journey, ritual, glow up, clean beauty, superfoods, revolutionair
+- Vertaal het concept naar de Oergezond wereld (huid, voeding, hormonen, toxines, circadiaans ritme)
+
+Geef je output als JSON:
+{
+  "tweetTekst": "korte krachtige tekst voor op de tweet-post afbeelding, max 200 tekens",
+  "caption": "volledige Instagram caption met openingszin, probleem, oplossing, CTA en 8-12 hashtags"
+}
+
+Alleen JSON terug, geen uitleg.`;
+
+  const body = JSON.stringify({
+    model: "claude-sonnet-4-6",
+    max_tokens: 800,
+    messages: [{ role: "user", content: prompt }],
+  });
+
+  const res = await httpsRequest(
+    {
+      hostname: "api.anthropic.com",
+      path: "/v1/messages",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": CLAUDE_API_KEY,
+        "anthropic-version": "2023-06-01",
+        "Content-Length": Buffer.byteLength(body),
+      },
+    },
+    body
+  );
+
+  if (res.status !== 200) throw new Error(`Claude remake mislukt: ${res.status}`);
+  const raw = res.body.content[0].text;
+  const jsonMatch = raw.match(/\{[\s\S]*\}/);
+  return JSON.parse(jsonMatch ? jsonMatch[0] : raw);
+}
+
+// ============================================================
 // TELEGRAM
 // ============================================================
 
@@ -434,24 +488,31 @@ async function pollCallbacks(topPosts, durationMs = 20 * 60 * 1000) {
       if (!post) continue;
 
       log(`Knop gedrukt: ${action} voor post ${idx + 1} (@${post.account})`);
-      await sendTelegram(`⏳ Genereer *${action === "tweet" ? "Tweet post" : "Nieuws post"}* voor post van @${post.account}...`);
 
       try {
-        // Laat Claude een tekst maken specifiek voor deze post
-        const ideaRaw = await generateContentIdeas([post]);
-        const jsonMatch = ideaRaw.match(/\{[\s\S]*\}/);
-        const idea = JSON.parse(jsonMatch ? jsonMatch[0] : ideaRaw);
-
-        if (action === "tweet") {
-          const buf = await generateTweetPost(idea.tweetPost);
-          await sendTelegramPhoto(buf, `🐦 *Tweet post klaar*`);
-          const caption = await generateInstagramCaption("tweet", idea.tweetPost);
-          await sendTelegram(`📋 *Instagram caption — kopieer naar Business Suite:*\n\n${caption}`);
+        if (action === "remake") {
+          await sendTelegram(`⏳ Post van @${post.account} namaken in het Nederlands...`);
+          const remakeText = await remakePost(post);
+          const buf = await generateTweetPost({ text: remakeText.tweetTekst });
+          await sendTelegramPhoto(buf, `🇳🇱 *Nagebootste post klaar*`);
+          await sendTelegram(`📋 *Instagram caption — kopieer naar Business Suite:*\n\n${remakeText.caption}`);
         } else {
-          const buf = await generateNewsPost(idea.newsPost);
-          await sendTelegramPhoto(buf, `📰 *Nieuws post klaar*`);
-          const caption = await generateInstagramCaption("news", idea.newsPost);
-          await sendTelegram(`📋 *Instagram caption — kopieer naar Business Suite:*\n\n${caption}`);
+          await sendTelegram(`⏳ Genereer *${action === "tweet" ? "Tweet post" : "Nieuws post"}* voor post van @${post.account}...`);
+          const ideaRaw = await generateContentIdeas([post]);
+          const jsonMatch = ideaRaw.match(/\{[\s\S]*\}/);
+          const idea = JSON.parse(jsonMatch ? jsonMatch[0] : ideaRaw);
+
+          if (action === "tweet") {
+            const buf = await generateTweetPost(idea.tweetPost);
+            await sendTelegramPhoto(buf, `🐦 *Tweet post klaar*`);
+            const caption = await generateInstagramCaption("tweet", idea.tweetPost);
+            await sendTelegram(`📋 *Instagram caption — kopieer naar Business Suite:*\n\n${caption}`);
+          } else {
+            const buf = await generateNewsPost(idea.newsPost);
+            await sendTelegramPhoto(buf, `📰 *Nieuws post klaar*`);
+            const caption = await generateInstagramCaption("news", idea.newsPost);
+            await sendTelegram(`📋 *Instagram caption — kopieer naar Business Suite:*\n\n${caption}`);
+          }
         }
       } catch (e) {
         await sendTelegram(`⚠️ Genereren mislukt: ${e.message}`);
@@ -540,10 +601,15 @@ async function main() {
       const caption = p.caption ? `\n_"${p.caption.slice(0, 120)}${p.caption.length > 120 ? "…" : ""}"_` : "";
       const text = `${type} *${i + 1}. @${p.account}*\n${stats}${caption}\n${p.url}`;
       const markup = {
-        inline_keyboard: [[
-          { text: "🐦 Tweet post", callback_data: `tweet:${i}` },
-          { text: "📰 Nieuws post", callback_data: `news:${i}` },
-        ]],
+        inline_keyboard: [
+          [
+            { text: "🐦 Tweet post", callback_data: `tweet:${i}` },
+            { text: "📰 Nieuws post", callback_data: `news:${i}` },
+          ],
+          [
+            { text: "🇳🇱 Namaken in NL", callback_data: `remake:${i}` },
+          ],
+        ],
       };
       await sendTelegram(text);
       // Stuur een apart bericht met de knoppen onder de post
