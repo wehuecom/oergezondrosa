@@ -16,14 +16,14 @@ const cfg = require("./config.js");
 const { COMPETITORS, HASHTAGS } = require("./accounts.js");
 const { generateCarousel, generateNewsPost, generateTweetPost } = require("./generate-statics.js");
 
-const APIFY_TOKEN = cfg.APIFY_API_TOKEN;
 const TELEGRAM_TOKEN = cfg.TELEGRAM_TOKEN;
 const TELEGRAM_CHAT_ID = cfg.TELEGRAM_CHAT_ID;
 const CLAUDE_API_KEY = cfg.CLAUDE_API_KEY;
+const IG_SESSION_ID = cfg.IG_SESSION_ID;
 
-const POSTS_PER_ACCOUNT = 5; // hoeveel posts per account ophalen
-const POSTS_PER_HASHTAG = 15; // hoeveel posts per hashtag ophalen
-const TOP_POSTS_FOR_CLAUDE = 20; // hoeveel top posts naar Claude sturen
+const POSTS_PER_ACCOUNT = 3; // hoeveel posts per account ophalen
+const POSTS_PER_HASHTAG = 5; // hoeveel posts per hashtag ophalen
+const TOP_POSTS_FOR_CLAUDE = 15; // hoeveel top posts naar Claude sturen
 
 // ============================================================
 // HELPERS
@@ -58,63 +58,109 @@ function log(msg) {
 }
 
 // ============================================================
-// APIFY
+// INSTAGRAM DIRECT API
 // ============================================================
 
-async function runApifyActor(input) {
-  log("Apify run starten...");
-  const body = JSON.stringify(input);
+const SESSION_ID = decodeURIComponent(IG_SESSION_ID);
 
-  const res = await httpsRequest(
-    {
-      hostname: "api.apify.com",
-      path: `/v2/acts/apify~instagram-scraper/runs?token=${APIFY_TOKEN}`,
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Content-Length": Buffer.byteLength(body),
-      },
-    },
-    body
-  );
+function igRequest(method, path, params = {}, bodyStr = null) {
+  const qs = Object.keys(params).length
+    ? "?" + Object.entries(params).map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join("&")
+    : "";
+  const bodyBuf = bodyStr ? Buffer.from(bodyStr) : null;
 
-  if (res.status !== 201) {
-    throw new Error(`Apify start mislukt: ${JSON.stringify(res.body)}`);
-  }
-
-  const runId = res.body.data.id;
-  log(`Apify run gestart: ${runId}`);
-  return runId;
-}
-
-async function waitForApifyRun(runId, maxWaitMs = 480000) {
-  const start = Date.now();
-  while (Date.now() - start < maxWaitMs) {
-    await sleep(8000);
-    const res = await httpsRequest({
-      hostname: "api.apify.com",
-      path: `/v2/actor-runs/${runId}?token=${APIFY_TOKEN}`,
-      method: "GET",
-    });
-
-    const status = res.body?.data?.status;
-    log(`Apify status: ${status}`);
-
-    if (status === "SUCCEEDED") return true;
-    if (status === "FAILED" || status === "ABORTED") {
-      throw new Error(`Apify run mislukt: ${status}`);
+  return new Promise((resolve, reject) => {
+    const headers = {
+      "User-Agent": "Instagram 269.0.0.18.75 Android (26/8.0.0; 480dpi; 1080x1920; OnePlus; ONEPLUS A3010; OnePlus3T; qcom; nl_NL; 314665256)",
+      Cookie: `sessionid=${SESSION_ID}`,
+      "X-IG-App-ID": "936619743392459",
+      Accept: "*/*",
+      "Accept-Language": "nl-NL",
+    };
+    if (bodyBuf) {
+      headers["Content-Type"] = "application/x-www-form-urlencoded";
+      headers["Content-Length"] = bodyBuf.length;
     }
-  }
-  throw new Error("Apify timeout na 3 minuten");
+
+    const req = https.request(
+      { hostname: "i.instagram.com", path: `/api/v1${path}${qs}`, method, headers },
+      (res) => {
+        let data = "";
+        res.on("data", (c) => (data += c));
+        res.on("end", () => {
+          try { resolve({ status: res.statusCode, body: JSON.parse(data) }); }
+          catch { resolve({ status: res.statusCode, body: data }); }
+        });
+      }
+    );
+    req.on("error", reject);
+    if (bodyBuf) req.write(bodyBuf);
+    req.end();
+  });
 }
 
-async function getApifyResults(runId) {
-  const res = await httpsRequest({
-    hostname: "api.apify.com",
-    path: `/v2/actor-runs/${runId}/dataset/items?token=${APIFY_TOKEN}&limit=200`,
-    method: "GET",
-  });
-  return res.body || [];
+async function igGet(path, params = {}) {
+  return igRequest("GET", path, params);
+}
+
+async function igPost(path, bodyStr) {
+  return igRequest("POST", path, {}, bodyStr);
+}
+
+function mapIgPost(item, username) {
+  const isVideo = item.media_type === 2;
+  return {
+    ownerUsername: item.user?.username || username,
+    type: isVideo ? "video" : item.media_type === 8 ? "carousel" : "image",
+    caption: item.caption?.text || "",
+    likesCount: item.like_count || 0,
+    commentsCount: item.comment_count || 0,
+    videoViewCount: item.play_count || item.view_count || 0,
+    shortCode: item.code || String(item.pk || ""),
+    videoUrl: isVideo ? "yes" : null,
+  };
+}
+
+async function scrapeAccount(username) {
+  try {
+    const profRes = await igGet("/users/web_profile_info/", { username });
+    if (profRes.status !== 200) {
+      log(`  [IG] @${username}: profiel ${profRes.status} — overgeslagen`);
+      return [];
+    }
+    const userId = profRes.body?.data?.user?.id;
+    if (!userId) { log(`  [IG] @${username}: geen user ID`); return []; }
+
+    await sleep(3000);
+    const feedRes = await igGet(`/feed/user/${userId}/`, { count: String(POSTS_PER_ACCOUNT) });
+    if (feedRes.status !== 200) {
+      log(`  [IG] @${username}: feed ${feedRes.status}`);
+      return [];
+    }
+    const items = feedRes.body?.items || [];
+    log(`  [IG] @${username}: ${items.length} posts`);
+    return items.map((it) => mapIgPost(it, username));
+  } catch (e) {
+    log(`  [IG] @${username} fout: ${e.message}`);
+    return [];
+  }
+}
+
+async function scrapeHashtag(tag) {
+  try {
+    const res = await igPost(`/tags/${tag}/sections/`, `tab=top&page=1&surface=explore`);
+    if (res.status !== 200) {
+      log(`  [IG] #${tag}: ${res.status} — overgeslagen`);
+      return [];
+    }
+    const sections = res.body?.sections || [];
+    const items = sections.flatMap((s) => s.layout_content?.medias?.map((m) => m.media) || []);
+    log(`  [IG] #${tag}: ${items.length} posts`);
+    return items.slice(0, POSTS_PER_HASHTAG).map((it) => mapIgPost(it, it.user?.username || tag));
+  } catch (e) {
+    log(`  [IG] #${tag} fout: ${e.message}`);
+    return [];
+  }
 }
 
 // ============================================================
@@ -122,43 +168,27 @@ async function getApifyResults(runId) {
 // ============================================================
 
 async function scrapeCompetitors() {
-  const urls = COMPETITORS.map(
-    (h) => `https://www.instagram.com/${h}/`
-  );
-
   log(`Scrapen van ${COMPETITORS.length} competitor accounts...`);
-
-  const runId = await runApifyActor({
-    directUrls: urls,
-    resultsType: "posts",
-    resultsLimit: POSTS_PER_ACCOUNT,
-    addParentData: true,
-  });
-
-  await waitForApifyRun(runId);
-  const posts = await getApifyResults(runId);
-  log(`${posts.length} posts opgehaald van competitors`);
-  return posts;
+  const all = [];
+  for (const username of COMPETITORS) {
+    const posts = await scrapeAccount(username);
+    all.push(...posts);
+    await sleep(3000);
+  }
+  log(`${all.length} posts opgehaald van competitors`);
+  return all;
 }
 
 async function scrapeHashtags() {
-  const urls = HASHTAGS.map(
-    (tag) => `https://www.instagram.com/explore/tags/${tag}/`
-  );
-
   log(`Scrapen van ${HASHTAGS.length} hashtags...`);
-
-  const runId = await runApifyActor({
-    directUrls: urls,
-    resultsType: "posts",
-    resultsLimit: POSTS_PER_HASHTAG,
-    addParentData: true,
-  });
-
-  await waitForApifyRun(runId);
-  const posts = await getApifyResults(runId);
-  log(`${posts.length} posts opgehaald van hashtags`);
-  return posts;
+  const all = [];
+  for (const tag of HASHTAGS) {
+    const posts = await scrapeHashtag(tag);
+    all.push(...posts);
+    await sleep(3000);
+  }
+  log(`${all.length} posts opgehaald van hashtags`);
+  return all;
 }
 
 // ============================================================
@@ -176,9 +206,28 @@ function filterTopPosts(posts, limit) {
       comments: p.commentsCount || 0,
       views: p.videoViewCount || p.videoPlayCount || 0,
       engagement: (p.likesCount || 0) + (p.commentsCount || 0) * 3,
-      url: p.url || p.shortCode ? `https://www.instagram.com/p/${p.shortCode}/` : "",
+      url: p.shortCode ? `https://www.instagram.com/p/${p.shortCode}/` : (p.url || ""),
     }))
     .sort((a, b) => b.engagement - a.engagement)
+    .slice(0, limit);
+}
+
+function filterTopReels(posts, limit = 8) {
+  return posts
+    .filter((p) => {
+      const type = (p.type || "").toLowerCase();
+      const isVideo = type === "video" || type === "reel" || !!p.videoUrl || !!p.videoViewCount;
+      return isVideo && p.shortCode;
+    })
+    .map((p) => ({
+      account: p.ownerUsername || p.username || "onbekend",
+      caption: (p.caption || p.alt || "").slice(0, 150),
+      likes: p.likesCount || 0,
+      comments: p.commentsCount || 0,
+      views: p.videoViewCount || p.videoPlayCount || 0,
+      url: `https://www.instagram.com/reel/${p.shortCode}/`,
+    }))
+    .sort((a, b) => (b.views || b.likes) - (a.views || a.likes))
     .slice(0, limit);
 }
 
@@ -186,7 +235,7 @@ function filterTopPosts(posts, limit) {
 // CLAUDE
 // ============================================================
 
-async function generateContentIdeas(topPosts) {
+async function generateContentIdeas(topPosts, usedTopics = []) {
   log("Claude om content ideeën vragen...");
 
   const postsText = topPosts
@@ -199,25 +248,31 @@ async function generateContentIdeas(topPosts) {
 
   const prompt = `Je bent de content strategist van Oergezond — een Nederlands gezondheidsplatform dat mensen helpt moderne gezondheidsproblemen op te lossen met oervoeding, circadiaans ritme, hormoonbalans, natuurlijke huidverzorging en holistische leefstijl.
 
-Oergezond is GEEN gewone crème-webshop. Het is een gezondheidsplatform. Thema's: voeding (carnivore, paleo, oervoeding, neus-tot-staart eten), hormonen, slaap, circadiaans ritme, toxines vermijden, huid van binnenuit herstellen, mentale helderheid, energie, kinderen gezond opvoeden.
+Oergezond is GEEN gewone crème-webshop. Het is een gezondheidsplatform. Thema's: voeding (carnivore, paleo, oervoeding, neus-tot-staart eten), hormonen, slaap, circadiaans ritme, toxines vermijden, huid van binnenuit herstellen, mentale helderheid, energie, kinderen gezond opvoeden, ayurveda, orthomoleculaire geneeskunde, anti-farmaceutische industrie feiten.
 
 Brand voice: confronterend eerlijk, rustig zelfverzekerd, educatief. Spreektaal. Korte zinnen.
 Gebruik: troep, puur, oer-, echt, gewoon, hormoonvriendelijk, grasgevoerd, herstel van binnenuit.
 Nooit: journey, ritual, glow up, clean beauty, superfoods, revolutionair.
 
-Hier zijn de ${topPosts.length} meest virale posts uit de gezondheids-niche op Instagram deze week:
+${topPosts.length > 0 ? `Hier zijn de ${topPosts.length} meest virale posts uit de gezondheids-niche op Instagram deze week:\n\n${postsText}\n\n` : "Er zijn vandaag geen virale posts beschikbaar. Genereer content puur op basis van de topicpool hieronder.\n\n"}${usedTopics.length > 0 ? `⛔ VERMIJD deze onderwerpen — die zijn al eerder gebruikt:\n${usedTopics.join(", ")}\n\n` : ""}Genereer content voor Oergezond${topPosts.length > 0 ? " gebaseerd op wat viral gaat" : " op basis van de topicpool"}. BELANGRIJK: Elke post moet gebaseerd zijn op een feitelijk onderbouwde claim — gesteund door wetenschappelijk onderzoek, orthomoleculaire geneeskunde, ayurvedische traditie, of gedocumenteerde feiten over de farmaceutische industrie. Geen vage claims.
 
-${postsText}
+Kies uit deze brede topicpool (maar ook andere mogen als ze relevant zijn):
+Voeding & metabolisme: carnivore dieet, lever eten, botbouillon, fermentatie, rauw melk, omega-3 vs omega-6, linolzuur, tarwe en gluten, fructose en lever, ketose, intermittent fasting, cholesterol mythe, LDL-P, HDL, triglycerides, insuline, bloedsuiker, glycemische index, processed meat, neus-tot-staart eten, orgaanvlees, histamine-intolerantie, oxalaten, anti-nutriënten, lectines, fytinezuur
+Hormonen & huid: cortisol, schildklier, oestrogeen dominantie, progesteron, testosteron, DHEA, insuline-achtige groeifactor, huidbarrière, ceramiden, talg, retinol vs retinoid, collageen, hyaluronzuur, tallow, eczeem, psoriasis, rosacea, acne, sebum, kokosolie op huid, SPF mythe
+Toxines & omgeving: PFAS, BPA, ftalaten, parabenen, aluminium deodorant, fluoride, chloor in leidingwater, pesticiden, EMF, wifi straling, blauw licht, microplastics in bloed, luchtfresser, weekmakers in plastic, non-stick pannen, lavendel en hormoonontregeling
+Slaap & ritme: cortisol ochtendpiek, melatonine aanmaak, REM-slaap, diepe slaap, slaapschuld, blauw licht blokkeren, grounding, ochtendzon, koude douche, 14-uurs vasten en slaap
+Suppletie & voedingsstoffen: magnesium L-threonate, zink, selenium, jodium, vitamine K2, vitamine A (retinol), borium, lithium orotaat, taurine, glycine, NAC, berberine, ashwagandha, rhodiola, lion's mane, adaptogenen
+Farmaceutische industrie & systeem: statines bijwerkingen, antidepressiva onttrekking, protonpompremmers en magnesium, antibiotica en microbioom, vaccin aluminium adjuvant, opiatencrisis, suikerlobby en voedingsrichtlijnen, Ancel Keys verzadigd vet mythe, WHO en conflicterende belangen, farmaceutische lobby, patenteerbare moleculen vs. natuur
+Ayurveda & holistische geneeskunde: dosha-typen, triphala, ashwagandha, turmeric en piperine, ghee, oil pulling, abhyanga massage, adaptogenen, neem, tulsi, shilajit, moringa
+Kinderen & gezin: babyvoeding en insulinepiek, formulevoeding vs borstvoeding, ADHD en voeding, antibiotica bij kinderen, spelen in vuil en microbioom, scherm-tv en melatonine kinderen, zonlicht en myopie kinderen
 
-Analyseer wat viral gaat en genereer content voor Oergezond. Geef je output ALLEEN als geldig JSON in dit exacte formaat:
+Geef je output ALLEEN als geldig JSON in dit exacte formaat:
 
 {
   "reels": [
-    {
-      "hook": "eerste 3 seconden tekst",
-      "opbouw": "wat laat je zien/vertellen",
-      "cta": "call to action"
-    }
+    { "hook": "eerste 3 seconden tekst", "opbouw": "wat laat je zien/vertellen", "cta": "call to action" },
+    { "hook": "...", "opbouw": "...", "cta": "..." },
+    { "hook": "...", "opbouw": "...", "cta": "..." }
   ],
   "carousel": {
     "title": "pakkende cover titel die triggert om verder te lezen (max 8 woorden)",
@@ -229,48 +284,79 @@ Analyseer wat viral gaat en genereer content voor Oergezond. Geef je output ALLE
       { "headline": "...", "body": "..." }
     ]
   },
-  "newsPost": {
-    "headline": "ALLES HOOFDLETTERS, max 18 woorden, confronterend feit of stelling",
-    "highlightWords": ["woord1", "woord2"],
-    "imagePrompt": "beschrijving voor AI afbeelding die past bij het onderwerp, naturalistisch en donker"
-  },
-  "tweetPost": {
-    "text": "tweet tekst, max 280 tekens, confronterend en deelbaar, geen hashtags"
-  },
+  "newsPosts": [
+    {
+      "onderwerp": "één woord of korte omschrijving van het thema",
+      "bron": "concrete bronvermelding, bijv. 'JAMA Internal Medicine 2021', 'Ayurvedisch principe ashwagandha', 'WHO rapport 2019', 'orthomoleculaire geneeskunde magnesium', 'onderzoek Zach Bush MD'",
+      "headline": "ALLES HOOFDLETTERS, max 18 woorden, confronterend feit of stelling direct gebaseerd op de bron",
+      "highlightWords": ["woord1", "woord2"],
+      "imagePrompt": "Specifieke Engelse beschrijving (max 12 woorden) van een CONCREET OBJECT dat direct hoort bij het onderwerp. Bijv. voor zaadoliën: 'close-up vegetable oil bottle dark stone'. Geen mensen, donker, realistisch."
+    },
+    { "onderwerp": "...", "bron": "...", "headline": "...", "highlightWords": [], "imagePrompt": "..." },
+    { "onderwerp": "...", "bron": "...", "headline": "...", "highlightWords": [], "imagePrompt": "..." },
+    { "onderwerp": "...", "bron": "...", "headline": "...", "highlightWords": [], "imagePrompt": "..." },
+    { "onderwerp": "...", "bron": "...", "headline": "...", "highlightWords": [], "imagePrompt": "..." }
+  ],
+  "tweetPosts": [
+    {
+      "onderwerp": "één woord of korte omschrijving van het thema",
+      "bron": "concrete bronvermelding",
+      "text": "tweet tekst max 280 tekens, confronterend en deelbaar, geen hashtags, direct gebaseerd op de bron"
+    },
+    { "onderwerp": "...", "bron": "...", "text": "..." },
+    { "onderwerp": "...", "bron": "...", "text": "..." },
+    { "onderwerp": "...", "bron": "...", "text": "..." },
+    { "onderwerp": "...", "bron": "...", "text": "..." }
+  ],
   "stories": [
     { "format": "poll/swipe/vraag/tip", "tekst": "..." },
     { "format": "...", "tekst": "..." }
   ]
 }
 
-Geef ALLEEN de JSON terug, geen extra tekst.`;
+Regels:
+- KRITIEK: alle 10 posts (5 nieuws + 5 tweet) moeten over 10 COMPLEET VERSCHILLENDE onderwerpen gaan. Geen enkel onderwerp mag dubbel voorkomen. Tweet 1 mag NIET hetzelfde thema delen als Nieuws 1. Elk van de 10 moet een uniek, losstaand onderwerp behandelen.
+- Elke claim moet feitelijk kloppen en traceerbaar zijn naar de opgegeven bron
+- Onderwerpen mogen gaan over: voeding, hormonen, slaap, toxines, huid, farmaceutische industrie, Big Pharma, suppletie, ayurveda, circadiaans ritme, microbioom, bloedsuiker, zaadoliën, statines, vaccins (feiten), suiker, ultrabewerkt voedsel, etc.
+- Schrijf ALLES in correct, natuurlijk Nederlands. Geen anglicismen, geen letterlijke vertalingen uit het Engels. Gebruik gewone Nederlandse termen: "bottenbouillon" niet "bone broth", "darmwand" niet "gut lining", "bloedsuiker" niet "blood sugar", "hormoonbalans" niet "hormoon balance".
+- Nieuws headlines zijn ALLES IN HOOFDLETTERS, max 12 woorden, krachtig en direct.
+- Tweet teksten zijn normaal geschreven Nederlands, max 280 tekens, confronterend en deelbaar.
+- Geef ALLEEN de JSON terug, geen extra tekst.`;
 
   const body = JSON.stringify({
     model: "claude-sonnet-4-6",
-    max_tokens: 2000,
+    max_tokens: 4000,
     messages: [{ role: "user", content: prompt }],
   });
 
-  const res = await httpsRequest(
-    {
-      hostname: "api.anthropic.com",
-      path: "/v1/messages",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": CLAUDE_API_KEY,
-        "anthropic-version": "2023-06-01",
-        "Content-Length": Buffer.byteLength(body),
+  const maxRetries = 3;
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    const res = await httpsRequest(
+      {
+        hostname: "api.anthropic.com",
+        path: "/v1/messages",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": CLAUDE_API_KEY,
+          "anthropic-version": "2023-06-01",
+          "Content-Length": Buffer.byteLength(body),
+        },
       },
-    },
-    body
-  );
+      body
+    );
 
-  if (res.status !== 200) {
+    if (res.status === 200) return res.body.content[0].text;
+
+    const isOverloaded = res.status === 529 || (res.body && res.body.error && res.body.error.type === "overloaded_error");
+    if (isOverloaded && attempt < maxRetries) {
+      log(`Claude API overloaded — poging ${attempt}/${maxRetries}, wacht ${attempt * 15}s...`);
+      await sleep(attempt * 15000);
+      continue;
+    }
+
     throw new Error(`Claude API mislukt: ${JSON.stringify(res.body)}`);
   }
-
-  return res.body.content[0].text;
 }
 
 // ============================================================
@@ -287,6 +373,7 @@ async function generateInstagramCaption(postType, data) {
 Brand voice: confronterend eerlijk, rustig zelfverzekerd, educatief. Spreektaal. Korte zinnen.
 Gebruik: troep, puur, oer-, echt, gewoon, hormoonvriendelijk, grasgevoerd, herstel van binnenuit.
 Nooit: journey, ritual, glow up, clean beauty, superfoods, revolutionair.
+Schrijf in correct, natuurlijk Nederlands. Geen anglicismen of letterlijke vertalingen uit het Engels.
 
 Structuur:
 1. Openingszin die triggert (confronterend of verrassend feit)
@@ -306,23 +393,33 @@ Geef ALLEEN de caption terug, geen uitleg. Klaar om te kopiëren naar Instagram.
     messages: [{ role: "user", content: prompt }],
   });
 
-  const res = await httpsRequest(
-    {
-      hostname: "api.anthropic.com",
-      path: "/v1/messages",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": CLAUDE_API_KEY,
-        "anthropic-version": "2023-06-01",
-        "Content-Length": Buffer.byteLength(body),
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    const res = await httpsRequest(
+      {
+        hostname: "api.anthropic.com",
+        path: "/v1/messages",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": CLAUDE_API_KEY,
+          "anthropic-version": "2023-06-01",
+          "Content-Length": Buffer.byteLength(body),
+        },
       },
-    },
-    body
-  );
+      body
+    );
 
-  if (res.status !== 200) throw new Error(`Claude caption mislukt: ${res.status}`);
-  return res.body.content[0].text;
+    if (res.status === 200) return res.body.content[0].text;
+
+    const isOverloaded = res.status === 529 || (res.body && res.body.error && res.body.error.type === "overloaded_error");
+    if (isOverloaded && attempt < 3) {
+      log(`Claude caption overloaded — poging ${attempt}/3, wacht ${attempt * 15}s...`);
+      await sleep(attempt * 15000);
+      continue;
+    }
+
+    throw new Error(`Claude caption mislukt: ${res.status}`);
+  }
 }
 
 // ============================================================
@@ -349,23 +446,34 @@ Alleen JSON terug, geen uitleg.`;
     messages: [{ role: "user", content: prompt }],
   });
 
-  const res = await httpsRequest(
-    {
-      hostname: "api.anthropic.com",
-      path: "/v1/messages",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": CLAUDE_API_KEY,
-        "anthropic-version": "2023-06-01",
-        "Content-Length": Buffer.byteLength(body),
+  let raw;
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    const res = await httpsRequest(
+      {
+        hostname: "api.anthropic.com",
+        path: "/v1/messages",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": CLAUDE_API_KEY,
+          "anthropic-version": "2023-06-01",
+          "Content-Length": Buffer.byteLength(body),
+        },
       },
-    },
-    body
-  );
+      body
+    );
 
-  if (res.status !== 200) throw new Error(`Claude remake mislukt: ${res.status}`);
-  const raw = res.body.content[0].text;
+    if (res.status === 200) { raw = res.body.content[0].text; break; }
+
+    const isOverloaded = res.status === 529 || (res.body && res.body.error && res.body.error.type === "overloaded_error");
+    if (isOverloaded && attempt < 3) {
+      log(`Claude remake overloaded — poging ${attempt}/3, wacht ${attempt * 15}s...`);
+      await sleep(attempt * 15000);
+      continue;
+    }
+
+    throw new Error(`Claude remake mislukt: ${res.status}`);
+  }
   const jsonMatch = raw.match(/\{[\s\S]*\}/);
   return JSON.parse(jsonMatch ? jsonMatch[0] : raw);
 }
@@ -533,6 +641,24 @@ function markRanToday() {
 }
 
 // ============================================================
+// GEBRUIKTE ONDERWERPEN BIJHOUDEN
+// ============================================================
+
+const USED_TOPICS_FILE = require("path").join(__dirname, ".used-topics.json");
+
+function loadUsedTopics() {
+  try {
+    return JSON.parse(require("fs").readFileSync(USED_TOPICS_FILE, "utf8"));
+  } catch { return []; }
+}
+
+function saveUsedTopics(topics) {
+  // Dedup + bewaar max 60 recente onderwerpen
+  const unique = [...new Set(topics)].slice(-60);
+  require("fs").writeFileSync(USED_TOPICS_FILE, JSON.stringify(unique, null, 2), "utf8");
+}
+
+// ============================================================
 // MAIN
 // ============================================================
 
@@ -545,26 +671,31 @@ async function main() {
   }
 
   try {
-    // Scrapen
-    const [competitorPosts, hashtagPosts] = await Promise.all([
-      scrapeCompetitors(),
-      scrapeHashtags(),
-    ]);
-
-    const allPosts = [...competitorPosts, ...hashtagPosts];
-    log(`Totaal ${allPosts.length} posts verzameld`);
-
-    if (allPosts.length === 0) {
-      await sendTelegram("⚠️ Content Scraper: geen posts gevonden vandaag. Apify quota mogelijk bereikt.");
-      return;
+    // Scrapen — als Apify faalt, ga door zonder virale posts
+    let allPosts = [];
+    try {
+      const competitorPosts = await scrapeCompetitors();
+      const hashtagPosts = await scrapeHashtags();
+      allPosts = [...competitorPosts, ...hashtagPosts];
+      log(`Totaal ${allPosts.length} posts verzameld`);
+    } catch (e) {
+      log(`Scraping mislukt (${e.message}) — ga door zonder virale posts`);
     }
 
-    // Top posts selecteren
-    const topPosts = filterTopPosts(allPosts, TOP_POSTS_FOR_CLAUDE);
-    log(`Top ${topPosts.length} posts geselecteerd op engagement`);
+    // Top posts selecteren (kan leeg zijn)
+    const topPosts = allPosts.length > 0 ? filterTopPosts(allPosts, TOP_POSTS_FOR_CLAUDE) : [];
+    if (topPosts.length > 0) {
+      log(`Top ${topPosts.length} posts geselecteerd op engagement`);
+    } else {
+      log("Geen virale posts beschikbaar — content wordt puur op basis van topicpool gegenereerd");
+    }
 
-    // Ideeën genereren
-    const rawIdeas = await generateContentIdeas(topPosts);
+    // Gebruikte onderwerpen laden
+    const usedTopics = loadUsedTopics();
+    log(`${usedTopics.length} eerder gebruikte onderwerpen geladen`);
+
+    // Ideeën genereren (werkt met én zonder virale posts)
+    const rawIdeas = await generateContentIdeas(topPosts, usedTopics);
 
     // JSON parsen
     let ideas;
@@ -582,7 +713,11 @@ async function main() {
     });
 
     // Bericht 1: header
-    await sendTelegram(`📊 *Viral deze week — ${datum}*\n_Top ${topPosts.length} posts op engagement_`);
+    if (topPosts.length > 0) {
+      await sendTelegram(`📊 *Viral deze week — ${datum}*\n_Top ${topPosts.length} posts op engagement_`);
+    } else {
+      await sendTelegram(`📊 *Dagelijkse content — ${datum}*\n_Geen virale posts beschikbaar — content gegenereerd op basis van topicpool_`);
+    }
 
     // Bericht per virale post — met knoppen om na te maken
     for (let i = 0; i < topPosts.length; i++) {
@@ -619,42 +754,69 @@ async function main() {
       await sleep(300);
     }
 
-    // Bericht 2: Reel ideeën (tekst)
-    const reelText = ideas.reels
-      .map((r, i) => `*Reel ${i + 1}*\nHook: ${r.hook}\nOpbouw: ${r.opbouw}\nCTA: ${r.cta}`)
-      .join("\n\n");
-    await sendTelegram(`🎬 *Reel Ideeën*\n\n${reelText}`);
+    // Reel ideeën verstuur je on-demand via /reels in Telegram (Amy)
 
-    // Bericht 3: Story ideeën (tekst)
-    const storyText = ideas.stories
+    // Story ideeën (tekst)
+    const storyText = (ideas.stories || [])
       .map((s, i) => `*Story ${i + 1} — ${s.format}*\n${s.tekst}`)
       .join("\n\n");
-    await sendTelegram(`📖 *Story Ideeën*\n\n${storyText}`);
+    if (storyText) await sendTelegram(`📖 *Story Ideeën*\n\n${storyText}`);
 
-    // Statics genereren
-    log("Carousel genereren...");
-    await sendTelegram(`🖼️ *Statics worden nu gegenereerd...*`);
-
-    const carouselSlides = await generateCarousel(ideas.carousel);
-    for (const slide of carouselSlides) {
-      await sendTelegramPhoto(slide.buffer);
-      await sleep(600);
+    // Carousel
+    if (ideas.carousel) {
+      log("Carousel genereren...");
+      await sendTelegram(`🖼️ *Statics worden nu gegenereerd...*`);
+      const carouselSlides = await generateCarousel(ideas.carousel);
+      for (const slide of carouselSlides) {
+        await sendTelegramPhoto(slide.buffer);
+        await sleep(600);
+      }
+      log("Carousel verstuurd ✅");
     }
-    log("Carousel verstuurd ✅");
 
-    log("Nieuws post genereren...");
-    const newsBuffer = await generateNewsPost(ideas.newsPost);
-    await sendTelegramPhoto(newsBuffer, `📰 *Nieuws post klaar*`);
-    const newsCaption = await generateInstagramCaption("news", ideas.newsPost);
-    await sendTelegram(`📋 *Instagram caption nieuws post:*\n\n${newsCaption}`);
-    log("Nieuws post verstuurd ✅");
+    // 5 Nieuws posts
+    const newsPosts = ideas.newsPosts || [];
+    if (newsPosts.length > 0) {
+      await sendTelegram(`📰 *5 Nieuws Posts — kies er één*\n_Worden nu gegenereerd..._`);
+      for (let i = 0; i < newsPosts.length; i++) {
+        const np = newsPosts[i];
+        log(`Nieuws post ${i + 1}/5 genereren (${np.onderwerp})...`);
+        try {
+          const buf = await generateNewsPost(np);
+          const caption = `📰 *Nieuws ${i + 1}/5 — ${np.onderwerp}*\n_Bron: ${np.bron}_`;
+          await sendTelegramPhoto(buf, caption);
+          const igCaption = await generateInstagramCaption("news", np);
+          await sendTelegram(`📋 *Caption ${i + 1}:*\n\n${igCaption}`);
+          log(`Nieuws post ${i + 1} verstuurd ✅`);
+        } catch (e) {
+          log(`Nieuws post ${i + 1} mislukt: ${e.message}`);
+          await sendTelegram(`⚠️ Nieuws post ${i + 1} mislukt: ${e.message}`);
+        }
+        await sleep(1000);
+      }
+    }
 
-    log("Tweet post genereren...");
-    const tweetBuffer = await generateTweetPost(ideas.tweetPost);
-    await sendTelegramPhoto(tweetBuffer, `🐦 *Tweet post klaar*`);
-    const tweetCaption = await generateInstagramCaption("tweet", ideas.tweetPost);
-    await sendTelegram(`📋 *Instagram caption tweet post:*\n\n${tweetCaption}`);
-    log("Tweet post verstuurd ✅");
+    // 5 Tweet posts
+    const tweetPosts = ideas.tweetPosts || [];
+    if (tweetPosts.length > 0) {
+      await sendTelegram(`🐦 *5 Tweet Posts — kies er één*\n_Worden nu gegenereerd..._`);
+      for (let i = 0; i < tweetPosts.length; i++) {
+        const tp = tweetPosts[i];
+        log(`Tweet post ${i + 1}/5 genereren (${tp.onderwerp})...`);
+        try {
+          const buf = await generateTweetPost(tp);
+          const caption = `🐦 *Tweet ${i + 1}/5 — ${tp.onderwerp}*\n_Bron: ${tp.bron}_`;
+          await sendTelegramPhoto(buf, caption);
+          const igCaption = await generateInstagramCaption("tweet", tp);
+          await sendTelegram(`📋 *Caption ${i + 1}:*\n\n${igCaption}`);
+          log(`Tweet post ${i + 1} verstuurd ✅`);
+        } catch (e) {
+          log(`Tweet post ${i + 1} mislukt: ${e.message}`);
+          await sendTelegram(`⚠️ Tweet post ${i + 1} mislukt: ${e.message}`);
+        }
+        await sleep(1000);
+      }
+    }
 
     log("Alles verstuurd naar Telegram ✅");
     // Sla top posts op zodat Amy de knop-callbacks kan afhandelen
@@ -663,6 +825,14 @@ async function main() {
       JSON.stringify(topPosts, null, 2),
       "utf8"
     );
+    // Gebruikte onderwerpen opslaan zodat volgende run andere kiest
+    const newTopics = [
+      ...(ideas.newsPosts || []).map(p => p.onderwerp).filter(Boolean),
+      ...(ideas.tweetPosts || []).map(p => p.onderwerp).filter(Boolean),
+    ];
+    saveUsedTopics([...usedTopics, ...newTopics]);
+    log(`${newTopics.length} onderwerpen opgeslagen voor volgende run`);
+
     markRanToday();
     // Knopreacties worden afgehandeld door Amy (zelfde bot)
 

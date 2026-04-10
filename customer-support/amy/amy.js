@@ -427,8 +427,8 @@ async function markAsRead(state, emailId) {
   });
 }
 
-const AMY_CAT_GREEN  = "Amy: Afgehandeld";
-const AMY_CAT_ORANGE = "Amy: Follow-up";
+const AMY_CAT_GREEN  = "Amy - Afgehandeld";
+const AMY_CAT_ORANGE = "Amy - Follow-up";
 
 async function ensureOutlookCategories(state) {
   const headers = msHeaders(state);
@@ -449,12 +449,20 @@ async function ensureOutlookCategories(state) {
 }
 
 async function markEmailCategory(state, emailId, color) {
-  if (!emailId || emailId.length < 50) return; // geen geldig email ID
+  if (!emailId || emailId.length < 50) {
+    console.log(`  [CAT] Overgeslagen — emailId ontbreekt/te kort (${emailId ? emailId.length : 0} chars)`);
+    return;
+  }
   const categoryName = color === "green" ? AMY_CAT_GREEN : AMY_CAT_ORANGE;
-  await patch(`https://graph.microsoft.com/v1.0/me/messages/${emailId}`, {
+  const resp = await patch(`https://graph.microsoft.com/v1.0/me/messages/${emailId}`, {
     headers: msHeaders(state),
     json: { categories: [categoryName] },
   });
+  if (resp && resp.ok === false) {
+    console.log(`  [CAT] Markering mislukt (${resp.status}): ${String(resp.text || "").substring(0, 200)}`);
+  } else {
+    console.log(`  [CAT] Gemarkeerd als "${categoryName}"`);
+  }
 }
 
 async function sendReply(state, originalEmailId, toEmail, subject, bodyText) {
@@ -469,7 +477,8 @@ async function sendReply(state, originalEmailId, toEmail, subject, bodyText) {
 
   if (!createResp.ok) {
     console.log(`  [WARN] createReply mislukt (${createResp.status}): ${createResp.text}`);
-    return false;
+    // 404 = originele email niet meer vindbaar — geef null terug als signaal voor sendMail fallback
+    return createResp.status === 404 ? null : false;
   }
 
   const draft = createResp.json();
@@ -724,7 +733,7 @@ Onderwerp: ${subject}${extraStr}
 
 Geef ALLEEN de herziene emailtekst terug (zonder INTENT/RISK/etc. headers).`;
 
-  return claudeComplete(prompt);
+  return claudeComplete(prompt, SYSTEM_PROMPT, 2000);
 }
 
 // ============================================================
@@ -755,7 +764,12 @@ async function tgAnswerCallback(callbackQueryId, text = "") {
 
 async function tgGetUpdates(offset = 0) {
   const resp = await get(`${TELEGRAM_API}/getUpdates`, {
-    params: { offset: String(offset), timeout: "3", limit: "100" },
+    params: {
+      offset: String(offset),
+      timeout: "3",
+      limit: "100",
+      allowed_updates: JSON.stringify(["message", "callback_query"]),
+    },
   });
   return resp.ok ? (resp.json().result || []) : [];
 }
@@ -1019,6 +1033,20 @@ async function handleSend(state, cq, recordId) {
 }
 
 async function _doSend(state, cq, recordId, msgId) {
+  // Harde dedup: check Airtable status eerst, ongeacht in-memory state
+  try {
+    const rec = await atGet(recordId);
+    if (rec && (rec.fields || {})["Status"] === "Afgehandeld") {
+      console.log(`  [DEDUP] Record ${recordId} al Afgehandeld — niet opnieuw versturen`);
+      await tgAnswerCallback(cq.id, "✅ Al verstuurd");
+      delete state.pendingCallbacks[String(msgId)];
+      saveState(state);
+      return;
+    }
+  } catch (e) {
+    console.log(`  [WARN] Airtable dedup check mislukt: ${e.message}`);
+  }
+
   const info = await getCallbackInfo(state, msgId, recordId);
 
   if (!info) {
@@ -1027,10 +1055,22 @@ async function _doSend(state, cq, recordId, msgId) {
   }
 
   const emailId = info.emailId;
-  console.log(`  VERSTUREN naar ${info.fromEmail}...`);
+  console.log(`  VERSTUREN naar ${info.fromEmail} (emailId: ${emailId ? "OK" : "ontbreekt"}, isContactForm: ${!!info.isContactForm})`);
+
+  if (!info.fromEmail) {
+    await tgSend("❌ Versturen mislukt — geen emailadres gevonden. Controleer Airtable.");
+    console.log(`  [ERROR] fromEmail ontbreekt voor recordId ${recordId}`);
+    return;
+  }
+  if (!info.concept) {
+    await tgSend("❌ Versturen mislukt — geen concept gevonden. Probeer opnieuw aan te passen.");
+    console.log(`  [ERROR] concept ontbreekt voor recordId ${recordId}`);
+    return;
+  }
+
   // Zorg dat het token geldig is voor versturen
   try { await getAccessToken(state); } catch (e) {
-    await tgAnswerCallback(cq.id, "❌ Token fout — herstart Amy");
+    await tgSend("❌ Token fout — herstart Amy");
     console.log(`  [ERROR] Token refresh mislukt: ${e.message}`);
     return;
   }
@@ -1038,6 +1078,7 @@ async function _doSend(state, cq, recordId, msgId) {
   const hasValidEmailId = emailId && emailId.length > 50;
   let ok;
   if (info.isContactForm || !hasValidEmailId) {
+    console.log(`  Via sendMail (emailId ${hasValidEmailId ? "geldig" : "ontbreekt"})`);
     const headers = msHeaders(state);
     const bodyHtml = info.concept.replace(/\n/g, "<br>");
     const resp = await post("https://graph.microsoft.com/v1.0/me/sendMail", {
@@ -1052,15 +1093,38 @@ async function _doSend(state, cq, recordId, msgId) {
       },
     });
     ok = resp.ok;
+    if (!ok) console.log(`  [ERROR] sendMail mislukt: ${resp.status} ${String(resp.text).substring(0, 200)}`);
   } else {
-    ok = await sendReply(state, emailId, info.fromEmail, info.subject, info.concept);
+    console.log(`  Via sendReply`);
+    const replyResult = await sendReply(state, emailId, info.fromEmail, info.subject, info.concept);
+    if (replyResult === null) {
+      // Originele email niet meer vindbaar — stuur direct
+      console.log(`  Fallback naar sendMail (originele email niet vindbaar)`);
+      const headers = msHeaders(state);
+      const bodyHtml = info.concept.replace(/\n/g, "<br>");
+      const resp = await post("https://graph.microsoft.com/v1.0/me/sendMail", {
+        headers,
+        json: {
+          message: {
+            subject: `Re: ${info.subject}`,
+            body: { contentType: "HTML", content: bodyHtml },
+            toRecipients: [{ emailAddress: { address: info.fromEmail } }],
+          },
+          saveToSentItems: true,
+        },
+      });
+      ok = resp.ok;
+      if (!ok) console.log(`  [ERROR] sendMail fallback mislukt: ${resp.status} ${String(resp.text).substring(0, 200)}`);
+    } else {
+      ok = replyResult;
+    }
   }
 
   if (ok) {
     await atUpdate(recordId, { Status: "Afgehandeld" });
     // Kleur: oranje als follow-up nodig, groen als volledig afgehandeld.
     const needsFollowup = info.followup === "ja";
-    try { await markEmailCategory(state, emailId, needsFollowup ? "orange" : "green"); } catch {}
+    try { await markEmailCategory(state, emailId, needsFollowup ? "orange" : "green"); } catch (e) { console.log(`  [CAT] Exception: ${e.message}`); }
     const kleurLabel = needsFollowup ? "🟠 Follow-up nodig" : "🟢 Afgehandeld";
     const sentAt = new Date().toLocaleTimeString("nl-NL", { hour: "2-digit", minute: "2-digit" });
     await tgEdit(msgId, `✅ <b>Verstuurd — ${info.fromName}</b>\n📌 ${info.subject}\n📧 ${info.fromEmail}\n${kleurLabel} · ${sentAt}`, null, true);
@@ -1068,6 +1132,7 @@ async function _doSend(state, cq, recordId, msgId) {
     saveState(state);
     console.log(`  OK — Email verstuurd naar ${info.fromEmail}`);
   } else {
+    await tgSend(`❌ Versturen mislukt naar ${info.fromEmail} — check logs`);
     console.log(`  ERROR — Versturen mislukt`);
   }
 }
@@ -1083,16 +1148,27 @@ async function handleEdit(state, cq, recordId) {
 
   if (result) {
     const feedbackMsgId = result.message_id;
+    const origInfo = state.pendingCallbacks[String(msgId)] || {};
     state.pendingCallbacks[`feedback_${feedbackMsgId}`] = {
-      recordId, originalMsgId: msgId,
+      recordId,
+      originalMsgId: msgId,
+      emailId: origInfo.emailId,
+      followup: origInfo.followup,
+      isContactForm: origInfo.isContactForm,
     };
     saveState(state);
   }
 }
 
+const _revisionInProgress = new Set();
+
 async function handleFeedbackReply(state, message) {
   const feedbackText = (message.text || "").trim();
   if (!feedbackText) return false;
+
+  // Commando's (beginnen met "/" of @mention + "/") zijn nooit feedback
+  const stripped = feedbackText.replace(/^@\w+\s+/, "").trim();
+  if (stripped.startsWith("/")) return false;
 
   let info = null;
   let cbKey = null;
@@ -1106,6 +1182,7 @@ async function handleFeedbackReply(state, message) {
     if (state.pendingCallbacks[directKey]) {
       cbKey = directKey;
       info = state.pendingCallbacks[cbKey];
+      console.log(`  [FEEDBACK] Match via directe reply op ${directKey}`);
     }
 
     // 2. Reply op het originele concept bericht
@@ -1114,6 +1191,7 @@ async function handleFeedbackReply(state, message) {
         if (k.startsWith("feedback_") && v && v.originalMsgId === replyToId) {
           cbKey = k;
           info = v;
+          console.log(`  [FEEDBACK] Match via origineel concept (${k})`);
           break;
         }
       }
@@ -1127,45 +1205,68 @@ async function handleFeedbackReply(state, message) {
       .sort((a, b) => parseInt(b[0].replace("feedback_", "")) - parseInt(a[0].replace("feedback_", "")));
     if (openSessions.length > 0) {
       [cbKey, info] = openSessions[0];
+      console.log(`  [FEEDBACK] Match via fallback (${cbKey})`);
     }
   }
 
-  if (!info) return false;
+  if (!info) {
+    console.log(`  [FEEDBACK] Geen match gevonden — niet als feedback behandeld`);
+    return false;
+  }
 
-  const { recordId, emailId, originalMsgId } = info;
+  const { recordId, emailId, originalMsgId, followup, isContactForm } = info;
 
-  const rec = await atGet(recordId);
-  if (!rec) {
-    await tgSend("❌ Kon emaildata niet ophalen.");
+  // Voorkom dubbele revisie voor hetzelfde record
+  if (_revisionInProgress.has(recordId)) {
+    console.log(`  [FEEDBACK] Revisie al bezig voor ${recordId} — overgeslagen`);
     return true;
   }
+  _revisionInProgress.add(recordId);
 
-  const fields = rec.fields || {};
-  const originalConcept = fields["Concept"] || "";
-  const fromName = fields["Naam"] || "";
-  const fromEmail = fields["Afzender"] || "";
-  const subject = fields["Onderwerp"] || "";
+  // Direct ALLE feedback_ keys voor dit record opruimen zodat volgende berichten niet matchen
+  for (const [k, v] of Object.entries(state.pendingCallbacks)) {
+    if (k.startsWith("feedback_") && v && v.recordId === recordId) {
+      delete state.pendingCallbacks[k];
+    }
+  }
+  saveState(state);
 
-  await tgSend("⏳ Amy herziet het concept...");
+  try {
+    console.log(`  [FEEDBACK] Airtable ophalen voor ${recordId}...`);
+    const rec = await atGet(recordId);
+    if (!rec) {
+      console.log(`  [FEEDBACK] Airtable leeg/mislukt voor ${recordId}`);
+      await tgSend("❌ Kon emaildata niet ophalen.");
+      return true;
+    }
 
-  const extra = state.extraInstructions || "";
-  const newConcept = await reviseConcept(originalConcept, feedbackText, fromName, subject, extra);
+    const fields = rec.fields || {};
+    const originalConcept = fields["Concept"] || "";
+    const fromName = fields["Naam"] || "";
+    const fromEmail = fields["Afzender"] || "";
+    const subject = fields["Onderwerp"] || "";
+    console.log(`  [FEEDBACK] Concept herzien voor ${fromName} (${subject.substring(0, 40)})`);
 
-  await atUpdate(recordId, { Concept: newConcept, Status: "In behandeling" });
+    await tgSend("⏳ Amy herziet het concept...");
 
-  const preview = newConcept.length > 700 ? newConcept.substring(0, 700) + "..." : newConcept;
-  const text = `✏️ <b>Herzien concept — ${fromName}</b>\n📌 ${subject}\n📧 ${fromEmail}\n⏳ Nog versturen\n\n${preview}`;
-  const result = await tgSend(text, conceptKeyboard(recordId));
+    const extra = state.extraInstructions || "";
+    const newConcept = await reviseConcept(originalConcept, feedbackText, fromName, subject, extra);
 
-  if (result) {
-    const newMsgId = result.message_id;
-    state.pendingCallbacks[String(newMsgId)] = {
-      recordId, emailId, fromEmail, fromName, subject, concept: newConcept,
-    };
+    await atUpdate(recordId, { Concept: newConcept, Status: "In behandeling" });
+
+    const text = `✏️ <b>Herzien concept — ${fromName}</b>\n📌 ${subject}\n📧 ${fromEmail}\n⏳ Nog versturen\n\n${newConcept}`;
+    const result = await tgSend(text, conceptKeyboard(recordId));
+
+    if (result) {
+      const newMsgId = result.message_id;
+      state.pendingCallbacks[String(newMsgId)] = {
+        recordId, emailId, fromEmail, fromName, subject, concept: newConcept, followup, isContactForm,
+      };
+    }
+  } finally {
+    _revisionInProgress.delete(recordId);
   }
 
-  // Opruimen
-  delete state.pendingCallbacks[cbKey];
   if (originalMsgId) delete state.pendingCallbacks[String(originalMsgId)];
   saveState(state);
   return true;
@@ -1176,6 +1277,8 @@ async function handleFeedbackReply(state, message) {
 // ============================================================
 
 async function handleCommand(state, text) {
+  // Strip @mention prefix ("@Amy_customersupport_Bot /reels" → "/reels")
+  text = text.replace(/^@\w+\s+/, "").trim();
   const lower = text.toLowerCase().trim();
 
   // Openstaande emails
@@ -1189,6 +1292,12 @@ async function handleCommand(state, text) {
   if (replyMatch) {
     const name = replyMatch[1].trim().replace(/\b\w/g, c => c.toUpperCase());
     await cmdReplyTo(state, name);
+    return true;
+  }
+
+  // /reels — genereer 5 virale reel ideeën on-demand
+  if (lower === "/reels" || lower === "reels") {
+    await cmdReels();
     return true;
   }
 
@@ -1254,6 +1363,99 @@ async function cmdReplyTo(state, name) {
       recordId, emailId, fromEmail, fromName, subject, concept,
     };
     saveState(state);
+  }
+}
+
+async function cmdReels() {
+  await sendToContentGroup("⏳ 5 virale reel ideeën genereren...");
+
+  // Lees gescrapete virale posts en pak de top 5 reels/videos op views
+  let viralReels = [];
+  try {
+    const raw = fs.readFileSync(SCRAPER_POSTS_FILE, "utf-8");
+    const all = JSON.parse(raw);
+    viralReels = all
+      .filter(p => p.type === "video" || p.type === "reel" || p.views > 0)
+      .sort((a, b) => (b.views || 0) - (a.views || 0))
+      .slice(0, 5);
+  } catch (e) {
+    await sendToContentGroup(`⚠️ Kon top-posts.json niet lezen: ${e.message}. Draai eerst de scraper.`);
+    return;
+  }
+
+  if (!viralReels.length) {
+    await sendToContentGroup("⚠️ Geen virale reels gevonden in top-posts.json.");
+    return;
+  }
+
+  const reelsList = viralReels.map((r, i) =>
+    `${i + 1}. @${r.account} — ${(r.views || 0).toLocaleString("nl-NL")} views, ${r.likes.toLocaleString("nl-NL")} likes
+   URL: ${r.url}
+   Caption: ${(r.caption || "(geen)").slice(0, 300)}`
+  ).join("\n\n");
+
+  const prompt = `Je bent de content strategist van Oergezond — een Nederlands gezondheidsplatform (oervoeding, hormonen, huid, slaap, circadiaans ritme, toxines vermijden, orthomoleculaire en ayurvedische geneeskunde, farmaceutische industrie feiten).
+
+Brand voice: confronterend eerlijk, rustig zelfverzekerd, educatief. Korte zinnen, spreektaal. Gebruik: troep, puur, oer-, echt, gewoon, hormoonvriendelijk, grasgevoerd, herstel van binnenuit. Nooit: journey, ritual, glow up, clean beauty, superfoods, revolutionair.
+
+Hier zijn de 5 meest virale reels uit de gezondheids-niche van deze week:
+
+${reelsList}
+
+Maak voor ELKE virale reel een Oergezond-versie: zelfde viral-mechaniek, maar vertaald naar een Oergezond-thema en in brand voice. Elke reel moet:
+- Scroll-stoppend zijn in de eerste 3 seconden
+- Gebaseerd op een feitelijk onderbouwde claim (wetenschappelijk onderzoek, orthomoleculair, ayurvedisch of gedocumenteerde farma-feiten) — fact-checkbaar
+- Over 5 VERSCHILLENDE onderwerpen gaan
+- In correct natuurlijk Nederlands (geen anglicismen)
+
+Geef output ALLEEN als geldig JSON, in dezelfde volgorde als de input (reel 1 = inspiratie 1, enz.):
+
+{
+  "reels": [
+    {
+      "onderwerp": "kort thema",
+      "bron": "concrete bronvermelding, bijv. 'JAMA 2021', 'orthomoleculair principe magnesium', 'ayurvedisch principe ghee'",
+      "hook": "eerste 3 seconden tekst — confronterend, trigger",
+      "opbouw": "wat je laat zien en vertelt, stap voor stap",
+      "cta": "call to action"
+    }
+  ]
+}
+
+Geef ALLEEN de JSON, geen extra tekst.`;
+
+  try {
+    const raw = await callClaude(prompt, 2500);
+    const jsonMatch = raw.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) throw new Error("Geen JSON in Claude response");
+    const parsed = JSON.parse(jsonMatch[0]);
+    const reels = parsed.reels || [];
+
+    if (!reels.length) {
+      await sendToContentGroup("⚠️ Geen reels gegenereerd.");
+      return;
+    }
+
+    const datum = new Date().toLocaleDateString("nl-NL", { weekday: "long", day: "numeric", month: "long" });
+    await sendToContentGroup(`🎬 <b>5 Virale Reel Ideeën — ${datum}</b>`);
+
+    for (let i = 0; i < reels.length; i++) {
+      const r = reels[i];
+      const src = viralReels[i];
+      const srcLine = src
+        ? `🔗 Inspiratie: @${src.account} (${(src.views || 0).toLocaleString("nl-NL")} views)\n${src.url}\n\n`
+        : "";
+      const text = `<b>Reel ${i + 1} — ${r.onderwerp || ""}</b>\n` +
+        `📚 Bron: ${r.bron || "?"}\n\n` +
+        srcLine +
+        `<b>Hook:</b> ${r.hook}\n\n` +
+        `<b>Opbouw:</b> ${r.opbouw}\n\n` +
+        `<b>CTA:</b> ${r.cta}`;
+      await sendToContentGroup(text);
+    }
+  } catch (e) {
+    console.log(`  [ERROR] /reels: ${e.message}`);
+    await sendToContentGroup(`⚠️ Reel generatie mislukt: ${e.message}`);
   }
 }
 
@@ -1366,30 +1568,62 @@ async function processTelegramUpdates(state) {
 
   for (const update of updates) {
     state.lastUpdateId = Math.max(state.lastUpdateId, update.update_id);
+    saveState(state); // direct persisteren zodat updates niet dubbel gespeeld worden bij crash
 
     if (update.callback_query) {
       const cq = update.callback_query;
-      const parts = (cq.data || "").split("|");
+      const data = cq.data || "";
+      const chatId = cq.message?.chat?.id;
+      const isContentChat = String(chatId) === String(CONTENT_CHAT_ID);
+      const isSupportChat = String(chatId) === String(TELEGRAM_CHAT_ID);
+
+      const parts = data.split("|");
       const action = parts[0];
       const recordId = parts[1] || "";
-      // email_id wordt niet meer in callback_data opgeslagen (te lang voor Telegram)
-      // — wordt opgehaald uit Airtable via record_id
+      const baseAction = action.split(":")[0];
 
-      if (action === "send") await handleSend(state, cq, recordId);
-      else if (action === "edit") await handleEdit(state, cq, recordId);
-      else if (["tweet", "news", "remake"].includes(action)) await handleScraperCallback(state, cq);
-      else await tgAnswerCallback(cq.id);
+      // Customer support callbacks alleen in support chat
+      if ((action === "send" || action === "edit") && isSupportChat) {
+        if (action === "send") await handleSend(state, cq, recordId);
+        else await handleEdit(state, cq, recordId);
+      }
+      // Scraper/content callbacks alleen in content chat
+      else if (["tweet", "news", "remake"].includes(baseAction) && isContentChat) {
+        await handleScraperCallback(state, cq);
+      } else {
+        await tgAnswerCallback(cq.id);
+      }
 
     } else if (update.message) {
       const msg = update.message;
       const text = (msg.text || "").trim();
       if (!text) continue;
 
-      // Check op feedback (ook zonder reply_to_message via fallback)
-      const handled = await handleFeedbackReply(state, msg);
-      if (handled) continue;
+      const chatId = msg.chat?.id;
+      const isContentChat = String(chatId) === String(CONTENT_CHAT_ID);
+      const isSupportChat = String(chatId) === String(TELEGRAM_CHAT_ID);
 
-      await handleCommand(state, text);
+      console.log(`  [TG] Bericht ontvangen in ${isContentChat ? "CONTENT" : isSupportChat ? "SUPPORT" : "ONBEKEND"}: "${text.substring(0, 60)}" (msg_id: ${msg.message_id})`);
+
+      // Content chat: alleen content commando's (/reels etc), geen feedback/emails
+      if (isContentChat) {
+        const stripped = text.replace(/^@\w+\s+/, "").trim().toLowerCase();
+        if (stripped === "/reels" || stripped === "reels") {
+          await cmdReels();
+        }
+        continue;
+      }
+
+      // Support chat: feedback + email commando's
+      if (isSupportChat) {
+        const handled = await handleFeedbackReply(state, msg);
+        if (handled) continue;
+        await handleCommand(state, text);
+        continue;
+      }
+
+      // Onbekende chat: negeer
+      console.log(`  [TG] Onbekende chat ${chatId} — genegeerd`);
     }
   }
 
@@ -1418,6 +1652,14 @@ async function main() {
   } catch (e) {
     console.error(`  [ERROR] Token refresh mislukt: ${e.message}`);
     process.exit(1);
+  }
+
+  // Verwijder eventuele webhook zodat long-polling altijd werkt
+  try {
+    await post(`${TELEGRAM_API}/deleteWebhook`, { json: { drop_pending_updates: false } });
+    console.log("  Telegram webhook verwijderd OK");
+  } catch (e) {
+    console.log(`  [WARN] deleteWebhook mislukt: ${e.message}`);
   }
 
   // Zorg dat Outlook categorieën bestaan met de juiste kleur

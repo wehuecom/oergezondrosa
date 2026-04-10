@@ -285,9 +285,8 @@ async function generateNewsPost(data) {
   // Genereer achtergrond via Freepik
   let photoBgBase64 = null;
   try {
-    photoBgBase64 = await generateFreepikBackground(
-      data.imagePrompt + ", product or concept photography, no text, no people, dark moody background"
-    );
+    const freepikPrompt = `${data.imagePrompt}. Context: news headline about "${data.headline}". Conceptual dark moody photo, no text, no people, no faces, dark background, high contrast, editorial style`;
+    photoBgBase64 = await generateFreepikBackground(freepikPrompt);
   } catch (e) {
     console.log("Freepik niet beschikbaar voor nieuws post:", e.message.slice(0, 80));
   }
@@ -399,9 +398,19 @@ async function generateNewsPost(data) {
       </div>
     </div>
     <div class="text-section">
-      <div class="headline">${headlineHtml}</div>
+      <div class="headline" id="hl">${headlineHtml}</div>
     </div>
   </div>
+  <script>
+    const el = document.getElementById('hl');
+    const maxH = 520;
+    let size = 68;
+    el.style.fontSize = size + 'px';
+    while (el.scrollHeight > maxH && size > 28) {
+      size -= 2;
+      el.style.fontSize = size + 'px';
+    }
+  </script>
 </body>
 </html>`;
 
