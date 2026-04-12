@@ -37,7 +37,7 @@ const LOGO_HTML = (size = 70, dark = true, circle = false) => {
 async function htmlToImage(html, width = 1080, height = 1080) {
   const browser = await puppeteer.launch({
     headless: true,
-    timeout: 60000,
+    timeout: 90000,
     args: [
       "--no-sandbox",
       "--disable-setuid-sandbox",
@@ -51,8 +51,17 @@ async function htmlToImage(html, width = 1080, height = 1080) {
   try {
     const page = await browser.newPage();
     await page.setViewport({ width, height, deviceScaleFactor: 1 });
-    await page.setContent(html, { waitUntil: "networkidle0", timeout: 30000 });
-    await page.evaluate(() => document.fonts.ready);
+    // Probeer met networkidle0, fallback naar domcontentloaded
+    try {
+      await page.setContent(html, { waitUntil: "networkidle0", timeout: 60000 });
+    } catch {
+      await page.setContent(html, { waitUntil: "domcontentloaded", timeout: 30000 });
+    }
+    // Wacht max 10s op fonts, ga anders door zonder
+    await Promise.race([
+      page.evaluate(() => document.fonts.ready),
+      new Promise(r => setTimeout(r, 10000)),
+    ]);
     const buffer = await page.screenshot({ type: "png", fullPage: false });
     return buffer;
   } finally {
