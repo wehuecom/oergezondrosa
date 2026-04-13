@@ -69,7 +69,7 @@ Per post, evalueer:
 2. EMOTIONELE TRIGGER: angst, herkenning, woede, hoop, verbazing
 3. OERGEZOND RELEVANTIE (1-10): past dit bij onze thema's en producten?
 4. CONTENT GAP: behandelen concurrenten dit al uitgebreid? (hoog = onbenut)
-5. BESTE FORMAT: carousel, nieuws, tweet, of reel
+5. BESTE FORMAT: nieuws of tweet (kies nieuws voor schokkende feiten/data, tweet voor meningen/stellingen)
 6. HOOK SUGGESTIE: eerste zin/3 seconden voor de Oergezond versie (in het Nederlands)
 
 Geef output als JSON array, gesorteerd op potentie (hoogste eerst), ALLEEN de top 10:
@@ -83,7 +83,7 @@ Geef output als JSON array, gesorteerd op potentie (hoogste eerst), ALLEEN de to
   "emotionalTrigger": "angst|herkenning|woede|hoop|verbazing",
   "relevanceScore": 8,
   "contentGap": "hoog|middel|laag",
-  "bestFormat": "carousel|nieuws|tweet|reel",
+  "bestFormat": "nieuws|tweet",
   "hookSuggestie": "...",
   "reasoning": "1-2 zinnen waarom dit kansrijk is voor Oergezond"
 }]

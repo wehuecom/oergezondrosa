@@ -2,7 +2,7 @@
 
 const { log } = require("../lib/logger.js");
 const { callClaude, parseJson } = require("../lib/claude.js");
-const { generateNewsPost, generateTweetPost, generateCarousel } = require("../generate-statics.js");
+const { generateNewsPost, generateTweetPost } = require("../generate-statics.js");
 
 const VERBODEN_WOORDEN = [
   "journey", "ritual", "elevate", "holistic", "glow up", "clean beauty",
@@ -133,10 +133,8 @@ ALLEEN JSON.`;
 }
 
 function getHookText(piece) {
-  if (piece.format === "carousel") return piece.data?.title || "";
   if (piece.format === "nieuws") return piece.data?.headline || "";
   if (piece.format === "tweet") return piece.data?.text || "";
-  if (piece.format === "reel") return piece.data?.hook || "";
   return "";
 }
 
@@ -168,15 +166,7 @@ ALLEEN JSON.`;
   // Regenereer image als hook/headline veranderd is
   const updated = { ...piece, caption: fixed.caption };
 
-  if (piece.format === "carousel" && fixed.carousel) {
-    updated.data = fixed.carousel;
-    try {
-      const slides = await generateCarousel(fixed.carousel);
-      updated.imageBuffers = slides.map(s => s.buffer);
-    } catch (e) {
-      log(`  Carousel regeneratie mislukt: ${e.message}`);
-    }
-  } else if (piece.format === "nieuws" && fixed.newsPost) {
+  if (piece.format === "nieuws" && fixed.newsPost) {
     updated.data = fixed.newsPost;
     try {
       updated.imageBuffer = await generateNewsPost(fixed.newsPost);
@@ -190,20 +180,12 @@ ALLEEN JSON.`;
     } catch (e) {
       log(`  Tweet image regeneratie mislukt: ${e.message}`);
     }
-  } else if (piece.format === "reel" && fixed.reelScript) {
-    updated.data = fixed.reelScript;
   }
 
   return updated;
 }
 
 function getFixJsonTemplate(piece) {
-  if (piece.format === "carousel") {
-    return `{
-  "carousel": { "title": "...", "subtitle": "...", "slides": [{"headline":"...","body":"..."},{"headline":"...","body":"..."},{"headline":"...","body":"..."},{"headline":"...","body":"..."}] },
-  "caption": "gefixte caption, max 150 woorden, precies 1 CTA, 8-12 hashtags"
-}`;
-  }
   if (piece.format === "nieuws") {
     return `{
   "newsPost": { "headline": "HOOFDLETTERS MAX 12 WOORDEN", "highlightWords": ["..."], "imagePrompt": "..." },
@@ -213,12 +195,6 @@ function getFixJsonTemplate(piece) {
   if (piece.format === "tweet") {
     return `{
   "tweetPost": { "text": "max 280 tekens" },
-  "caption": "gefixte caption, max 150 woorden, precies 1 CTA, 8-12 hashtags"
-}`;
-  }
-  if (piece.format === "reel") {
-    return `{
-  "reelScript": { "hook": "...", "shots": [...], "cta": "...", "audio": "..." },
   "caption": "gefixte caption, max 150 woorden, precies 1 CTA, 8-12 hashtags"
 }`;
   }

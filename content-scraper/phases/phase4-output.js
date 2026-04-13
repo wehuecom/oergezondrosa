@@ -26,51 +26,64 @@ async function run(content, rawData) {
     .map(([s, c]) => `${s}: ${c}`)
     .join(" · ");
 
-  // Header
-  await sendText(`📊 *Dagelijkse content — ${datum}*\n_${rawData.length} bronpunten geanalyseerd (${sourceText})_\n_${content.length} posts gegenereerd en goedgekeurd_`);
+  // Tel nieuws en tweet posts
+  const newsCount = content.filter(c => c.format === "nieuws").length;
+  const tweetCount = content.filter(c => c.format === "tweet").length;
 
-  // Per content stuk
-  for (let i = 0; i < content.length; i++) {
-    const piece = content[i];
+  // Header
+  await sendText(`📊 *Dagelijkse content — ${datum}*\n_${rawData.length} bronpunten geanalyseerd (${sourceText})_\n_${newsCount} nieuws posts + ${tweetCount} tweet posts gegenereerd_`);
+
+  // Stuur nieuws posts eerst
+  const newsPosts = content.filter(c => c.format === "nieuws");
+  const tweetPosts = content.filter(c => c.format === "tweet");
+
+  if (newsPosts.length > 0) {
+    await sendText(`📰 *${newsPosts.length} Nieuws Posts — kies er één*`);
+  }
+
+  // Nieuws posts
+  for (let i = 0; i < newsPosts.length; i++) {
+    const piece = newsPosts[i];
     await sleep(1000);
 
     try {
-      if (piece.format === "carousel" && piece.imageBuffers) {
-        await sendText(`🖼️ *${i + 1}. Carousel — ${piece.topic}*\n_${piece.hookPatroon} · ${piece.source}_`);
-        for (const buf of piece.imageBuffers) {
-          await sendPhoto(buf);
-          await sleep(600);
-        }
-        await sendText(`📋 *Caption:*\n\n${piece.caption}`);
-
-      } else if (piece.format === "nieuws" && piece.imageBuffer) {
-        const header = `📰 *${i + 1}. Nieuws — ${piece.topic}*\n_${piece.hookPatroon} · ${piece.source} · Bron: ${piece.bron || "n/a"}_`;
+      if (piece.format === "nieuws" && piece.imageBuffer) {
+        const header = `📰 *Nieuws ${i + 1} — ${piece.topic}*\n_Bron: ${piece.bron || "n/a"}_`;
         await sendPhoto(piece.imageBuffer, header);
-        await sendText(`📋 *Caption:*\n\n${piece.caption}`);
+        await sendText(`📋 *Caption ${i + 1}:*\n\n${piece.caption}`);
 
       } else if (piece.format === "tweet" && piece.imageBuffer) {
-        const header = `🐦 *${i + 1}. Tweet — ${piece.topic}*\n_${piece.hookPatroon} · ${piece.source} · Bron: ${piece.bron || "n/a"}_`;
+        const header = `🐦 *Tweet ${i + 1} — ${piece.topic}*\n_Bron: ${piece.bron || "n/a"}_`;
         await sendPhoto(piece.imageBuffer, header);
-        await sendText(`📋 *Caption:*\n\n${piece.caption}`);
-
-      } else if (piece.format === "reel") {
-        const script = piece.data;
-        let reelText = `🎬 *${i + 1}. Reel — ${piece.topic}*\n_${piece.hookPatroon} · ${piece.source}_\n\n`;
-        reelText += `*Hook:* ${script.hook}\n\n`;
-        if (script.shots) {
-          for (const shot of script.shots) {
-            reelText += `⏱ *${shot.timing}*\n🎥 ${shot.visual}\n💬 ${shot.tekst}\n\n`;
-          }
-        }
-        reelText += `*CTA:* ${script.cta}\n🎵 *Audio:* ${script.audio || "voice-over"}`;
-        await sendText(reelText);
-        await sendText(`📋 *Caption:*\n\n${piece.caption}`);
+        await sendText(`📋 *Caption ${i + 1}:*\n\n${piece.caption}`);
       }
 
       log(`  ${piece.format} "${piece.topic}" verstuurd ✅`);
     } catch (e) {
       log(`  ${piece.format} "${piece.topic}" versturen mislukt: ${e.message}`);
-      await sendText(`⚠️ Post ${i + 1} (${piece.topic}) versturen mislukt`);
+      await sendText(`⚠️ Nieuws ${i + 1} (${piece.topic}) versturen mislukt`);
+    }
+  }
+
+  // Tweet posts
+  if (tweetPosts.length > 0) {
+    await sendText(`🐦 *${tweetPosts.length} Tweet Posts — kies er één*`);
+  }
+
+  for (let i = 0; i < tweetPosts.length; i++) {
+    const piece = tweetPosts[i];
+    await sleep(1000);
+
+    try {
+      if (piece.imageBuffer) {
+        const header = `🐦 *Tweet ${i + 1} — ${piece.topic}*\n_Bron: ${piece.bron || "n/a"}_`;
+        await sendPhoto(piece.imageBuffer, header);
+        await sendText(`📋 *Caption ${i + 1}:*\n\n${piece.caption}`);
+      }
+      log(`  tweet "${piece.topic}" verstuurd ✅`);
+    } catch (e) {
+      log(`  tweet "${piece.topic}" versturen mislukt: ${e.message}`);
+      await sendText(`⚠️ Tweet ${i + 1} (${piece.topic}) versturen mislukt`);
     }
   }
 
