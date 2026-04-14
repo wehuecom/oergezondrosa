@@ -1308,7 +1308,125 @@ async function handleCommand(state, text) {
     return true;
   }
 
+  // Geen command herkend — stuur naar Amy Chat (vrij gesprek)
   return false;
+}
+
+// ============================================================
+// AMY CHAT — Vrij gesprek via Claude
+// ============================================================
+
+const AMY_CHAT_HISTORY = []; // in-memory conversation history (reset bij restart)
+const AMY_MAX_HISTORY = 20; // bewaar laatste 20 berichten
+
+const AMY_SYSTEM_PROMPT = `Je bent Amy, de assistent van Oergezond. Je praat via Telegram met Rosa of Jorn, de oprichters.
+
+WIE JE BENT:
+- Je bent behulpzaam, direct, en denkt mee als een teamlid
+- Je schrijft in het Nederlands, informeel (jij/je), kort en to the point
+- Je kent het bedrijf door en door
+
+OERGEZOND:
+- Nederlands gezondheidsmerk — oervoeding, natuurlijke leefstijl, holistische gezondheid
+- Producten: Oercrème (€28,95), Oercrème Vitamine E (€32,50), Shampoo Bar, Conditioner Bar, Haarolie, Luierzalf, Oerbril, Lippenbalsem, Deodorant, Oerbouillon, Afwasmiddel, Waterfles, Oerpouch/Oerbars
+- Shopify webshop: www.oergezond.com
+- Instagram: @oergezond (hoofdkanaal), TikTok: @oergezondnl
+- Opgericht door Jorn & Rosa — achtergrond bij Defensie, hersteld van PDS en vermoeidheid
+
+BRAND VOICE:
+- Toon: confronterend eerlijk, rustig zelfverzekerd, educatief
+- Gebruik: troep, puur, oer-, echt, gewoon, hormoonvriendelijk, grasgevoerd, herstel van binnenuit
+- Nooit: journey, ritual, elevate, glow up, clean beauty, self-care, superfoods, revolutionair
+
+3 KLANTAVATARS:
+1. Bewuste Moeder (Lisa, 32-45) — koopt biologisch, wil geen hormoonverstorende stoffen op kinderen
+2. Huidprobleem-Zoeker (Tom/Sanne, 25-45) — eczeem/psoriasis, moe van steroïdcrèmes
+3. Bewuste Biohacker (Daan/Mark, 28-45) — carnivoor/paleo, Huberman, anti-zaadoliën
+
+WAT JE KUNT:
+- Content schrijven (captions, nieuwsbrieven, scripts, ad copy)
+- Vragen beantwoorden over producten, ingrediënten, strategie
+- Meedenken over marketing, ads, Instagram, email
+- Klantservice concepten opstellen
+- Alles rondom het bedrijf
+
+WAT JE NIET DOET:
+- Nooit medische claims maken
+- Nooit zelf publiceren of financiële acties doen
+- Altijd in het Nederlands tenzij anders gevraagd
+
+Houd je antwoorden compact — dit is Telegram, geen essay. Max 3-4 korte alinea's tenzij er meer nodig is.`;
+
+async function amyChat(userMessage, chatId) {
+  // Voeg user bericht toe aan history
+  AMY_CHAT_HISTORY.push({ role: "user", content: userMessage });
+
+  // Trim history
+  while (AMY_CHAT_HISTORY.length > AMY_MAX_HISTORY) {
+    AMY_CHAT_HISTORY.shift();
+  }
+
+  const body = JSON.stringify({
+    model: "claude-sonnet-4-6",
+    max_tokens: 1500,
+    system: AMY_SYSTEM_PROMPT,
+    messages: AMY_CHAT_HISTORY,
+  });
+
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    const res = await post("https://api.anthropic.com/v1/messages", {
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": CLAUDE_API_KEY,
+        "anthropic-version": "2023-06-01",
+      },
+      json: {
+        model: "claude-sonnet-4-6",
+        max_tokens: 1500,
+        system: AMY_SYSTEM_PROMPT,
+        messages: AMY_CHAT_HISTORY,
+      },
+    });
+
+    if (res.ok) {
+      const data = res.json();
+      const reply = data?.content?.[0]?.text || "Sorry, ik kon geen antwoord genereren.";
+
+      // Voeg Amy's antwoord toe aan history
+      AMY_CHAT_HISTORY.push({ role: "assistant", content: reply });
+
+      // Stuur naar Telegram (splits bij >4000 tekens)
+      const targetChatId = chatId || TELEGRAM_CHAT_ID;
+      const chunks = [];
+      let remaining = reply;
+      while (remaining.length > 0) {
+        chunks.push(remaining.slice(0, 4000));
+        remaining = remaining.slice(4000);
+      }
+      for (const chunk of chunks) {
+        await post(`${TELEGRAM_API}/sendMessage`, {
+          json: { chat_id: targetChatId, text: chunk, parse_mode: "Markdown" },
+        });
+      }
+
+      console.log(`  [AMY CHAT] Antwoord verstuurd (${reply.length} tekens)`);
+      return;
+    }
+
+    const isOverloaded = res.status === 529;
+    if (isOverloaded && attempt < 3) {
+      console.log(`  [AMY CHAT] Claude overloaded — poging ${attempt}/3, wacht ${attempt * 10}s...`);
+      await new Promise(r => setTimeout(r, attempt * 10000));
+      continue;
+    }
+
+    console.log(`  [AMY CHAT] Claude error: ${res.status} ${res.text?.substring(0, 200)}`);
+    const errorChatId = chatId || TELEGRAM_CHAT_ID;
+    await post(`${TELEGRAM_API}/sendMessage`, {
+      json: { chat_id: errorChatId, text: "⚠️ Sorry, ik kon even geen antwoord genereren. Probeer het opnieuw." },
+    });
+    return;
+  }
 }
 
 async function cmdListOpen() {
@@ -1605,20 +1723,27 @@ async function processTelegramUpdates(state) {
 
       console.log(`  [TG] Bericht ontvangen in ${isContentChat ? "CONTENT" : isSupportChat ? "SUPPORT" : "ONBEKEND"}: "${text.substring(0, 60)}" (msg_id: ${msg.message_id})`);
 
-      // Content chat: alleen content commando's (/reels etc), geen feedback/emails
+      // Content chat: content commando's + vrij gesprek
       if (isContentChat) {
         const stripped = text.replace(/^@\w+\s+/, "").trim().toLowerCase();
         if (stripped === "/reels" || stripped === "reels") {
           await cmdReels();
+        } else {
+          // Vrij gesprek met Amy
+          await amyChat(text, chatId);
         }
         continue;
       }
 
-      // Support chat: feedback + email commando's
+      // Support chat: feedback + email commando's + vrij gesprek
       if (isSupportChat) {
         const handled = await handleFeedbackReply(state, msg);
         if (handled) continue;
-        await handleCommand(state, text);
+        const cmdHandled = await handleCommand(state, text);
+        if (!cmdHandled) {
+          // Geen command herkend — vrij gesprek met Amy
+          await amyChat(text, chatId);
+        }
         continue;
       }
 
