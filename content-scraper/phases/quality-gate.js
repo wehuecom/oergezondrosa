@@ -80,7 +80,14 @@ async function checkQuality(piece) {
 
   // 3. Scroll-stop + Brand voice + CTA check (Claude)
   const hookText = getHookText(piece);
-  const prompt = `Je bent een kwaliteitscontroleur voor Oergezond content. Check deze post op 3 criteria.
+  const prompt = `Je bent een kwaliteitscontroleur voor Oergezond content.
+
+WERKHOUDING:
+- Wees proactief en streng: liever een fix te veel dan middelmatige content doorlaten. Zie je een subtiel toonprobleem? Benoem het.
+- Weet je iets niet zeker? Zeg het eerlijk — markeer het als twijfelgeval in je feedback.
+- Niet gokken of aannemen: beoordeel alleen wat je daadwerkelijk kunt checken.
+
+Check deze post op 3 criteria.
 
 HOOK/HEADLINE:
 "${hookText}"

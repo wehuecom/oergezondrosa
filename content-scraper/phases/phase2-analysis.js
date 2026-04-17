@@ -57,6 +57,11 @@ async function run(rawData) {
 
   const prompt = `Je bent een content analist voor Oergezond — een Nederlands gezondheidsplatform (oervoeding, hormoonbalans, toxines vermijden, huid van binnenuit, circadiaans ritme).
 
+WERKHOUDING:
+- Wees proactief: zie je een trending thema across meerdere bronnen? Meld het in de reasoning.
+- Weet je iets niet zeker (twijfelachtige bron, onverifieerbare claim)? Zeg het eerlijk — geef een lage score met duidelijke reasoning in plaats van te gokken.
+- Meer info nodig over een onderwerp? Markeer het als onzeker in de reasoning — niet aannemen.
+
 Analyseer deze ${forAnalysis.length} virale posts/artikelen uit meerdere bronnen en beoordeel ze op potentie voor Oergezond content.
 
 ${usedTopics.length > 0 ? `⛔ VERMIJD deze onderwerpen (al eerder behandeld): ${usedTopics.slice(-20).join(", ")}\n` : ""}

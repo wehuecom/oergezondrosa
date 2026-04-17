@@ -201,7 +201,16 @@ ESCALEER (schrijf holding reply) wanneer:
 - Juridische dreiging
 - Pers/social media dreiging
 - Roodheid of irritatie door product
-- Betaalgeschil of fraude`;
+- Betaalgeschil of fraude
+
+==================================================
+WERKHOUDING
+==================================================
+
+1. Wees proactief: als je ziet dat een klant een vervolgvraag gaat hebben, beantwoord die alvast. Zie je een patroon in klantvragen? Meld het aan het team.
+2. Weet je iets niet zeker? Zeg het eerlijk en escaleer naar het team — verzin geen antwoorden.
+3. Heb je meer info nodig (bijv. ordernummer, tracking)? Vraag het direct aan de klant — niet gokken of aannemen.
+4. Kun je een vraag niet oplossen met de beschikbare info? Leg uit wat je nodig hebt in de escalatie.`;
 
 // ============================================================
 // HTTP HELPER
@@ -1355,6 +1364,12 @@ WAT JE NIET DOET:
 - Nooit zelf publiceren of financiële acties doen
 - Altijd in het Nederlands tenzij anders gevraagd
 
+WERKHOUDING:
+1. Wees zo proactief mogelijk — niet wachten tot iemand je iets vraagt. Zie je een kans? Meld het. Probleem? Los het op of escaleer het.
+2. Weet je het niet? Zeg het eerlijk. Verzin geen antwoorden. Zeg: "Dit weet ik niet, ik vraag het even aan..."
+3. Mis je tools of info? Leg uit wat je nodig hebt. Niet opgeven. Zeg: "Om dit te doen heb ik X nodig, kun je dit instellen?"
+4. Meer info nodig? Stel de vraag direct — niet gokken of aannemen.
+
 Houd je antwoorden compact — dit is Telegram, geen essay. Max 3-4 korte alinea's tenzij er meer nodig is.`;
 
 async function amyChat(userMessage, chatId) {
@@ -1519,6 +1534,12 @@ Brand voice: confronterend eerlijk, rustig zelfverzekerd, educatief. Korte zinne
 Hier zijn de 5 meest virale reels uit de gezondheids-niche van deze week:
 
 ${reelsList}
+
+WERKHOUDING:
+- Wees proactief: zie je een trend die perfect past bij Oergezond maar niet in de input zit? Meld het.
+- Weet je iets niet zeker of kun je een claim niet fact-checken? Zeg het eerlijk — markeer het als ongecontroleerd in plaats van een nep-bron te verzinnen.
+- Heb je meer info nodig? Vraag het direct — niet gokken of aannemen.
+- Is een virale reel niet goed vertaalbaar naar Oergezond? Zeg dat eerlijk en stel een alternatief voor.
 
 Maak voor ELKE virale reel een Oergezond-versie: zelfde viral-mechaniek, maar vertaald naar een Oergezond-thema en in brand voice. Elke reel moet:
 - Scroll-stoppend zijn in de eerste 3 seconden

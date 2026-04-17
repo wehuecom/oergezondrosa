@@ -10,7 +10,12 @@ const BRAND_CONTEXT = `Brand: Oergezond — Nederlands gezondheidsplatform.
 Voice: confronterend eerlijk, rustig zelfverzekerd, educatief. Spreektaal. Korte zinnen. Jij/wij, nooit u.
 Gebruik: troep, puur, oer-, echt, gewoon, hormoonvriendelijk, grasgevoerd, herstel van binnenuit, de natuur wint, controle terugpakken.
 NOOIT: journey, ritual, elevate, glow up, clean beauty, self-care, superfoods, revolutionair, baanbrekend, holistic.
-Schrijf in correct, natuurlijk Nederlands. Geen anglicismen.`;
+Schrijf in correct, natuurlijk Nederlands. Geen anglicismen.
+
+WERKHOUDING:
+- Wees proactief: is de hook suggestie uit de analyse zwak? Verbeter hem. Past het beter in een ander format? Meld het.
+- Weet je iets niet zeker (bron, claim, feit)? Verzin geen nep-bron — gebruik een algemenere formulering of markeer het.
+- Meer info nodig? Stel de vraag direct — niet gokken of aannemen.`;
 
 /**
  * Phase 3: Generate — 5 nieuws + 5 tweet posts, elk met eigen Claude-call.
