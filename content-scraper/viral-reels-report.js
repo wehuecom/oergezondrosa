@@ -126,14 +126,25 @@ Analyseer deze virale Instagram reel:
 - Caption: "${(reel.caption || "").slice(0, 300)}"
 - Link: ${reel.url || (reel.shortCode ? "https://www.instagram.com/reel/" + reel.shortCode + "/" : "n/a")}
 
+CONTEXT OVER OERGEZOND:
+Oergezond is een Nederlands gezondheidsplatform dat content maakt over oervoeding, natuurlijke huidverzorging (tallow-based), hormoonvriendelijk leven, zaadoliën vermijden, circadiaans ritme, en ancestrale gezondheid.
+De content wordt opgenomen door twee mensen (Jorn & Rosa) met een iPhone — geen studio, geen lab, geen dure equipment. Denk: praten naar camera, keuken, buitenopnames, simpele B-roll.
+
 Doe deep research en geef terug als JSON:
 {
   "onderwerp": "kort onderwerp in 3-5 woorden",
   "waaromViraal": "waarom werkt deze reel zo goed? Analyseer de hook, het format, de emotionele trigger en de timing. Max 3 zinnen.",
   "wetenschappelijkeBasis": "welke wetenschappelijke bronnen of onderzoeken ondersteunen dit onderwerp? Noem specifieke studies, journals of onderzoekers als die bestaan. Max 4 zinnen.",
   "bronnen": ["bron 1 — bijv. 'Journal of Clinical Nutrition, 2019'", "bron 2"],
-  "kernboodschap": "de kernboodschap in 1 zin die Oergezond kan overnemen"
+  "kernboodschap": "de kernboodschap in 1 zin die Oergezond kan overnemen",
+  "relevantVoorOergezond": true/false,
+  "redenRelevantie": "leg kort uit waarom dit wel/niet past bij Oergezond en of zij dit realistisch na kunnen maken met een iPhone en geen studio"
 }
+
+BELANGRIJK: Zet "relevantVoorOergezond" op false als:
+- Het onderwerp NIET past bij oervoeding, natuurlijke gezondheid, huidverzorging, hormonen, zaadoliën, circadiaans ritme of ancestrale gezondheid
+- De reel een dure studio, lab, medische apparatuur of professionele setup vereist die niet na te maken is met een iPhone
+- Het puur entertainment/comedy is zonder educatieve waarde voor Oergezond's doelgroep
 
 Alleen JSON, geen extra tekst.`;
 
@@ -743,7 +754,14 @@ async function generateViralReelsReport(reels, config, options = {}) {
     // Korte pauze tussen API calls
     await sleep(2000);
 
-    // Stap 2: Script genereren
+    // Skip irrelevante reels VOOR script-generatie (scheelt API call)
+    if (research.relevantVoorOergezond === false) {
+      log(`  ⏭️ @${reel.account} overgeslagen — niet relevant: ${research.redenRelevantie || "geen reden"}`);
+      if (i < normalizedReels.length - 1) await sleep(2000);
+      continue;
+    }
+
+    // Stap 2: Script genereren (alleen voor relevante reels)
     log(`[${i + 1}/${normalizedReels.length}] Script genereren: @${reel.account}...`);
 
     let script;
@@ -766,6 +784,11 @@ async function generateViralReelsReport(reels, config, options = {}) {
     if (i < normalizedReels.length - 1) {
       await sleep(3000);
     }
+  }
+
+  if (reelsData.length === 0) {
+    log("Geen relevante reels gevonden na filtering — geen PDF");
+    return null;
   }
 
   // Stap 3: PDF genereren

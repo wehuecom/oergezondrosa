@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wat zit er écht in jouw deodorant? | Oergezond</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --green: #4b5a3c;
+      --green-dark: #2d3825;
+      --green-light: #f4f6f0;
+      --text: #1a1a1a;
+      --muted: #666;
+      --white: #ffffff;
+      --red: #c0392b;
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      line-height: 1.6;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--green-dark);
+      color: var(--white);
+      padding: 60px 24px 48px;
+      text-align: center;
+    }
+    .hero-label {
+      display: inline-block;
+      background: var(--red);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 2px;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 6vw, 48px);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero h1 span { color: #a8c090; }
+    .hero p {
+      font-size: clamp(16px, 3vw, 19px);
+      color: rgba(255,255,255,0.8);
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ── SECTIONS ── */
+    .section {
+      padding: 56px 24px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 12px;
+    }
+    .section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(22px, 4vw, 32px);
+      font-weight: 800;
+      color: var(--green-dark);
+      line-height: 1.25;
+      margin-bottom: 20px;
+    }
+    .section p {
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 16px;
+      line-height: 1.75;
+    }
+    .section p:last-child { margin-bottom: 0; }
+
+    /* ── DIVIDER ── */
+    .divider {
+      width: 48px;
+      height: 3px;
+      background: var(--green);
+      margin: 0 auto 24px;
+    }
+    .divider-left {
+      margin-left: 0;
+    }
+
+    /* ── STOFFEN LIJST ── */
+    .toxins-bg {
+      background: var(--green-light);
+      padding: 56px 24px;
+    }
+    .toxins-inner {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .toxin-card {
+      background: white;
+      border-left: 4px solid var(--red);
+      border-radius: 4px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+    .toxin-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--green-dark);
+      margin-bottom: 6px;
+    }
+    .toxin-card p {
+      font-size: 14px;
+      color: #444;
+      line-height: 1.65;
+      margin: 0;
+    }
+    .toxin-card .source {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    /* ── FACT CHECK BLOKKEN ── */
+    .fact-bg {
+      background: var(--green-dark);
+      color: white;
+      padding: 56px 24px;
+    }
+    .fact-inner {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .fact-inner .section-label { color: #a8c090; }
+    .fact-inner h2 { color: white; }
+    .fact-block {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 28px;
+      align-items: flex-start;
+    }
+    .fact-icon {
+      width: 36px;
+      height: 36px;
+      background: #a8c090;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--green-dark);
+      margin-top: 2px;
+    }
+    .fact-text h4 {
+      font-size: 15px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 4px;
+    }
+    .fact-text p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.65;
+      margin: 0;
+    }
+    .fact-text .source {
+      font-size: 12px;
+      color: rgba(255,255,255,0.45);
+      margin-top: 6px;
+      font-style: italic;
+    }
+
+    /* ── LYMFE SECTIE ── */
+    .lymfe-bg {
+      background: #fff8f0;
+      border-top: 3px solid #e8d5b0;
+      border-bottom: 3px solid #e8d5b0;
+      padding: 56px 24px;
+    }
+
+    /* ── OPLOSSING ── */
+    .solution-bg {
+      background: var(--green);
+      color: white;
+      padding: 64px 24px;
+      text-align: center;
+    }
+    .solution-bg h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(24px, 5vw, 36px);
+      font-weight: 800;
+      color: white;
+      line-height: 1.25;
+      margin-bottom: 16px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .solution-bg p {
+      font-size: 16px;
+      color: rgba(255,255,255,0.85);
+      max-width: 520px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+
+    /* ── INGREDIËNTEN ── */
+    .ingredients {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+    .ingredient-pill {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: white;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 100px;
+    }
+
+    /* ── CTA KNOP ── */
+    .cta-btn {
+      display: inline-block;
+      background: white;
+      color: var(--green-dark);
+      font-family: 'Open Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 18px 40px;
+      border-radius: 4px;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.25);
+    }
+    .cta-sub {
+      display: block;
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+      margin-top: 14px;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: var(--green-dark);
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      padding: 24px;
+      font-size: 12px;
+    }
+    .footer a { color: rgba(255,255,255,0.5); text-decoration: none; }
+
+    /* ── QUOTE ── */
+    blockquote {
+      border-left: 3px solid var(--green);
+      padding: 12px 20px;
+      margin: 24px 0;
+      background: var(--green-light);
+      border-radius: 0 4px 4px 0;
+    }
+    blockquote p {
+      font-style: italic;
+      color: #444;
+      font-size: 15px;
+      margin: 0;
+    }
+    blockquote cite {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 6px;
+      font-style: normal;
+    }
+
+    @media (max-width: 480px) {
+      .hero { padding: 48px 20px 40px; }
+      .section { padding: 44px 20px; }
+      .toxins-bg, .fact-bg, .lymfe-bg, .solution-bg { padding: 44px 20px; }
+      .fact-block { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+
+<!-- INTRO -->
+<section class="section">
+  <div class="section-label">Het probleem</div>
+  <div class="divider divider-left"></div>
+  <h2>Je smeert elke dag gif onder je oksels. En dat is geen overdrijving.</h2>
+  <p>De oksel is een van de meest absorptieve plekken van je lichaam. Dunne huid, veel bloedvaten, direct contact met je lymfestelsel. Wat je daar dagelijks op smeert, gaat rechtstreeks je lichaam in.</p>
+  <p>De meeste deodorants bevatten stoffen die hormonen nabootsen, aluminiumzouten die je zweetsysteem letterlijk dichtpluggen, en conserveermiddelen die al aangetroffen zijn in borstweefsel.</p>
+  <p>Niet één keer. Elke dag. Jarenlang.</p>
+
+  <blockquote>
+    <p>"We smeren dit op één van de meest absorptieve plekken van ons lichaam, vlak naast lymfeklieren die afvalstoffen uit de borst draineren."</p>
+    <cite>— Dr. Philippa Darbre, celbiologiste Universiteit van Reading (UK)</cite>
+  </blockquote>
+</section>
+
+<!-- TOXISCHE STOFFEN -->
+<div class="toxins-bg">
+  <div class="toxins-inner">
+    <div class="section-label">Wat zit erin</div>
+    <div class="divider divider-left"></div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(22px,4vw,30px);font-weight:800;color:var(--green-dark);line-height:1.25;margin-bottom:28px;">De 5 meest gebruikte stoffen — en wat ze doen</h2>
+
+    <div class="toxin-card">
+      <h3>Aluminiumzouten (aluminiumchlorohydraat)</h3>
+      <p>Pluggen je zweetklieren letterlijk af door een gel te vormen in de uitvoergang. Aluminium wordt opgenomen in je lichaam en kan zich ophopen in borstweefsel. Onderzoek toont verhoogde aluminiumconcentraties aan in borsttumoren ten opzichte van gezond weefsel.</p>
+      <p class="source">Bron: Darbre et al., Journal of Inorganic Biochemistry, 2005 | Exley et al., Journal of Trace Elements in Medicine and Biology, 2007</p>
+    </div>
+
+    <div class="toxin-card">
+      <h3>Parabenen (methylparaben, propylparaben)</h3>
+      <p>Conserveermiddelen die oestrogeen nabootsen in je lichaam — zogenaamde xeno-oestrogenen. Ze binden aan oestrogeenreceptoren en verstoren je hormonale balans. In 2004 werden parabenen aangetroffen in 18 van de 20 onderzochte borsttumoren — intact, niet afgebroken.</p>
+      <p class="source">Bron: Darbre et al., Journal of Applied Toxicology, 2004</p>
+    </div>
+
+    <div class="toxin-card">
+      <h3>Triclosan</h3>
+      <p>Antibacterieel middel dat interfereert met schildklierhormonen en testosteron. De FDA verbood triclosan in 2016 in zeep — maar in deodorant zit het nog steeds. Triclosan draagt ook bij aan resistente bacteriestammen.</p>
+      <p class="source">Bron: FDA Consumer Update, 2016 | Dinwiddie et al., International Journal of Environmental Research and Public Health, 2014</p>
+    </div>
+
+    <div class="toxin-card">
+      <h3>Propyleenglycol</h3>
+      <p>Penetratieversterker — het maakt je huid letterlijk doorlaatbaarder voor alle andere stoffen. Gebruikt als antivries in industriële toepassingen. Irriteert de huid en slijmvliezen, en verhoogt de opname van giftige stoffen die er tegelijk mee op zitten.</p>
+      <p class="source">Bron: Fiume et al., International Journal of Toxicology, 2012</p>
+    </div>
+
+    <div class="toxin-card">
+      <h3>Synthetische parfums</h3>
+      <p>"Parfum" op een etiket kan een verzamelnaam zijn voor honderden onbekende chemicaliën — inclusief ftalaten, die direct ingrijpen op je hormoonproductie. Ftalaten verlagen testosteronniveaus en zijn in verband gebracht met verminderde vruchtbaarheid.</p>
+      <p class="source">Bron: Swan et al., Environmental Health Perspectives, 2005</p>
+    </div>
+  </div>
+</div>
+
+<!-- LYMFE -->
+<div class="lymfe-bg">
+  <div class="section">
+    <div class="section-label">Waarom dit zo gevaarlijk is</div>
+    <div class="divider divider-left"></div>
+    <h2>Je lymfeklieren zitten er vlak naast. Dat is geen toeval.</h2>
+    <p>De oksel bevat een cluster van lymfeklieren die de borst, arm en okselregio draineren. Het lymfestelsel is je afvalverwerkingssysteem — het ruimt toxines, bacteriën en kankercellen op.</p>
+    <p>Als je dagelijks hormoonverstorende en carcinogene stoffen smeert op de huid vlak boven die klieren, belast je continu een systeem dat je beschermt. Het lymfeweefsel absorbeert deze stoffen, en bij ophoping kan het systeem niet meer optimaal functioneren.</p>
+    <p>Dit is ook waarom borstkanker statistisch vaker voorkomt in het kwadrant van de borst dat het dichtst bij de oksel ligt — het bovenste buitenste kwadrant. Onderzoekers van de Universiteit van Reading wezen hier al in 2004 op.</p>
+
+    <blockquote>
+      <p>"De topografische correlatie tussen de plek waar antiperspirants worden aangebracht en de plek waar borstkanker zich het vaakst ontwikkelt, vraagt om verder onderzoek."</p>
+      <cite>— McGrath, European Journal of Cancer Prevention, 2003</cite>
+    </blockquote>
+
+    <p>We zeggen niet dat deodorant borstkanker veroorzaakt. Wat we zeggen: je smeert dagelijks stoffen op een gevoelige plek die direct in verbinding staat met je immuunsysteem, en dat is een onnodig risico als er een puur alternatief bestaat.</p>
+  </div>
+</div>
+
+<!-- FACT CHECK -->
+<div class="fact-bg">
+  <div class="fact-inner">
+    <div class="section-label">Fact check</div>
+    <div class="divider" style="margin-left:0;background:#a8c090;margin-bottom:24px;"></div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(22px,4vw,30px);font-weight:800;color:white;line-height:1.25;margin-bottom:32px;">Wat is bewezen — en wat niet</h2>
+
+    <div class="fact-block">
+      <div class="fact-icon">✓</div>
+      <div class="fact-text">
+        <h4>Aluminium wordt opgenomen via de huid</h4>
+        <p>Meerdere studies bevestigen dat aluminiumzouten uit antiperspirants worden opgenomen door de huid en detecteerbaar zijn in bloed en weefsel.</p>
+        <p class="source">Bron: Exley et al., Journal of Trace Elements in Medicine and Biology, 2007</p>
+      </div>
+    </div>
+
+    <div class="fact-block">
+      <div class="fact-icon">✓</div>
+      <div class="fact-text">
+        <h4>Parabenen aangetroffen in borsttumoren</h4>
+        <p>Darbre et al. (2004) vonden intacte parabenen — waaronder methylparaben — in 18 van 20 borsttumoren. Dit bewijst dat ze worden opgenomen en niet afgebroken.</p>
+        <p class="source">Bron: Darbre et al., Journal of Applied Toxicology, 2004</p>
+      </div>
+    </div>
+
+    <div class="fact-block">
+      <div class="fact-icon">✓</div>
+      <div class="fact-text">
+        <h4>Aluminium verstoort oestrogeenwerking</h4>
+        <p>Aluminium bindt aan oestrogeenreceptoren en activeert oestrogeenafhankelijke genen — aangetoond in celstudies op borstkankercellen.</p>
+        <p class="source">Bron: Darbre, Journal of Applied Toxicology, 2006</p>
+      </div>
+    </div>
+
+    <div class="fact-block">
+      <div class="fact-icon">✓</div>
+      <div class="fact-text">
+        <h4>Hogere aluminiumconcentratie in borsttumoren</h4>
+        <p>Vergelijkend onderzoek toont significant hogere aluminiumgehalten in borstweefsel dicht bij de oksel versus weefsel verder weg.</p>
+        <p class="source">Bron: Exley et al., Journal of Inorganic Biochemistry, 2007</p>
+      </div>
+    </div>
+
+    <div class="fact-block">
+      <div class="fact-icon">✓</div>
+      <div class="fact-text">
+        <h4>Zweten is gezond — onderdrukken niet</h4>
+        <p>Zweet is een primair ontgiftingsmechanisme. Wetenschappelijk onderzoek toont aan dat zweet zware metalen, BPA en ftalaten afvoert. Een antiperspirant blokkeert dit systeem structureel.</p>
+        <p class="source">Bron: Genuis et al., Archives of Environmental Contamination and Toxicology, 2011</p>
+      </div>
+    </div>
+
+    <div class="fact-block">
+      <div class="fact-icon" style="background:#e8d5b0;">⚠</div>
+      <div class="fact-text">
+        <h4>Direct causaal verband met kanker nog niet bewezen</h4>
+        <p>Er is geen definitief bewijs dat deodorant direct borstkanker veroorzaakt. De correlaties en biologische mechanismen zijn wél aangetoond. Het voorzorgsprincipe is hier op zijn plaats.</p>
+        <p class="source">Bron: American Cancer Society statement, 2022</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OPLOSSING -->
+<div class="solution-bg">
+  <h2>Er bestaat een deodorant zonder die troep. Gewoon puur. En het werkt.</h2>
+  <p>De Oergezond deodorant bevat geen aluminium, geen parabenen, geen synthetische parfums. Alleen ingrediënten die je huid herkent — en die je lymfestelsel met rust laten.</p>
+
+  <div class="ingredients">
+    <span class="ingredient-pill">✓ Zonder aluminium</span>
+    <span class="ingredient-pill">✓ Zonder parabenen</span>
+    <span class="ingredient-pill">✓ Zonder triclosan</span>
+    <span class="ingredient-pill">✓ Zonder synthetische parfums</span>
+    <span class="ingredient-pill">✓ 100% natuurlijk</span>
+    <span class="ingredient-pill">✓ Hormoonvriendelijk</span>
+  </div>
+
+  <a href="https://www.oergezond.com/products/deodorant" class="cta-btn">
+    Bekijk de Oergezond Deodorant →
+  </a>
+  <span class="cta-sub">Gratis verzending vanaf €40 · Gemaakt in Nederland</span>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>© Oergezond · <a href="https://www.oergezond.com">oergezond.com</a></p>
+  <p style="margin-top:8px;font-size:11px;">Deze pagina is informatief en vervangt geen medisch advies. De genoemde studies zijn publiek beschikbaar via PubMed en zijn niet gesponsord door Oergezond.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,118 @@
+MANYCHAT FLOWS — REEL → DM → LANDER
+=====================================
+
+Elke reel heeft een keyword als CTA. Wanneer iemand dat keyword comment,
+stuurt ManyChat automatisch een DM met de link naar de lander.
+
+
+FLOW 1 — ZAADOLIE
+==================
+Reel: "Zaadoliën zijn het nieuwe roken"
+CTA in reel: "Comment ZAADOLIE en ik stuur je de complete gids"
+Keyword trigger: ZAADOLIE
+
+DM bericht:
+"Hey! Hier is de complete zaadoliën gids die ik beloofde.
+
+Alles wat je moet weten over welke oliën je moet vermijden, waarom, en wat je wél kunt gebruiken:
+
+[LINK naar zaadolien-lander.html]
+
+Heb je vragen? Stuur gerust een berichtje!"
+
+Lander: zaadolien-lander.html
+Doel: Email capture → Klaviyo lijst "Zaadoliën Gids"
+Follow-up Klaviyo flow: 3 emails over 7 dagen
+  - Mail 1 (direct): PDF met zaadoliën gids
+  - Mail 2 (dag 3): "Heb je al etiketten gecheckt? Dit vonden andere lezers"
+  - Mail 3 (dag 7): "Zaadoliën zitten ook in je skincare" → Oercrème
+
+
+FLOW 2 — SLAAP
+===============
+Reel: "Wat kunstlicht doet met je slaap"
+CTA in reel: "Comment SLAAP en ik stuur je het oer slaapprotocol"
+Keyword trigger: SLAAP
+
+DM bericht:
+"Hey! Hier is het Oer Slaapprotocol.
+
+5 stappen om beter te slapen zonder pillen — met de wetenschap erachter:
+
+[LINK naar slaapprotocol-lander.html]
+
+Probeer stap 1 morgenochtend. Je merkt het verschil binnen 3 dagen."
+
+Lander: slaapprotocol-lander.html
+Doel: Email capture + Oerbril verkoop
+Follow-up Klaviyo flow: 3 emails over 7 dagen
+  - Mail 1 (direct): PDF slaapprotocol
+  - Mail 2 (dag 3): "Heb je al ochtendzon gepakt? Dit is waarom het werkt"
+  - Mail 3 (dag 7): "Stap 4 makkelijker maken?" → Oerbril
+
+
+FLOW 3 — HUID26
+================
+Reel: "Je huid is een orgaan — 26 seconden tot je bloed"
+CTA in reel: "Comment HUID en ik laat je zien wat er in je crème zit"
+Keyword trigger: HUID
+
+DM bericht:
+"Hey! Wist je dat alles wat je smeert binnen 26 seconden in je bloed zit?
+
+Hier zie je precies wat er in de meeste crèmes zit — en waarom je huid beter verdient:
+
+[LINK naar huid-26-seconden-lander.html]
+
+Draai je crème om en vergelijk. Je schrikt."
+
+Lander: huid-26-seconden-lander.html
+Doel: Directe verkoop Oercrème
+Geen email capture — directe link naar product
+
+
+FLOW 4 — MAAG
+==============
+Reel: "De maagzuurremmer-leugen"
+CTA in reel: "Comment MAAG en ik stuur je het herstelprotocol"
+Keyword trigger: MAAG
+
+DM bericht:
+"Hey! Hier is het darmherstel protocol.
+
+5 stappen om je maagzuur natuurlijk te herstellen — zonder medicijnen:
+
+[LINK naar maagzuur-lander.html]
+
+Ken je iemand die al jaren omeprazol slikt? Stuur dit door."
+
+Lander: maagzuur-lander.html
+Doel: Email capture → Klaviyo lijst "Darmherstel"
+Follow-up Klaviyo flow: 3 emails over 7 dagen
+  - Mail 1 (direct): PDF darmherstel protocol
+  - Mail 2 (dag 3): "De appelazijn-truc: zo doe je het goed"
+  - Mail 3 (dag 7): "Je darm en je huid zijn verbonden" → Oercrème
+
+
+SETUP INSTRUCTIES MANYCHAT
+===========================
+
+1. Ga naar ManyChat → Automation → New Automation
+2. Trigger: "Instagram Comment" → keyword (bijv. ZAADOLIE)
+3. Zet "Reply to comment" AAN met iets als "Check je DM!"
+4. Action: Send DM → plak het DM bericht hierboven
+5. Herhaal voor elk keyword
+
+TIP: Zet "Comment Reply" aan zodat Instagram je comment boost ziet
+(meer comments = meer reach)
+
+LANDERS HOSTEN
+==============
+De HTML bestanden staan in: LIO_OS/landers/
+Je kunt ze hosten via:
+- Shopify page (kopieer de HTML in een custom page)
+- Netlify (gratis, sleep de bestanden erin)
+- Carrd.co (herbouw met hun builder)
+
+De email forms moeten nog gekoppeld worden aan Klaviyo.
+Vervang action="#" door je Klaviyo form endpoint.

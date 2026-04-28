@@ -188,8 +188,11 @@ async function scrapeAll() {
 // ============================================================
 
 function filterReels(posts, limit = MAX_REELS_FOR_REPORT) {
+  // Alleen reels van de laatste 30 dagen
+  const thirtyDaysAgo = Math.floor(Date.now() / 1000) - 30 * 24 * 60 * 60;
+
   return posts
-    .filter((p) => p.type === "video" && p.shortCode)
+    .filter((p) => p.type === "video" && p.shortCode && (!p.timestamp || p.timestamp >= thirtyDaysAgo))
     .map((p) => ({
       account: p.ownerUsername,
       caption: (p.caption || "").slice(0, 300),
@@ -198,6 +201,7 @@ function filterReels(posts, limit = MAX_REELS_FOR_REPORT) {
       views: p.videoViewCount || 0,
       url: `https://www.instagram.com/reel/${p.shortCode}/`,
       shortCode: p.shortCode,
+      timestamp: p.timestamp || 0,
     }))
     .sort((a, b) => (b.views || b.likes * 10) - (a.views || a.likes * 10))
     .slice(0, limit);
@@ -530,8 +534,13 @@ async function main() {
     if (reels.length >= 3) {
       log(`${reels.length} nieuwe reels gevonden — PDF genereren...`);
       try {
-        await generateViralReelsReport(reels, cfg, { sendToTelegram: true });
-        log("Viral Reels Report verstuurd ✅");
+        const pdf = await generateViralReelsReport(reels, cfg, { sendToTelegram: true });
+        if (pdf) {
+          log("Viral Reels Report verstuurd ✅");
+        } else {
+          log("Geen relevante reels na filtering — geen PDF verstuurd");
+          await sendTelegram(`ℹ️ Vandaag geen relevante reels voor Oergezond gevonden. Morgen weer!`).catch(() => {});
+        }
         saveSeenReels([...seenReels, ...reels.map((r) => r.shortCode)]);
       } catch (e) {
         log(`Reels report mislukt: ${e.message}`);

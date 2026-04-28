@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>26 seconden tot je bloed | Oergezond</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root { --green: #4b5a3c; --green-dark: #2d3825; --green-light: #f4f6f0; --text: #1a1a1a; --muted: #666; --white: #ffffff; --red: #c0392b; --accent: #a8c090; }
+    body { font-family: 'Open Sans', sans-serif; color: var(--text); background: var(--white); line-height: 1.6; }
+
+    .hero { background: var(--green-dark); color: var(--white); padding: 60px 24px 48px; text-align: center; }
+    .hero-label { display: inline-block; background: var(--red); color: white; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 6px 16px; border-radius: 2px; margin-bottom: 24px; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 6vw, 48px); font-weight: 800; line-height: 1.2; margin-bottom: 20px; max-width: 700px; margin-left: auto; margin-right: auto; }
+    .hero h1 span { color: var(--accent); }
+    .hero p { font-size: clamp(16px, 3vw, 19px); color: rgba(255,255,255,0.8); max-width: 560px; margin: 0 auto; line-height: 1.7; }
+    .hero-stat { font-family: 'Playfair Display', serif; font-size: clamp(64px, 12vw, 120px); font-weight: 800; color: var(--accent); line-height: 1; margin: 32px 0 8px; }
+    .hero-stat-label { font-size: 18px; color: rgba(255,255,255,0.6); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 32px; }
+
+    .section { padding: 56px 24px; max-width: 720px; margin: 0 auto; }
+    .section-label { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--green); margin-bottom: 12px; }
+    .section h2 { font-family: 'Playfair Display', serif; font-size: clamp(22px, 4vw, 32px); font-weight: 800; color: var(--green-dark); line-height: 1.25; margin-bottom: 20px; }
+    .section p { font-size: 16px; color: #333; margin-bottom: 16px; line-height: 1.75; }
+    .divider { width: 48px; height: 3px; background: var(--green); margin: 0 0 24px; }
+
+    .counter-section { background: var(--green-light); padding: 56px 24px; }
+    .counter-inner { max-width: 720px; margin: 0 auto; text-align: center; }
+    .counter-num { font-family: 'Playfair Display', serif; font-size: 72px; font-weight: 800; color: var(--red); }
+    .counter-label { font-size: 16px; color: var(--muted); margin-bottom: 24px; }
+    .counter-desc { font-size: 16px; color: #333; max-width: 520px; margin: 0 auto; line-height: 1.75; }
+
+    .toxins-bg { background: var(--green-light); padding: 56px 24px; }
+    .toxins-inner { max-width: 720px; margin: 0 auto; }
+    .toxin-card { background: white; border-left: 4px solid var(--red); border-radius: 4px; padding: 20px 24px; margin-bottom: 16px; }
+    .toxin-card h3 { font-size: 16px; font-weight: 700; color: var(--green-dark); margin-bottom: 6px; }
+    .toxin-card p { font-size: 14px; color: #444; line-height: 1.65; margin: 0; }
+    .toxin-card .source { font-size: 12px; color: var(--muted); margin-top: 8px; font-style: italic; }
+
+    .compare-bg { background: var(--green-dark); color: white; padding: 56px 24px; }
+    .compare-inner { max-width: 720px; margin: 0 auto; }
+    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 32px; }
+    .compare-col h3 { font-size: 14px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; padding-bottom: 8px; }
+    .compare-col.bad h3 { color: var(--red); border-bottom: 2px solid var(--red); }
+    .compare-col.good h3 { color: var(--accent); border-bottom: 2px solid var(--accent); }
+    .compare-item { font-size: 14px; color: rgba(255,255,255,0.8); padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+
+    .solution-bg { background: var(--green); color: white; padding: 64px 24px; text-align: center; }
+    .solution-bg h2 { font-family: 'Playfair Display', serif; font-size: clamp(24px, 5vw, 36px); font-weight: 800; color: white; line-height: 1.25; margin-bottom: 16px; max-width: 600px; margin-left: auto; margin-right: auto; }
+    .solution-bg p { font-size: 16px; color: rgba(255,255,255,0.85); max-width: 520px; margin: 0 auto 24px; line-height: 1.7; }
+    .ingredients { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 32px; }
+    .ingredient-pill { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: white; font-size: 13px; font-weight: 600; padding: 8px 16px; border-radius: 100px; }
+    .cta-btn { display: inline-block; background: white; color: var(--green-dark); font-size: 16px; font-weight: 700; padding: 18px 40px; border-radius: 4px; text-decoration: none; box-shadow: 0 4px 20px rgba(0,0,0,0.2); transition: transform 0.15s ease; }
+    .cta-btn:hover { transform: translateY(-2px); }
+    .cta-sub { display: block; font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 14px; }
+
+    blockquote { border-left: 3px solid var(--green); padding: 12px 20px; margin: 24px 0; background: var(--green-light); border-radius: 0 4px 4px 0; }
+    blockquote p { font-style: italic; color: #444; font-size: 15px; margin: 0; }
+    blockquote cite { display: block; font-size: 12px; color: var(--muted); margin-top: 6px; font-style: normal; }
+
+    .footer { background: var(--green-dark); color: rgba(255,255,255,0.4); text-align: center; padding: 24px; font-size: 12px; }
+    .footer a { color: rgba(255,255,255,0.5); text-decoration: none; }
+
+    @media (max-width: 480px) {
+      .hero { padding: 48px 20px 40px; }
+      .section, .toxins-bg, .compare-bg, .solution-bg, .counter-section { padding: 44px 20px; }
+      .compare-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-label">Wist je dit?</div>
+  <div class="hero-stat">26</div>
+  <div class="hero-stat-label">seconden</div>
+  <h1>Alles wat je op je huid smeert zit <span>binnen 26 seconden</span> in je bloed</h1>
+  <p>Zo werken nicotinepleisters. Zo werken hormoonpleisters. En zo werkt je dagcrème.</p>
+</div>
+
+<section class="section">
+  <div class="section-label">Het probleem</div>
+  <div class="divider"></div>
+  <h2>Je huid is geen muur. Het is een spons.</h2>
+  <p>De gemiddelde vrouw smeert dagelijks meer dan 160 chemische stoffen op haar huid. Via crème, shampoo, make-up, deodorant, bodylotion, zonnebrand.</p>
+  <p>De gemiddelde man: 85 stoffen.</p>
+  <p>De skincare-industrie behandelt je huid alsof het een oppervlak is. Iets waar je dingen óp smeert. Maar je huid is een orgaan. Je grootste orgaan. En het absorbeert vrijwel alles.</p>
+
+  <blockquote>
+    <p>"De huid is niet alleen een barrière — het is een actief orgaan dat stoffen opneemt en in de systemische circulatie brengt."</p>
+    <cite>— Bouwstra et al., Journal of Investigative Dermatology</cite>
+  </blockquote>
+</section>
+
+<div class="toxins-bg">
+  <div class="toxins-inner">
+    <div class="section-label">Wat zit er in je crème</div>
+    <div class="divider"></div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(22px,4vw,30px);font-weight:800;color:var(--green-dark);line-height:1.25;margin-bottom:28px;">Dit absorbeert je huid dagelijks</h2>
+
+    <div class="toxin-card">
+      <h3>Zaadoliën (zonnebloem, soja, druivenpit)</h3>
+      <p>Hoog in linolzuur, dat de huidbarrière kan verstoren en ontsteking bevordert. Zit in de meeste "natuurlijke" crèmes als goedkope filler.</p>
+    </div>
+
+    <div class="toxin-card">
+      <h3>Parabenen (methyl-, propyl-, butylparaben)</h3>
+      <p>Conserveermiddelen die oestrogeen nabootsen. Aangetroffen in borsttumoren. Verstoren je hormonale balans bij dagelijkse blootstelling.</p>
+      <p class="source">Bron: Darbre et al., Journal of Applied Toxicology, 2004</p>
+    </div>
+
+    <div class="toxin-card">
+      <h3>PEG-verbindingen</h3>
+      <p>Penetratieversterkers — ze maken je huid doorlaatbaarder. Niet alleen voor de crème zelf, maar voor álles wat tegelijk op je huid zit. Inclusief de schadelijke stoffen.</p>
+    </div>
+
+    <div class="toxin-card">
+      <h3>Synthetisch parfum</h3>
+      <p>"Parfum" op een etiket kan een verzamelnaam zijn voor 50+ onbekende chemicaliën — inclusief ftalaten die testosteron verlagen en vruchtbaarheid verminderen.</p>
+      <p class="source">Bron: Swan et al., Environmental Health Perspectives, 2005</p>
+    </div>
+
+    <div class="toxin-card">
+      <h3>Mineral oil / Paraffinum liquidum</h3>
+      <p>Bijproduct van aardolieraffinage. Legt een plastic-achtige laag over je huid. Blokkeert de natuurlijke ademhaling en vochtregulatie.</p>
+    </div>
+  </div>
+</div>
+
+<div class="compare-bg">
+  <div class="compare-inner">
+    <div class="section-label" style="color:var(--accent);">Vergelijk</div>
+    <div class="divider" style="background:var(--accent);"></div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(22px,4vw,30px);font-weight:800;color:white;line-height:1.25;">Gemiddelde dagcrème vs. Oercrème</h2>
+
+    <div class="compare-grid">
+      <div class="compare-col bad">
+        <h3>Gemiddelde crème</h3>
+        <div class="compare-item">25+ ingrediënten</div>
+        <div class="compare-item">Zaadoliën als basis</div>
+        <div class="compare-item">Synthetisch parfum</div>
+        <div class="compare-item">Parabenen / phenoxyethanol</div>
+        <div class="compare-item">PEG-verbindingen</div>
+        <div class="compare-item">Vetzuurprofiel matcht niet met huid</div>
+      </div>
+      <div class="compare-col good">
+        <h3>Oercrème</h3>
+        <div class="compare-item">Kort ingrediëntenlijstje</div>
+        <div class="compare-item">Grasgevoerd tallow als basis</div>
+        <div class="compare-item">Geen parfum</div>
+        <div class="compare-item">Geen conserveermiddelen</div>
+        <div class="compare-item">Geen penetratieversterkers</div>
+        <div class="compare-item">Vetzuurprofiel matcht menselijke huid 1:1</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="solution-bg">
+  <h2>Je huid herkent tallow. Omdat het lijkt op wat je huid zelf maakt.</h2>
+  <p>Grasgevoerd rundvet heeft een vetzuurprofiel dat bijna identiek is aan menselijk huidvet. Dat is geen marketingverhaal — dat is biochemie. Je huid neemt het op omdat het het herkent.</p>
+
+  <div class="ingredients">
+    <span class="ingredient-pill">Grasgevoerd tallow</span>
+    <span class="ingredient-pill">Vitamine A</span>
+    <span class="ingredient-pill">Vitamine D</span>
+    <span class="ingredient-pill">Vitamine E</span>
+    <span class="ingredient-pill">Vitamine K</span>
+    <span class="ingredient-pill">Geen troep</span>
+  </div>
+
+  <a href="https://www.oergezond.com/products/oercreme" class="cta-btn">
+    Bekijk de Oercrème →
+  </a>
+  <span class="cta-sub">Gratis verzending vanaf €40 · Gemaakt in Nederland</span>
+</div>
+
+<footer class="footer">
+  <p>© Oergezond · <a href="https://www.oergezond.com">oergezond.com</a></p>
+  <p style="margin-top:8px;font-size:11px;">Deze pagina is informatief en vervangt geen medisch advies.</p>
+</footer>
+
+</body>
+</html>

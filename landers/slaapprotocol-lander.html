@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Het Oer Slaapprotocol | Oergezond</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root { --green: #4b5a3c; --green-dark: #2d3825; --green-light: #f4f6f0; --text: #1a1a1a; --muted: #666; --white: #ffffff; --red: #c0392b; --accent: #a8c090; --night: #1a1f2e; --night-accent: #7b9cd4; }
+    body { font-family: 'Open Sans', sans-serif; color: var(--text); background: var(--white); line-height: 1.6; }
+
+    .hero { background: var(--night); color: var(--white); padding: 60px 24px 48px; text-align: center; }
+    .hero-label { display: inline-block; background: var(--night-accent); color: var(--night); font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 6px 16px; border-radius: 2px; margin-bottom: 24px; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 6vw, 48px); font-weight: 800; line-height: 1.2; margin-bottom: 20px; max-width: 700px; margin-left: auto; margin-right: auto; }
+    .hero h1 span { color: var(--night-accent); }
+    .hero p { font-size: clamp(16px, 3vw, 19px); color: rgba(255,255,255,0.8); max-width: 560px; margin: 0 auto; line-height: 1.7; }
+
+    .section { padding: 56px 24px; max-width: 720px; margin: 0 auto; }
+    .section-label { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--green); margin-bottom: 12px; }
+    .section h2 { font-family: 'Playfair Display', serif; font-size: clamp(22px, 4vw, 32px); font-weight: 800; color: var(--green-dark); line-height: 1.25; margin-bottom: 20px; }
+    .section p { font-size: 16px; color: #333; margin-bottom: 16px; line-height: 1.75; }
+    .divider { width: 48px; height: 3px; background: var(--green); margin: 0 0 24px; }
+
+    .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 32px 0; }
+    .stat-card { background: var(--green-light); border-radius: 8px; padding: 24px 16px; text-align: center; }
+    .stat-number { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 800; color: var(--green); }
+    .stat-desc { font-size: 13px; color: var(--muted); margin-top: 4px; line-height: 1.4; }
+
+    .protocol-bg { background: var(--night); color: white; padding: 56px 24px; }
+    .protocol-inner { max-width: 720px; margin: 0 auto; }
+    .step { display: flex; gap: 20px; margin-bottom: 36px; align-items: flex-start; }
+    .step-num { min-width: 48px; height: 48px; border-radius: 50%; background: var(--night-accent); color: var(--night); font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-content h4 { font-size: 17px; font-weight: 700; color: white; margin-bottom: 6px; }
+    .step-content p { font-size: 14px; color: rgba(255,255,255,0.75); line-height: 1.7; margin: 0; }
+    .step-content .time { display: inline-block; background: rgba(123,156,212,0.2); color: var(--night-accent); font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 20px; margin-bottom: 8px; }
+
+    .product-bg { background: var(--green-light); padding: 56px 24px; }
+    .product-inner { max-width: 720px; margin: 0 auto; text-align: center; }
+    .product-inner h2 { font-family: 'Playfair Display', serif; font-size: clamp(22px, 4vw, 30px); font-weight: 800; color: var(--green-dark); margin-bottom: 16px; }
+    .product-inner p { font-size: 16px; color: #333; max-width: 560px; margin: 0 auto 24px; line-height: 1.75; }
+    .product-btn { display: inline-block; background: var(--green); color: white; font-size: 15px; font-weight: 700; padding: 16px 36px; border-radius: 4px; text-decoration: none; transition: transform 0.15s ease; }
+    .product-btn:hover { transform: translateY(-2px); }
+
+    .cta-bg { background: var(--green); color: white; padding: 64px 24px; text-align: center; }
+    .cta-bg h2 { font-family: 'Playfair Display', serif; font-size: clamp(24px, 5vw, 36px); font-weight: 800; color: white; line-height: 1.25; margin-bottom: 16px; max-width: 600px; margin-left: auto; margin-right: auto; }
+    .cta-bg p { font-size: 16px; color: rgba(255,255,255,0.85); max-width: 520px; margin: 0 auto 32px; line-height: 1.7; }
+    .email-form { max-width: 440px; margin: 0 auto; display: flex; gap: 10px; }
+    .email-form input { flex: 1; padding: 16px 20px; border: none; border-radius: 4px; font-size: 15px; font-family: 'Open Sans', sans-serif; }
+    .email-form button { background: var(--green-dark); color: white; border: none; padding: 16px 28px; border-radius: 4px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: 'Open Sans', sans-serif; white-space: nowrap; }
+    .cta-sub { display: block; font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 14px; }
+
+    blockquote { border-left: 3px solid var(--green); padding: 12px 20px; margin: 24px 0; background: var(--green-light); border-radius: 0 4px 4px 0; }
+    blockquote p { font-style: italic; color: #444; font-size: 15px; margin: 0; }
+    blockquote cite { display: block; font-size: 12px; color: var(--muted); margin-top: 6px; font-style: normal; }
+
+    .footer { background: var(--green-dark); color: rgba(255,255,255,0.4); text-align: center; padding: 24px; font-size: 12px; }
+    .footer a { color: rgba(255,255,255,0.5); text-decoration: none; }
+
+    @media (max-width: 480px) {
+      .hero { padding: 48px 20px 40px; }
+      .section, .protocol-bg, .product-bg, .cta-bg { padding: 44px 20px; }
+      .stat-row { grid-template-columns: 1fr; }
+      .step { flex-direction: column; gap: 8px; }
+      .email-form { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-label">Gratis protocol</div>
+  <h1>Je slaapt slecht. <span>Het ligt niet aan je matras.</span></h1>
+  <p>80% van de Nederlanders heeft een verstoord circadiaans ritme. Dit is het protocol dat het herstelt.</p>
+</div>
+
+<section class="section">
+  <div class="section-label">Het probleem</div>
+  <div class="divider"></div>
+  <h2>Kunstlicht heeft je biologische klok kapotgemaakt</h2>
+  <p>Je lichaam draait op een circadiaans ritme. Ochtendlicht vertelt je hersenen: word wakker, maak cortisol aan. Avondduisternis vertelt ze: maak melatonine, bereid je voor op slaap.</p>
+  <p>Maar jij zit tot 23:00 achter een scherm. Blauw licht. TL-lampen. LED-verlichting. Je lichaam denkt dat het nog middag is.</p>
+  <p>Melatonine wordt niet aangemaakt. Je ligt wakker. Pakt je telefoon. Meer blauw licht. En de volgende ochtend sta je kapot op.</p>
+  <p>Dit is geen slaaprobleem. Dit is een lichtprobleem.</p>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-number">80%</div>
+      <div class="stat-desc">van Nederlanders heeft vitamine D-tekort</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">43%</div>
+      <div class="stat-desc">slaapt structureel minder dan 7 uur</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">20x</div>
+      <div class="stat-desc">meer kunstlicht dan 100 jaar geleden</div>
+    </div>
+  </div>
+
+  <blockquote>
+    <p>"De meeste slaapproblemen zijn geen slaapproblemen. Het zijn lichtproblemen die zich uiten als slaapproblemen."</p>
+    <cite>— Dr. Andrew Huberman, Stanford School of Medicine</cite>
+  </blockquote>
+</section>
+
+<div class="protocol-bg">
+  <div class="protocol-inner">
+    <div class="section-label" style="color:var(--night-accent);">Het oer slaapprotocol</div>
+    <div class="divider" style="background:var(--night-accent);"></div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(22px,4vw,30px);font-weight:800;color:white;line-height:1.25;margin-bottom:32px;">5 stappen naar beter slapen — zonder pillen</h2>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <div class="time">Ochtend — binnen 30 min na opstaan</div>
+        <h4>Ochtendzon in je ogen</h4>
+        <p>Ga naar buiten en kijk in de richting van de zon (niet recht erin). 10-15 minuten. Dit reset je circadiaanse klok en start de cortisol-piek die je wakker en alert maakt. Geen zonnebril. Wel buiten — door een raam werkt het niet.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <div class="time">Overdag</div>
+        <h4>Zo veel mogelijk natuurlijk licht</h4>
+        <p>Werk bij een raam. Loop in je lunchpauze naar buiten. Hoe meer natuurlijk licht overdag, hoe sterker het melatoninesignaal 's avonds. Je lichaam heeft contrast nodig: licht overdag, donker 's avonds.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <div class="time">Na zonsondergang</div>
+        <h4>Dim je verlichting</h4>
+        <p>Schakel over op warm licht (kaarsen, zoutlampen, dim oranje lampjes). Vermijd TL-lampen en felle LED's. Dit vertelt je lichaam dat het avond is en de melatonineproductie kan starten.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <div class="time">Avond — 2 uur voor bedtijd</div>
+        <h4>Blokkeer blauw licht</h4>
+        <p>Draag een blauwlichtbril als je nog een scherm gebruikt. Of beter: leg je telefoon weg. Blauw licht onderdrukt melatonine met tot 50%, zelfs bij korte blootstelling.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        <div class="time">Slaapkamer</div>
+        <h4>Pikkedonker en koel</h4>
+        <p>Verduisteringsgordijnen. Geen standby-lampjes. Geen telefoon naast je bed. Kamertemperatuur rond 18°C. Je lichaam slaapt het diepst in koude en duisternis — zoals de natuur het bedoeld heeft.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="product-bg">
+  <div class="product-inner">
+    <h2>Stap 4 makkelijker maken? Daar hebben we iets voor.</h2>
+    <p>De Oerbril blokkeert blauw licht zonder dat alles oranje kleurt. Draag hem 's avonds als je nog een scherm wilt gebruiken. Je melatonineproductie blijft intact. Je slaapt dieper.</p>
+    <a href="https://www.oergezond.com/products/oerbril" class="product-btn">Bekijk de Oerbril →</a>
+  </div>
+</div>
+
+<div class="cta-bg">
+  <h2>Wil je het complete slaapprotocol als PDF?</h2>
+  <p>Het hele protocol met tijdschema, checklist en wetenschappelijke bronnen. Gratis in je inbox.</p>
+  <form class="email-form" id="klaviyo-form" onsubmit="return submitToKlaviyo(event)">
+    <input type="email" id="email-input" placeholder="Je e-mailadres" required>
+    <button type="submit" id="submit-btn">Stuur mij het protocol</button>
+  </form>
+  <span class="cta-sub" id="form-msg">Geen spam. Alleen waarde. Je kunt je altijd uitschrijven.</span>
+  <script>
+  async function submitToKlaviyo(e) {
+    e.preventDefault();
+    var email = document.getElementById('email-input').value;
+    var btn = document.getElementById('submit-btn');
+    var msg = document.getElementById('form-msg');
+    btn.textContent = 'Even geduld...'; btn.disabled = true;
+    try {
+      await fetch('https://a.klaviyo.com/client/subscriptions/?company_id=UXNDxC', {
+        method: 'POST', headers: { 'Content-Type': 'application/json', 'revision': '2024-02-15' },
+        body: JSON.stringify({ data: { type: 'subscription', attributes: { custom_source: 'Slaapprotocol Lander', profile: { data: { type: 'profile', attributes: { email: email } } } }, relationships: { list: { data: { type: 'list', id: 'WU2ALr' } } } } })
+      });
+      document.getElementById('klaviyo-form').innerHTML = '<p style="font-size:18px;font-weight:700;color:white;padding:20px 0;">Check je inbox! Het protocol is onderweg.</p>';
+      msg.textContent = '';
+    } catch(err) { btn.textContent = 'Probeer opnieuw'; btn.disabled = false; msg.textContent = 'Er ging iets mis.'; }
+    return false;
+  }
+  </script>
+</div>
+
+<footer class="footer">
+  <p>© Oergezond · <a href="https://www.oergezond.com">oergezond.com</a></p>
+  <p style="margin-top:8px;font-size:11px;">Deze pagina is informatief en vervangt geen medisch advies.</p>
+</footer>
+
+</body>
+</html>

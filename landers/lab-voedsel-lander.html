@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab-Voedsel: Wat Je Verliest | Oergezond</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root { --green: #4b5a3c; --green-dark: #2d3825; --green-light: #f4f6f0; --text: #1a1a1a; --muted: #666; --white: #ffffff; --red: #c0392b; --accent: #a8c090; }
+    body { font-family: 'Open Sans', sans-serif; color: var(--text); background: var(--white); line-height: 1.6; }
+    .hero { background: var(--green-dark); color: var(--white); padding: 60px 24px 48px; text-align: center; }
+    .hero-label { display: inline-block; background: var(--red); color: white; font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 6px 16px; border-radius: 2px; margin-bottom: 24px; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 6vw, 48px); font-weight: 800; line-height: 1.2; margin-bottom: 20px; max-width: 700px; margin-left: auto; margin-right: auto; }
+    .hero h1 span { color: var(--accent); }
+    .hero p { font-size: clamp(17px, 3.5vw, 20px); color: #ffffff; max-width: 560px; margin: 0 auto; line-height: 1.7; font-weight: 500; }
+    .section { padding: 56px 24px; max-width: 720px; margin: 0 auto; }
+    .section-label { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--green); margin-bottom: 12px; }
+    .section h2 { font-family: 'Playfair Display', serif; font-size: clamp(22px, 4vw, 32px); font-weight: 800; color: var(--green-dark); line-height: 1.25; margin-bottom: 20px; }
+    .section p { font-size: 16px; color: #333; margin-bottom: 16px; line-height: 1.75; }
+    .divider { width: 48px; height: 3px; background: var(--green); margin: 0 0 24px; }
+    .toxins-bg { background: #fef8f0; padding: 56px 24px; border-top: 3px solid #e8d5b0; }
+    .toxins-inner { max-width: 720px; margin: 0 auto; }
+    .warn-card { background: white; border-left: 4px solid #d4880f; border-radius: 4px; padding: 20px 24px; margin-bottom: 16px; }
+    .warn-card h3 { font-size: 16px; font-weight: 700; color: #9a6500; margin-bottom: 6px; }
+    .warn-card p { font-size: 14px; color: #444; line-height: 1.65; margin: 0; }
+    .danger-bg { background: var(--green-dark); color: white; padding: 56px 24px; }
+    .danger-inner { max-width: 720px; margin: 0 auto; }
+    .danger-item { display: flex; gap: 16px; margin-bottom: 24px; align-items: flex-start; }
+    .danger-icon { min-width: 36px; height: 36px; background: var(--red); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+    .danger-text h4 { font-size: 15px; font-weight: 700; color: white; margin-bottom: 4px; }
+    .danger-text p { font-size: 14px; color: rgba(255,255,255,0.75); line-height: 1.65; margin: 0; }
+    .safe-bg { background: var(--green-light); padding: 56px 24px; }
+    .safe-inner { max-width: 720px; margin: 0 auto; }
+    .safe-card { background: white; border-left: 4px solid var(--green); border-radius: 4px; padding: 20px 24px; margin-bottom: 16px; }
+    .safe-card h3 { font-size: 16px; font-weight: 700; color: var(--green-dark); margin-bottom: 6px; }
+    .safe-card p { font-size: 14px; color: #444; line-height: 1.65; margin: 0; }
+    .cta-bg { background: var(--green); color: white; padding: 64px 24px; text-align: center; }
+    .cta-bg h2 { font-family: 'Playfair Display', serif; font-size: clamp(24px, 5vw, 36px); font-weight: 800; color: white; line-height: 1.25; margin-bottom: 16px; max-width: 600px; margin-left: auto; margin-right: auto; }
+    .cta-bg p { font-size: 16px; color: rgba(255,255,255,0.85); max-width: 520px; margin: 0 auto 32px; line-height: 1.7; }
+    .email-form { max-width: 440px; margin: 0 auto; display: flex; gap: 10px; }
+    .email-form input { flex: 1; padding: 16px 20px; border: none; border-radius: 4px; font-size: 15px; font-family: 'Open Sans', sans-serif; }
+    .email-form button { background: var(--green-dark); color: white; border: none; padding: 16px 28px; border-radius: 4px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: 'Open Sans', sans-serif; white-space: nowrap; }
+    .email-form button:hover { background: #1f2a17; }
+    .cta-sub { display: block; font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 14px; }
+    .footer { background: var(--green-dark); color: rgba(255,255,255,0.4); text-align: center; padding: 24px; font-size: 12px; }
+    .footer a { color: rgba(255,255,255,0.5); text-decoration: none; }
+    @media (max-width: 480px) {
+      .hero { padding: 48px 20px 40px; }
+      .section, .toxins-bg, .danger-bg, .safe-bg, .cta-bg { padding: 44px 20px; }
+      .email-form { flex-direction: column; }
+      .danger-item { flex-direction: column; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="hero" style="background:linear-gradient(160deg,#2d3825 0%,#4b5a3c 100%);color:#ffffff;padding:80px 24px 64px;text-align:center;">
+  <div class="hero-label" style="display:inline-block;background:#c0392b;color:white;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;padding:8px 20px;border-radius:2px;margin-bottom:28px;">Rapport 2026</div>
+  <h1 style="font-family:'Playfair Display',serif;font-size:clamp(32px,7vw,52px);font-weight:800;line-height:1.15;margin-bottom:20px;max-width:700px;margin-left:auto;margin-right:auto;color:#ffffff;">Lab-voedsel: <span style="color:#a8c090;">wat je verliest</span></h1>
+  <p style="font-size:clamp(17px,3.5vw,20px);color:#ffffff;max-width:560px;margin:0 auto;line-height:1.7;font-weight:500;">Kweekvlees, kweekvis en synthetische zuivel liggen binnenkort in de supermarkt. Dit is wat niemand je vertelt.</p>
+</div>
+
+<section class="section">
+  <div class="section-label">Het probleem</div>
+  <div class="divider"></div>
+  <h2>Je eten komt binnenkort uit een fabriek</h2>
+  <p>Er wordt nu gewerkt aan kweekvlees, kweekvis, synthetische zuivel en complete maaltijden uit bioreactors. Singapore keurde het goed in 2020. De VS in 2023. Europa is de volgende.</p>
+  <p>De industrie belooft dat het "nutritioneel vergelijkbaar" is met echt vlees. Maar de details vertellen een ander verhaal.</p>
+  <p>Echt voedsel bevat voedingsstoffen in een vorm die je lichaam herkent. Duizenden jaren co-evolutie. Zodra je voedsel in een lab gaat maken, verandert dat. Onderzoek laat zien dat synthetisch voedsel een ander micronutriëntenprofiel heeft en minder herkenbaar is voor je cellen.</p>
+</section>
+
+<div class="toxins-bg">
+  <div class="toxins-inner">
+    <div class="section-label">Wat er nu al gebeurt</div>
+    <div class="divider"></div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(22px,4vw,30px);font-weight:800;color:var(--green-dark);margin-bottom:28px;">Niet alleen vlees</h2>
+    <div class="warn-card"><h3>Kweekvis uit bioreactors</h3><p>Cellen van vis worden gekweekt in stalen tanks met synthetische groeimedia. BlueNalu en Wildtype produceren al kweekzalm in de VS.</p></div>
+    <div class="warn-card"><h3>Synthetische zuivel — melk zonder koe</h3><p>Melkeiwitgenen worden in micro-organismen geplaatst die in bioreactors groeien. Perfect Day en New Culture zijn marktleiders.</p></div>
+    <div class="warn-card"><h3>Complete maaltijden uit de fabriek</h3><p>De ambitie: volledige voedselproducten via cellulaire landbouw. Niet alleen vlees, maar vetten, eiwitten en structuren die natuurlijk voedsel nabootsen.</p></div>
+  </div>
+</div>
+
+<div class="danger-bg">
+  <div class="danger-inner">
+    <div class="section-label" style="color:var(--accent);">De zorgen</div>
+    <div class="divider" style="background:var(--accent);"></div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(22px,4vw,30px);font-weight:800;color:white;margin-bottom:32px;">Wat niemand benoemt</h2>
+    <div class="danger-item"><div class="danger-icon">⚠️</div><div class="danger-text"><h4>Genetische instabiliteit</h4><p>Na meerdere delingscycli veranderen cellen onvoorspelbaar. Er is geen langetermijnonderzoek naar wat dit betekent voor het eindproduct.</p></div></div>
+    <div class="danger-item"><div class="danger-icon">⚠️</div><div class="danger-text"><h4>35% mycoplasma-besmetting</h4><p>Tot 35% van cellijnen raakt besmet met mycoplasma-bacteriën. Langetermijneffecten van residuen in het eindproduct: onbekend.</p></div></div>
+    <div class="danger-item"><div class="danger-icon">⚠️</div><div class="danger-text"><h4>Groeimedium is bedrijfsgeheim</h4><p>Het medium bevat hormonen, groeifactoren en soms antibiotica. De exacte samenstelling is niet openbaar.</p></div></div>
+    <div class="danger-item"><div class="danger-icon">⚠️</div><div class="danger-text"><h4>Nul langetermijnstudies op mensen</h4><p>Geen enkele studie naar gezondheidseffecten van regelmatig kweekvlees eten. Wij zijn het experiment.</p></div></div>
+  </div>
+</div>
+
+<div class="safe-bg">
+  <div class="safe-inner">
+    <div class="section-label">Het alternatief</div>
+    <div class="divider"></div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(22px,4vw,30px);font-weight:800;color:var(--green-dark);margin-bottom:28px;">Echt eten is onvervangbaar</h2>
+    <div class="safe-card"><h3>Grasgevoerd vlees</h3><p>Compleet aminozuurprofiel, heem-ijzer, B12, zink, CLA, creatine. Duizenden jaren co-evolutie met de mens.</p></div>
+    <div class="safe-card"><h3>Orgaanvlees</h3><p>Meest nutriëntdichte voedsel dat bestaat. Lever = meer vitamine A, B12, folaat en ijzer per gram dan wat dan ook.</p></div>
+    <div class="safe-card"><h3>Wild gevangen vis</h3><p>Omega-3 in de meest biobeschikbare vorm. Selenium, jodium, vitamine D. Essentieel voor je hersenen.</p></div>
+    <div class="safe-card"><h3>Eieren van vrije kippen</h3><p>Choline, vetoplosbare vitamines, compleet eiwit. Het meest complete enkelvoudige voedingsmiddel.</p></div>
+  </div>
+</div>
+
+<div class="cta-bg">
+  <h2>Wil je de complete gids? Gratis.</h2>
+  <p>Alles over kweekvlees, kweekvis en synthetische zuivel — met wetenschappelijke bronnen, vergelijkingstabel en actieplan.</p>
+  <form class="email-form" id="klaviyo-form" onsubmit="return submitToKlaviyo(event)">
+    <input type="email" id="email-input" placeholder="Je e-mailadres" required>
+    <button type="submit" id="submit-btn">Stuur mij de gids</button>
+  </form>
+  <span class="cta-sub" id="form-msg">Geen spam. Alleen waarde. Je kunt je altijd uitschrijven.</span>
+  <script>
+  async function submitToKlaviyo(e) {
+    e.preventDefault();
+    var email = document.getElementById('email-input').value;
+    var btn = document.getElementById('submit-btn');
+    var msg = document.getElementById('form-msg');
+    btn.textContent = 'Even geduld...'; btn.disabled = true;
+    try {
+      await fetch('https://a.klaviyo.com/client/subscriptions/?company_id=UXNDxC', {
+        method: 'POST', headers: { 'Content-Type': 'application/json', 'revision': '2024-02-15' },
+        body: JSON.stringify({ data: { type: 'subscription', attributes: { custom_source: 'Lab-Voedsel Gids Lander', profile: { data: { type: 'profile', attributes: { email: email } } } }, relationships: { list: { data: { type: 'list', id: 'SBwwMs' } } } } })
+      });
+      document.getElementById('klaviyo-form').innerHTML = '<p style="font-size:18px;font-weight:700;color:white;padding:20px 0;">Check je inbox! De gids is onderweg.</p>';
+      msg.textContent = '';
+    } catch(err) { btn.textContent = 'Probeer opnieuw'; btn.disabled = false; msg.textContent = 'Er ging iets mis.'; }
+    return false;
+  }
+  </script>
+</div>
+
+<footer class="footer">
+  <p>© Oergezond · <a href="https://www.oergezond.com">oergezond.com</a></p>
+  <p style="margin-top:8px;font-size:11px;">Deze pagina is informatief en vervangt geen medisch advies.</p>
+</footer>
+
+</body>
+</html>

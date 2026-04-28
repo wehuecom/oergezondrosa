@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zaadoliën: het nieuwe roken | Oergezond</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      color: #1a1a1a;
+      background: #ffffff;
+      line-height: 1.6;
+    }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(160deg, #2d3825 0%, #4b5a3c 100%);
+      color: #ffffff;
+      padding: 80px 24px 64px;
+      text-align: center;
+    }
+    .hero-label {
+      display: inline-block;
+      background: #c0392b;
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 8px 20px;
+      border-radius: 2px;
+      margin-bottom: 28px;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 7vw, 52px);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero h1 span { color: #a8c090; }
+    .hero p {
+      font-size: clamp(16px, 3vw, 20px);
+      color: rgba(255,255,255,0.75);
+      max-width: 540px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 40px;
+    }
+    .hero-stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 800;
+      color: #a8c090;
+      line-height: 1;
+    }
+    .hero-stat-label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      margin-top: 6px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* SECTIONS */
+    .section {
+      padding: 64px 24px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #4b5a3c;
+      margin-bottom: 12px;
+    }
+    .section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(24px, 5vw, 34px);
+      font-weight: 800;
+      color: #2d3825;
+      line-height: 1.25;
+      margin-bottom: 20px;
+    }
+    .section p {
+      font-size: 16px;
+      color: #333;
+      margin-bottom: 16px;
+      line-height: 1.8;
+    }
+    .divider {
+      width: 48px;
+      height: 3px;
+      background: #4b5a3c;
+      margin-bottom: 24px;
+    }
+
+    /* TOXIN CARDS */
+    .toxins-bg {
+      background: #f4f6f0;
+      padding: 64px 24px;
+    }
+    .toxins-inner { max-width: 720px; margin: 0 auto; }
+    .toxin-card {
+      background: #ffffff;
+      border-left: 5px solid #c0392b;
+      border-radius: 6px;
+      padding: 24px 28px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .toxin-card h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: #2d3825;
+      margin-bottom: 8px;
+    }
+    .toxin-card p {
+      font-size: 15px;
+      color: #444;
+      line-height: 1.7;
+      margin: 0;
+    }
+    .toxin-card .source {
+      font-size: 12px;
+      color: #999;
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    /* TIMELINE */
+    .timeline-bg {
+      background: linear-gradient(160deg, #2d3825 0%, #1f2a17 100%);
+      color: white;
+      padding: 64px 24px;
+    }
+    .timeline-inner { max-width: 720px; margin: 0 auto; }
+    .timeline-item {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 36px;
+      align-items: flex-start;
+    }
+    .timeline-year {
+      min-width: 80px;
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: #a8c090;
+      padding-top: 2px;
+    }
+    .timeline-text h4 {
+      font-size: 16px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 6px;
+    }
+    .timeline-text p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    /* SWAP */
+    .swap-bg {
+      background: #faf8f4;
+      border-top: 4px solid #e8d5b0;
+      border-bottom: 4px solid #e8d5b0;
+      padding: 64px 24px;
+    }
+    .swap-inner { max-width: 720px; margin: 0 auto; }
+    .swap-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .swap-bad {
+      flex: 1;
+      background: #ffffff;
+      border-left: 5px solid #c0392b;
+      padding: 16px 20px;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #c0392b;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    }
+    .swap-arrow {
+      font-size: 22px;
+      color: #4b5a3c;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .swap-good {
+      flex: 1;
+      background: #ffffff;
+      border-left: 5px solid #4b5a3c;
+      padding: 16px 20px;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #4b5a3c;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    }
+
+    /* QUOTE */
+    blockquote {
+      border-left: 4px solid #4b5a3c;
+      padding: 16px 24px;
+      margin: 28px 0;
+      background: #f4f6f0;
+      border-radius: 0 8px 8px 0;
+    }
+    blockquote p {
+      font-style: italic;
+      color: #444;
+      font-size: 16px;
+      margin: 0;
+      line-height: 1.7;
+    }
+    blockquote cite {
+      display: block;
+      font-size: 13px;
+      color: #999;
+      margin-top: 8px;
+      font-style: normal;
+    }
+
+    /* CTA */
+    .cta-bg {
+      background: linear-gradient(160deg, #4b5a3c 0%, #2d3825 100%);
+      color: white;
+      padding: 80px 24px;
+      text-align: center;
+    }
+    .cta-bg h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(26px, 5vw, 38px);
+      font-weight: 800;
+      color: white;
+      line-height: 1.25;
+      margin-bottom: 16px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .cta-bg p {
+      font-size: 17px;
+      color: rgba(255,255,255,0.8);
+      max-width: 520px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+    }
+    .email-form {
+      max-width: 460px;
+      margin: 0 auto;
+      display: flex;
+      gap: 12px;
+    }
+    .email-form input {
+      flex: 1;
+      padding: 18px 22px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-family: 'Open Sans', sans-serif;
+    }
+    .email-form button {
+      background: #a8c090;
+      color: #2d3825;
+      border: none;
+      padding: 18px 32px;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Open Sans', sans-serif;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+    .email-form button:hover { background: #96b07c; }
+    .cta-sub {
+      display: block;
+      font-size: 13px;
+      color: rgba(255,255,255,0.45);
+      margin-top: 16px;
+    }
+
+    /* FOOTER */
+    .footer {
+      background: #1f2a17;
+      color: rgba(255,255,255,0.35);
+      text-align: center;
+      padding: 28px;
+      font-size: 12px;
+    }
+    .footer a { color: rgba(255,255,255,0.5); text-decoration: none; }
+
+    @media (max-width: 600px) {
+      .hero { padding: 56px 20px 48px; }
+      .hero-stats { gap: 24px; }
+      .hero-stat-num { font-size: 36px; }
+      .section { padding: 48px 20px; }
+      .toxins-bg, .timeline-bg, .swap-bg, .cta-bg { padding: 48px 20px; }
+      .email-form { flex-direction: column; }
+      .swap-row { flex-direction: column; gap: 8px; }
+      .swap-arrow { transform: rotate(90deg); }
+      .timeline-item { flex-direction: column; gap: 6px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">Gratis gids</div>
+  <h1>Zaadoliën zijn <span>het nieuwe roken</span></h1>
+  <p>Over 10 jaar kijken we naar zaadoliën zoals we nu naar sigaretten kijken. Dit is waarom.</p>
+  <div class="hero-stats">
+    <div>
+      <div class="hero-stat-num">20%</div>
+      <div class="hero-stat-label">van je calorieën</div>
+    </div>
+    <div>
+      <div class="hero-stat-num">20:1</div>
+      <div class="hero-stat-label">omega-6 balans</div>
+    </div>
+    <div>
+      <div class="hero-stat-num">1000%</div>
+      <div class="hero-stat-label">stijging sinds 1909</div>
+    </div>
+  </div>
+</div>
+
+<!-- INTRO -->
+<section class="section">
+  <div class="section-label">Het probleem</div>
+  <div class="divider"></div>
+  <h2>In 1900 at niemand zaadoliën. Nu zitten ze in bijna alles.</h2>
+  <p>Zonnebloemolie. Sojaolie. Koolzaadolie. Maïsolie. Ze zitten in bijna alles wat je koopt. Chips, brood, koekjes, sauzen, kant-en-klaarmaaltijden, restauranteten.</p>
+  <p>Ze worden gepromoot als "hart-gezond" en "plantaardig." Maar de wetenschap vertelt een ander verhaal.</p>
+  <p>Zaadoliën zijn extreem hoog in omega-6 vetzuren. De verhouding omega-6 tot omega-3 in het moderne dieet is volledig uit balans: 20:1 in plaats van de natuurlijke 1:1 tot 3:1. Het resultaat? Chronische ontsteking. In elk weefsel. In elk orgaan. Elke dag.</p>
+
+  <blockquote>
+    <p>"De introductie van industrieel verwerkte zaadoliën in het menselijk dieet is het grootste ongecontroleerde experiment in de geschiedenis van de menselijke voeding."</p>
+    <cite>— Dr. Cate Shanahan, auteur Deep Nutrition</cite>
+  </blockquote>
+</section>
+
+<!-- ZIEKTEN -->
+<div class="toxins-bg">
+  <div class="toxins-inner">
+    <div class="section-label">Wat de wetenschap zegt</div>
+    <div class="divider"></div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(24px,5vw,32px);font-weight:800;color:#2d3825;line-height:1.25;margin-bottom:28px;">Chronische ontsteking is de basis van bijna elke moderne ziekte</h2>
+
+    <div class="toxin-card">
+      <h3>Hart- en vaatziekten</h3>
+      <p>Overmatige omega-6 inname bevordert oxidatie van LDL-cholesterol — de daadwerkelijke trigger voor atherosclerose. De Sydney Diet Heart Study toonde aan dat vervangen van dierlijk vet door zaadoliën het sterftecijfer verhoogde.</p>
+      <p class="source">Bron: Ramsden et al., BMJ, 2013</p>
+    </div>
+
+    <div class="toxin-card">
+      <h3>Obesitas</h3>
+      <p>Linolzuur uit zaadoliën stimuleert de aanmaak van endocannabinoïden — dezelfde receptoren die cannabis activeert. Je wordt letterlijk hongeriger van zaadoliën.</p>
+      <p class="source">Bron: Alvheim et al., Obesity, 2012</p>
+    </div>
+
+    <div class="toxin-card">
+      <h3>Diabetes type 2</h3>
+      <p>Zaadoliën verhogen insulineresistentie door ontsteking in vetweefsel. De stijging van diabetes loopt vrijwel parallel met de stijging van zaadolieconsumptie.</p>
+      <p class="source">Bron: DiNicolantonio &amp; O'Keefe, Missouri Medicine, 2018</p>
+    </div>
+
+    <div class="toxin-card">
+      <h3>Depressie en angst</h3>
+      <p>Een verstoorde omega-6/omega-3 balans is geassocieerd met hogere incidentie van depressie. Omega-6 bevordert pro-inflammatoire cytokines die direct invloed hebben op je hersenfunctie.</p>
+      <p class="source">Bron: Kiecolt-Glaser et al., Psychosomatic Medicine, 2007</p>
+    </div>
+  </div>
+</div>
+
+<!-- TIJDLIJN -->
+<div class="timeline-bg">
+  <div class="timeline-inner">
+    <div class="section-label" style="color:#a8c090;">Tijdlijn</div>
+    <div class="divider" style="background:#a8c090;"></div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(24px,5vw,32px);font-weight:800;color:white;line-height:1.25;margin-bottom:36px;">Hoe zaadoliën ons dieet binnenkwamen</h2>
+
+    <div class="timeline-item">
+      <div class="timeline-year">1911</div>
+      <div class="timeline-text">
+        <h4>Crisco komt op de markt</h4>
+        <p>Procter &amp; Gamble lanceert de eerste gehydrogeneerde zaadolie als goedkoop alternatief voor reuzel. Massale marketingcampagnes positioneren het als "modern" en "schoon."</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-year">1961</div>
+      <div class="timeline-text">
+        <h4>American Heart Association promoot zaadoliën</h4>
+        <p>Op basis van de foutieve lipidhypothese van Ancel Keys wordt dierlijk vet gedemoniseerd en zaadoliën gepromoot als "hart-gezond." Deze richtlijn is nooit herroepen.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-year">1992</div>
+      <div class="timeline-text">
+        <h4>De voedingspiramide</h4>
+        <p>De graanindustrie lobbyt succesvol voor een voedingspiramide met granen als basis en vet als vijand. Zaadolieconsumptie explodeert.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-year">2026</div>
+      <div class="timeline-text">
+        <h4>Nu: 20% van alle calorieën uit zaadoliën</h4>
+        <p>Obesitas verdrievoudigd. Diabetes epidemisch. Hartfalen doodsoorzaak #1. De correlatie is geen toeval meer.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SWAP -->
+<div class="swap-bg">
+  <div class="swap-inner">
+    <div class="section-label">De oplossing</div>
+    <div class="divider"></div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(24px,5vw,32px);font-weight:800;color:#2d3825;line-height:1.25;margin-bottom:32px;">Vervang dit → door dit</h2>
+
+    <div class="swap-row">
+      <div class="swap-bad">Zonnebloemolie</div>
+      <div class="swap-arrow">→</div>
+      <div class="swap-good">Boter of ghee</div>
+    </div>
+    <div class="swap-row">
+      <div class="swap-bad">Koolzaadolie</div>
+      <div class="swap-arrow">→</div>
+      <div class="swap-good">Reuzel of kokosolie</div>
+    </div>
+    <div class="swap-row">
+      <div class="swap-bad">Sojaolie</div>
+      <div class="swap-arrow">→</div>
+      <div class="swap-good">Olijfolie (in glas)</div>
+    </div>
+    <div class="swap-row">
+      <div class="swap-bad">Margarine</div>
+      <div class="swap-arrow">→</div>
+      <div class="swap-good">Echte roomboter</div>
+    </div>
+    <div class="swap-row">
+      <div class="swap-bad">Kant-en-klaar sauzen</div>
+      <div class="swap-arrow">→</div>
+      <div class="swap-good">Zelfgemaakt met boter/olijfolie</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-bg">
+  <h2>Wil je de complete zaadoliën gids? Gratis.</h2>
+  <p>Alles wat je moet weten in één overzicht. Welke oliën je moet vermijden, wat je wél kunt gebruiken, en hoe je etiketten leest.</p>
+  <form class="email-form" id="klaviyo-form" onsubmit="return submitToKlaviyo(event)">
+    <input type="email" id="email-input" placeholder="Je e-mailadres" required>
+    <button type="submit" id="submit-btn">Stuur mij de gids</button>
+  </form>
+  <span class="cta-sub" id="form-msg">Geen spam. Alleen waarde. Je kunt je altijd uitschrijven.</span>
+  <script>
+  async function submitToKlaviyo(e) {
+    e.preventDefault();
+    var email = document.getElementById('email-input').value;
+    var btn = document.getElementById('submit-btn');
+    var msg = document.getElementById('form-msg');
+    btn.textContent = 'Even geduld...'; btn.disabled = true;
+    try {
+      await fetch('https://a.klaviyo.com/client/subscriptions/?company_id=UXNDxC', {
+        method: 'POST', headers: { 'Content-Type': 'application/json', 'revision': '2024-02-15' },
+        body: JSON.stringify({ data: { type: 'subscription', attributes: { custom_source: 'Zaadolien Gids Lander', profile: { data: { type: 'profile', attributes: { email: email } } } }, relationships: { list: { data: { type: 'list', id: 'RVTdXW' } } } } })
+      });
+      document.getElementById('klaviyo-form').innerHTML = '<p style="font-size:18px;font-weight:700;color:white;padding:20px 0;">Check je inbox! De gids is onderweg.</p>';
+      msg.textContent = '';
+    } catch(err) { btn.textContent = 'Probeer opnieuw'; btn.disabled = false; msg.textContent = 'Er ging iets mis.'; }
+    return false;
+  }
+  </script>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p>&copy; Oergezond &middot; <a href="https://www.oergezond.com">oergezond.com</a></p>
+  <p style="margin-top:8px;font-size:11px;">Deze pagina is informatief en vervangt geen medisch advies. Alle genoemde studies zijn publiek beschikbaar via PubMed.</p>
+</footer>
+
+</body>
+</html>
