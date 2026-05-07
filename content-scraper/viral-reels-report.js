@@ -19,7 +19,7 @@ const puppeteer = require("puppeteer");
 // HELPERS
 // ============================================================
 
-function httpsRequest(options, body = null) {
+function httpsRequest(options, body = null, timeoutMs = 120000) {
   return new Promise((resolve, reject) => {
     const req = https.request(options, (res) => {
       let data = "";
@@ -32,6 +32,7 @@ function httpsRequest(options, body = null) {
         }
       });
     });
+    req.setTimeout(timeoutMs, () => { req.destroy(); reject(new Error(`Timeout na ${timeoutMs / 1000}s`)); });
     req.on("error", reject);
     if (body) req.write(Buffer.isBuffer(body) ? body : (typeof body === "string" ? body : JSON.stringify(body)));
     req.end();
@@ -137,6 +138,8 @@ Doe deep research en geef terug als JSON:
   "wetenschappelijkeBasis": "welke wetenschappelijke bronnen of onderzoeken ondersteunen dit onderwerp? Noem specifieke studies, journals of onderzoekers als die bestaan. Max 4 zinnen.",
   "bronnen": ["bron 1 — bijv. 'Journal of Clinical Nutrition, 2019'", "bron 2"],
   "kernboodschap": "de kernboodschap in 1 zin die Oergezond kan overnemen",
+  "feitelijkJuist": true/false,
+  "factCheckNotitie": "Is de kernboodschap feitelijk correct? Als er twijfel is of de claim overdreven/onjuist is, zet feitelijkJuist op false en leg uit waarom. Wees streng — liever een claim skippen dan iets verspreiden dat niet klopt.",
   "relevantVoorOergezond": true/false,
   "redenRelevantie": "leg kort uit waarom dit wel/niet past bij Oergezond en of zij dit realistisch na kunnen maken met een iPhone en geen studio"
 }
@@ -145,6 +148,11 @@ BELANGRIJK: Zet "relevantVoorOergezond" op false als:
 - Het onderwerp NIET past bij oervoeding, natuurlijke gezondheid, huidverzorging, hormonen, zaadoliën, circadiaans ritme of ancestrale gezondheid
 - De reel een dure studio, lab, medische apparatuur of professionele setup vereist die niet na te maken is met een iPhone
 - Het puur entertainment/comedy is zonder educatieve waarde voor Oergezond's doelgroep
+
+Zet "feitelijkJuist" op false als:
+- De claim niet onderbouwd kan worden met peer-reviewed onderzoek of gevestigde traditionele kennis
+- De claim overdreven, misleidend of uit context getrokken is
+- Het een conspiracytheorie is zonder degelijke onderbouwing
 
 Alleen JSON, geen extra tekst.`;
 
@@ -168,29 +176,49 @@ Alleen JSON, geen extra tekst.`;
 // ============================================================
 
 async function generateReelScript(reel, research, apiKey) {
-  const prompt = `Je bent de content creator van Oergezond — een Nederlands gezondheidsplatform.
-
-Schrijf een COMPLEET nieuw reel-script in de Oergezond brand voice, gebaseerd op dit virale onderwerp:
+  const prompt = `Je schrijft een reel-script voor Oergezond. Het moet klinken alsof een ECHT MENS het zegt — niet als AI, niet als een merk, niet als een copywriter. Gewoon iemand die boos, verbaasd of gefrustreerd is over wat hij ontdekt heeft en het aan een vriend vertelt.
 
 Onderwerp: ${research.onderwerp || "gezondheid"}
 Kernboodschap: ${research.kernboodschap || reel.caption || ""}
 Wetenschappelijke basis: ${research.wetenschappelijkeBasis || "geen specifieke bron"}
 Originele caption: "${(reel.caption || "").slice(0, 200)}"
 
-BRAND VOICE REGELS:
-- Taal: Nederlands
-- Toon: confronterend eerlijk, rustig zelfverzekerd, educatief
-- Schrijfstijl: spreektaal, korte zinnen, als een vriend aan de keukentafel
-- Gebruik deze woorden: troep, puur, oer-, echt, gewoon, hormoonvriendelijk, grasgevoerd, herstel van binnenuit, zoals de natuur het bedoeld heeft, je huid herkent het, de natuur wint, controle terugpakken, simpel maar effectief
-- NOOIT gebruiken: journey, ritual, glow up, clean beauty, superfoods, revolutionair, baanbrekend, holistic, self-care, elevate
+ANTI-AI REGELS — dit is het ALLERBELANGRIJKSTE:
+- Schrijf EXACT zoals een 30-jarige Nederlander praat. Niet netjes, niet gepolijst.
+- Gebruik woorden als: "gewoon", "echt", "serieus", "gek", "bizar", "kijk", "luister", "man", "jongens", "ff", "hè"
+- Gebruik NOOIT: "essentieel", "cruciaal", "optimaal", "het is belangrijk om", "onderzoek toont aan", "uit studies blijkt", "daarnaast", "bovendien", "namelijk", "met andere woorden"
+- Geen perfecte zinnen. Echte mensen praten met halve zinnen, herhalingen, en emotie.
+- Geen opsommingen of "ten eerste... ten tweede...". Praat gewoon.
+- Het moet klinken alsof je dit zegt terwijl je boos in je camera kijkt na het lezen van een ingredient-lijst.
+
+EMOTIE — het script moet 1 van deze emoties hard triggeren:
+- WOEDE: "ze stoppen dit in je eten en niemand zegt er wat van"
+- WALGING: "kijk wat erin zit. kijk dan. lees het etiket"
+- SCHOK: "ik geloofde het ook niet. maar dit is gewoon een feit"
+- HERKENNING: "je hebt dit. je weet niet waarom. dit is waarom"
+- URGENTIE: "je smeert dit elke dag op je gezicht. elke dag"
+
+HOOK: De eerste zin bepaalt alles. Geen "wist je dat". Geen vraag. Gewoon een klap:
+- "Dit zit in je tandpasta."
+- "Je crème maakt je huid kapot."
+- "Ze liegen. Punt."
+- "Lees je etiket. Nu."
+- "Niemand vertelt je dit."
+
+STRUCTUUR (25-40 seconden):
+- Hook: 1 zin. Klap in je gezicht.
+- Emotie: 2-3 zinnen. Rauw. Alsof je het net ontdekt hebt.
+- Het ding: wat het probleem is. Kort. Geen uitleg van 5 zinnen.
+- De draai: wat je WEL kunt doen. 1-2 zinnen. Simpel.
+- Einde: iets dat mensen triggert om te reageren. Geen "volg ons". Geen "like en deel".
 
 Geef terug als JSON:
 {
-  "hook": "de eerste zin die de kijker stopt met scrollen — max 10 woorden, confronterend of verrassend",
-  "script": "volledig transcript van de reel (30-60 seconden spreektijd). Schrijf het als gesproken tekst, niet als opsomming. Gebruik korte paragrafen met witregels ertussen.",
-  "cta": "call to action aan het einde — kort en direct",
+  "hook": "eerste zin — max 6 woorden, klap in je gezicht",
+  "script": "volledig gesproken transcript. Zoals iemand het ECHT zou zeggen. Met emotie, halve zinnen, herhalingen. Geen AI-taal.",
+  "cta": "laatste zin — triggert reacties, geen 'volg ons voor meer'",
   "geschatteDuur": "30s / 45s / 60s",
-  "visueleInstructies": "wat moet er visueel te zien zijn per sectie van het script — kort beschreven"
+  "visueleInstructies": "wat je filmt — iPhone, keuken, product vasthouden, etiket laten zien, buiten lopen, etc."
 }
 
 Alleen JSON, geen extra tekst.`;
@@ -757,6 +785,13 @@ async function generateViralReelsReport(reels, config, options = {}) {
     // Skip irrelevante reels VOOR script-generatie (scheelt API call)
     if (research.relevantVoorOergezond === false) {
       log(`  ⏭️ @${reel.account} overgeslagen — niet relevant: ${research.redenRelevantie || "geen reden"}`);
+      if (i < normalizedReels.length - 1) await sleep(2000);
+      continue;
+    }
+
+    // Skip feitelijk onjuiste claims
+    if (research.feitelijkJuist === false) {
+      log(`  ⛔ @${reel.account} overgeslagen — fact-check gefaald: ${research.factCheckNotitie || "geen notitie"}`);
       if (i < normalizedReels.length - 1) await sleep(2000);
       continue;
     }

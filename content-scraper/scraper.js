@@ -15,6 +15,8 @@ const https = require("https");
 const cfg = require("./config.js");
 const { COMPETITORS, HASHTAGS } = require("./accounts.js");
 const { generateCarousel, generateNewsPost, generateTweetPost } = require("./generate-statics.js");
+const { generateViralReelsReport } = require("./viral-reels-report.js");
+const db = require("./lib/supabase.js");
 
 const TELEGRAM_TOKEN = cfg.TELEGRAM_TOKEN;
 const TELEGRAM_CHAT_ID = cfg.TELEGRAM_CHAT_ID;
@@ -29,7 +31,7 @@ const TOP_POSTS_FOR_CLAUDE = 15; // hoeveel top posts naar Claude sturen
 // HELPERS
 // ============================================================
 
-function httpsRequest(options, body = null) {
+function httpsRequest(options, body = null, timeoutMs = 60000) {
   return new Promise((resolve, reject) => {
     const req = https.request(options, (res) => {
       let data = "";
@@ -41,6 +43,10 @@ function httpsRequest(options, body = null) {
           resolve({ status: res.statusCode, body: data });
         }
       });
+    });
+    req.setTimeout(timeoutMs, () => {
+      req.destroy();
+      reject(new Error(`Request timeout na ${timeoutMs / 1000}s`));
     });
     req.on("error", reject);
     if (body) req.write(Buffer.isBuffer(body) ? body : (typeof body === "string" ? body : JSON.stringify(body)));
@@ -77,6 +83,7 @@ function igRequest(method, path, params = {}, bodyStr = null) {
       Accept: "*/*",
       "Accept-Language": "nl-NL",
     };
+    const timeoutMs = 15000;
     if (bodyBuf) {
       headers["Content-Type"] = "application/x-www-form-urlencoded";
       headers["Content-Length"] = bodyBuf.length;
@@ -93,6 +100,7 @@ function igRequest(method, path, params = {}, bodyStr = null) {
         });
       }
     );
+    req.setTimeout(timeoutMs, () => { req.destroy(); reject(new Error("IG request timeout")); });
     req.on("error", reject);
     if (bodyBuf) req.write(bodyBuf);
     req.end();
@@ -173,7 +181,7 @@ async function scrapeCompetitors() {
   for (const username of COMPETITORS) {
     const posts = await scrapeAccount(username);
     all.push(...posts);
-    await sleep(3000);
+    await sleep(7000); // 7s pauze om 429 rate limits te vermijden
   }
   log(`${all.length} posts opgehaald van competitors`);
   return all;
@@ -185,7 +193,7 @@ async function scrapeHashtags() {
   for (const tag of HASHTAGS) {
     const posts = await scrapeHashtag(tag);
     all.push(...posts);
-    await sleep(3000);
+    await sleep(4000);
   }
   log(`${all.length} posts opgehaald van hashtags`);
   return all;
@@ -343,7 +351,8 @@ Regels:
           "Content-Length": Buffer.byteLength(body),
         },
       },
-      body
+      body,
+      120000 // 2 min timeout voor Claude API
     );
 
     if (res.status === 200) return res.body.content[0].text;
@@ -406,7 +415,8 @@ Geef ALLEEN de caption terug, geen uitleg. Klaar om te kopiëren naar Instagram.
           "Content-Length": Buffer.byteLength(body),
         },
       },
-      body
+      body,
+      90000 // 90s timeout
     );
 
     if (res.status === 200) return res.body.content[0].text;
@@ -460,7 +470,8 @@ Alleen JSON terug, geen uitleg.`;
           "Content-Length": Buffer.byteLength(body),
         },
       },
-      body
+      body,
+      90000 // 90s timeout
     );
 
     if (res.status === 200) { raw = res.body.content[0].text; break; }
@@ -645,6 +656,7 @@ function markRanToday() {
 // ============================================================
 
 const USED_TOPICS_FILE = require("path").join(__dirname, ".used-topics.json");
+const SEEN_REELS_FILE = require("path").join(__dirname, ".seen-reels.json");
 
 function loadUsedTopics() {
   try {
@@ -656,6 +668,16 @@ function saveUsedTopics(topics) {
   // Dedup + bewaar max 60 recente onderwerpen
   const unique = [...new Set(topics)].slice(-60);
   require("fs").writeFileSync(USED_TOPICS_FILE, JSON.stringify(unique, null, 2), "utf8");
+}
+
+function loadSeenReels() {
+  try { return JSON.parse(require("fs").readFileSync(SEEN_REELS_FILE, "utf8")); }
+  catch { return []; }
+}
+
+function saveSeenReels(codes) {
+  const unique = [...new Set(codes)].slice(-300);
+  require("fs").writeFileSync(SEEN_REELS_FILE, JSON.stringify(unique, null, 2), "utf8");
 }
 
 // ============================================================
@@ -678,6 +700,14 @@ async function main() {
       const hashtagPosts = await scrapeHashtags();
       allPosts = [...competitorPosts, ...hashtagPosts];
       log(`Totaal ${allPosts.length} posts verzameld`);
+
+      // Posts opslaan in Supabase
+      try {
+        const saved = await db.saveScrapedPosts(allPosts);
+        log(`${saved} posts opgeslagen in Supabase`);
+      } catch (e) {
+        log(`Supabase posts opslaan mislukt: ${e.message}`);
+      }
     } catch (e) {
       log(`Scraping mislukt (${e.message}) — ga door zonder virale posts`);
     }
@@ -690,10 +720,21 @@ async function main() {
       log("Geen virale posts beschikbaar — content wordt puur op basis van topicpool gegenereerd");
     }
 
-    // Gebruikte onderwerpen laden
-    const usedTopics = loadUsedTopics();
-    log(`${usedTopics.length} eerder gebruikte onderwerpen geladen`);
+    // Gebruikte onderwerpen laden (Supabase + lokaal als fallback)
+    let usedTopics = [];
+    try {
+      usedTopics = await db.getUsedTopics();
+      log(`${usedTopics.length} eerder gebruikte onderwerpen geladen (Supabase)`);
+    } catch (e) {
+      usedTopics = loadUsedTopics();
+      log(`${usedTopics.length} eerder gebruikte onderwerpen geladen (lokaal)`);
+    }
 
+    // ============================================================
+    // FASE 1: STATICS (nieuws + tweet posts)
+    // ============================================================
+    let ideas = null;
+    try {
     // Ideeën genereren (werkt met én zonder virale posts)
     const rawIdeas = await generateContentIdeas(topPosts, usedTopics);
 
@@ -766,7 +807,14 @@ async function main() {
     if (ideas.carousel) {
       log("Carousel genereren...");
       await sendTelegram(`🖼️ *Statics worden nu gegenereerd...*`);
-      const carouselSlides = await generateCarousel(ideas.carousel);
+      let carouselSlides;
+      try {
+        carouselSlides = await generateCarousel(ideas.carousel);
+      } catch (carErr) {
+        log(`Carousel poging 1 mislukt: ${carErr.message} — retry...`);
+        await sleep(3000);
+        carouselSlides = await generateCarousel(ideas.carousel);
+      }
       for (const slide of carouselSlides) {
         await sendTelegramPhoto(slide.buffer);
         await sleep(600);
@@ -818,6 +866,128 @@ async function main() {
       }
     }
 
+    log("Statics verstuurd naar Telegram ✅");
+    } catch (staticErr) {
+      log(`Statics mislukt: ${staticErr.message}`);
+      await sendTelegram(`⚠️ Statics mislukt: ${staticErr.message}`).catch(() => {});
+    }
+
+    // ============================================================
+    // FASE 2: VIRAL REELS RAPPORT (draait ALTIJD, onafhankelijk van statics)
+    // ============================================================
+    let reelsReportSent = false;
+    try {
+      log("=== VIRAL REELS RAPPORT ===");
+
+      // Laad eerder verstuurde reels zodat we geen dubbele sturen
+      const seenReels = loadSeenReels();
+      log(`${seenReels.length} eerder verstuurde reels in geheugen`);
+
+      // Extra hashtags scrapen — breed genoeg voor altijd genoeg reels
+      const reelHashtags = [
+        "metabolichealth", "cortisol", "insulinresistance", "circadianrhythm",
+        "rawmilk", "carnivoreresults", "nontoxicliving", "functionalnutrition",
+        "ancestralliving", "noseedoils", "bloodsugarbalance", "hormonalhealth",
+        "guthealth", "biohacking", "antiinflammatory", "hormonebalance",
+      ];
+      log(`Extra hashtags scrapen voor reels (${reelHashtags.length} tags)...`);
+      const extraPosts = [];
+      for (const tag of reelHashtags) {
+        try {
+          const posts = await scrapeHashtag(tag);
+          extraPosts.push(...posts);
+        } catch (e) {
+          log(`  [IG] #${tag} fout: ${e.message}`);
+        }
+        await sleep(3000);
+      }
+      log(`${extraPosts.length} extra posts opgehaald`);
+
+      // Combineer alles, dedup, filter op reels, filter geziene eruit
+      const allReelPosts = [...allPosts, ...extraPosts];
+      const seenSet = new Set(seenReels);
+      const codeSet = new Set();
+      const reels = allReelPosts
+        .filter(p => p.type === "video" && p.shortCode && (p.caption || "").length > 20)
+        .filter(p => !seenSet.has(p.shortCode)) // niet eerder verstuurd
+        .filter(p => { if (codeSet.has(p.shortCode)) return false; codeSet.add(p.shortCode); return true; }) // dedup binnen run
+        .map(p => ({
+          account: p.ownerUsername,
+          caption: (p.caption || "").slice(0, 300),
+          likes: p.likesCount || 0,
+          comments: p.commentsCount || 0,
+          views: p.videoViewCount || 0,
+          url: `https://www.instagram.com/reel/${p.shortCode}/`,
+          shortCode: p.shortCode,
+        }))
+        .sort((a, b) => (b.views || b.likes * 10) - (a.views || a.likes * 10))
+        .slice(0, 10); // neem 10, na fact-check/relevantie filtering blijven er ~6-8 over
+
+      log(`${reels.length} nieuwe reels gevonden`);
+
+      if (reels.length >= 3) {
+        const pdf = await generateViralReelsReport(reels, cfg, { sendToTelegram: true });
+        if (pdf) {
+          log("Viral Reels Report verstuurd ✅");
+          reelsReportSent = true;
+          // Sla verstuurde reels op zodat ze niet opnieuw komen
+          saveSeenReels([...seenReels, ...reels.map(r => r.shortCode)]);
+        } else {
+          log("Geen relevante reels na filtering — retry met meer hashtags");
+        }
+      } else {
+        log(`Te weinig nieuwe reels (${reels.length})`);
+      }
+
+      // Als rapport niet verstuurd is, probeer nog een ronde met andere hashtags
+      if (!reelsReportSent) {
+        log("Retry met backup hashtags...");
+        const backupTags = ["paleodiet", "carnivore", "seedoils", "animalbased", "healthfacts", "toxinfree", "nervousystem", "microbiome"];
+        const backupPosts = [];
+        for (const tag of backupTags) {
+          try {
+            const posts = await scrapeHashtag(tag);
+            backupPosts.push(...posts);
+          } catch (e) { /* skip */ }
+          await sleep(3000);
+        }
+
+        const backupReels = backupPosts
+          .filter(p => p.type === "video" && p.shortCode && (p.caption || "").length > 20)
+          .filter(p => !seenSet.has(p.shortCode) && !codeSet.has(p.shortCode))
+          .map(p => ({
+            account: p.ownerUsername,
+            caption: (p.caption || "").slice(0, 300),
+            likes: p.likesCount || 0,
+            comments: p.commentsCount || 0,
+            views: p.videoViewCount || 0,
+            url: `https://www.instagram.com/reel/${p.shortCode}/`,
+            shortCode: p.shortCode,
+          }))
+          .sort((a, b) => (b.views || b.likes * 10) - (a.views || a.likes * 10))
+          .slice(0, 10);
+
+        log(`Backup: ${backupReels.length} extra reels gevonden`);
+
+        if (backupReels.length >= 3) {
+          const pdf = await generateViralReelsReport(backupReels, cfg, { sendToTelegram: true });
+          if (pdf) {
+            log("Viral Reels Report verstuurd (backup) ✅");
+            reelsReportSent = true;
+            saveSeenReels([...seenReels, ...reels.map(r => r.shortCode), ...backupReels.map(r => r.shortCode)]);
+          }
+        }
+      }
+
+      if (!reelsReportSent) {
+        log("Reels rapport kon vandaag niet verstuurd worden");
+        await sendTelegram(`ℹ️ Vandaag geen viral reels rapport — te weinig nieuwe reels gevonden na filtering.`).catch(() => {});
+      }
+    } catch (reelErr) {
+      log(`Reels rapport fout: ${reelErr.message}`);
+      await sendTelegram(`⚠️ Viral Reels Report fout: ${reelErr.message}`).catch(() => {});
+    }
+
     log("Alles verstuurd naar Telegram ✅");
     // Sla top posts op zodat Amy de knop-callbacks kan afhandelen
     require("fs").writeFileSync(
@@ -832,6 +1002,27 @@ async function main() {
     ];
     saveUsedTopics([...usedTopics, ...newTopics]);
     log(`${newTopics.length} onderwerpen opgeslagen voor volgende run`);
+
+    // Alles opslaan in Supabase
+    try {
+      if (ideas) {
+        await db.saveGeneratedContent(ideas);
+        const newTopics = [
+          ...(ideas.newsPosts || []).map(p => p.onderwerp).filter(Boolean),
+          ...(ideas.tweetPosts || []).map(p => p.onderwerp).filter(Boolean),
+        ];
+        await db.saveUsedTopics(newTopics);
+      }
+      await db.logRun({
+        postsScraped: allPosts.length,
+        contentGenerated: ideas ? (ideas.newsPosts || []).length + (ideas.tweetPosts || []).length : 0,
+        reelsReport: reelsReportSent,
+        status: "completed",
+      });
+      log("Alles opgeslagen in Supabase ✅");
+    } catch (e) {
+      log(`Supabase opslaan mislukt: ${e.message}`);
+    }
 
     markRanToday();
     // Knopreacties worden afgehandeld door Amy (zelfde bot)
