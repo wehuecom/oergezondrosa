@@ -815,6 +815,14 @@ async function generateViralReelsReport(reels, config, options = {}) {
 
     reelsData.push({ reel, research, script });
 
+    // Opslaan in Supabase
+    try {
+      const db = require("./lib/supabase.js");
+      await db.saveReelWithScript(reel, research, script);
+    } catch (e) {
+      log(`  Supabase opslaan mislukt: ${e.message}`);
+    }
+
     // Pauze tussen reels
     if (i < normalizedReels.length - 1) {
       await sleep(3000);
