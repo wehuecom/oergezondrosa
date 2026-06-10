@@ -1,0 +1,122 @@
+<style>
+  .rh{background:linear-gradient(160deg,#1A2E1A 0%,#1A2E1A 100%);color:#fff;padding:48px 24px 40px;text-align:center;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+  .rh-crumb{font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:20px}
+  .rh-crumb a{color:rgba(255,255,255,0.55);text-decoration:none}
+  .rh-label{display:inline-block;background:rgba(168,192,144,0.2);color:#a8c090;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:6px 16px;border-radius:20px;margin-bottom:16px}
+  .rh h1{font-family:Georgia,serif;font-size:clamp(26px,6vw,42px);font-weight:800;line-height:1.2;margin:0 auto 14px;max-width:600px;color:#ffffff}
+  .rh-sub{font-size:clamp(15px,3vw,17px);color:rgba(255,255,255,0.6);max-width:480px;margin:0 auto;line-height:1.6}
+  .rh-meta{display:flex;justify-content:center;gap:28px;margin-top:28px;flex-wrap:wrap}
+  .rh-meta-item{text-align:center}
+  .rh-meta-val{font-weight:700;font-size:15px;color:#a8c090}
+  .rh-meta-lbl{font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px}
+  .rh-img{max-width:720px;margin:-20px auto 0;padding:0 24px;position:relative;z-index:2}
+  .rh-img img{width:100%;height:380px;object-fit:cover;border-radius:14px;box-shadow:0 10px 36px rgba(0,0,0,0.12)}
+  @media(max-width:640px){.rh-meta{gap:16px}.rh-img img{height:240px}}
+</style>
+
+<section class="rh">
+  <div class="rh-crumb">
+    <a href="/">Oergezond</a> / <a href="/pages/recepten">Recepten</a> / {{ section.settings.recept_naam }}
+  </div>
+  {% if section.settings.categorie != blank %}
+    <div class="rh-label">{{ section.settings.categorie }}</div>
+  {% endif %}
+  <h1>{{ section.settings.recept_naam }}</h1>
+  {% if section.settings.korte_omschrijving != blank %}
+    <p class="rh-sub">{{ section.settings.korte_omschrijving }}</p>
+  {% endif %}
+  <div class="rh-meta">
+    {% if section.settings.bereidingstijd != blank %}
+      <div class="rh-meta-item">
+        <div class="rh-meta-val">{{ section.settings.bereidingstijd }}</div>
+        <div class="rh-meta-lbl">Bereidingstijd</div>
+      </div>
+    {% endif %}
+    {% if section.settings.porties != blank %}
+      <div class="rh-meta-item">
+        <div class="rh-meta-val">{{ section.settings.porties }}</div>
+        <div class="rh-meta-lbl">Porties</div>
+      </div>
+    {% endif %}
+    {% if section.settings.niveau != blank %}
+      <div class="rh-meta-item">
+        <div class="rh-meta-val">{{ section.settings.niveau }}</div>
+        <div class="rh-meta-lbl">Niveau</div>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% if section.settings.foto != blank %}
+  <div class="rh-img">
+    {{ section.settings.foto | image_url: width: 1440 | image_tag }}
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Recept Hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "recept_naam",
+      "label": "Receptnaam",
+      "default": "Receptnaam hier"
+    },
+    {
+      "type": "select",
+      "id": "categorie",
+      "label": "Categorie",
+      "options": [
+        { "value": "Hoofdgerecht", "label": "Hoofdgerecht" },
+        { "value": "Ontbijt", "label": "Ontbijt" },
+        { "value": "Lunch", "label": "Lunch" },
+        { "value": "Snack", "label": "Snack" },
+        { "value": "Bijgerecht", "label": "Bijgerecht" },
+        { "value": "Drank", "label": "Drank" },
+        { "value": "Dessert", "label": "Dessert" }
+      ],
+      "default": "Hoofdgerecht"
+    },
+    {
+      "type": "text",
+      "id": "korte_omschrijving",
+      "label": "Korte omschrijving",
+      "default": "Simpel, voedzaam en zonder troep."
+    },
+    {
+      "type": "text",
+      "id": "bereidingstijd",
+      "label": "Bereidingstijd",
+      "default": "35 min"
+    },
+    {
+      "type": "text",
+      "id": "porties",
+      "label": "Porties",
+      "default": "4"
+    },
+    {
+      "type": "select",
+      "id": "niveau",
+      "label": "Niveau",
+      "options": [
+        { "value": "Makkelijk", "label": "Makkelijk" },
+        { "value": "Gemiddeld", "label": "Gemiddeld" },
+        { "value": "Gevorderd", "label": "Gevorderd" }
+      ],
+      "default": "Makkelijk"
+    },
+    {
+      "type": "image_picker",
+      "id": "foto",
+      "label": "Receptfoto"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Recept Hero"
+    }
+  ]
+}
+{% endschema %}

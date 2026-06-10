@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oergehaktballetjes in tomatensaus | Oergezond Recepten</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      color: #1a1a1a;
+      background: #ffffff;
+      line-height: 1.7;
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      background: #2d3825;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .header-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: #ffffff;
+      text-decoration: none;
+    }
+    .header-logo span { color: #a8c090; }
+    .header-nav { display: flex; gap: 24px; }
+    .header-nav a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    .header-nav a:hover { color: #ffffff; }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      background: linear-gradient(160deg, #2d3825 0%, #4b5a3c 100%);
+      color: #ffffff;
+      padding: 56px 24px 48px;
+      text-align: center;
+    }
+    .hero-breadcrumb {
+      font-size: 13px;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 24px;
+    }
+    .hero-breadcrumb a { color: rgba(255,255,255,0.55); text-decoration: none; }
+    .hero-breadcrumb a:hover { color: #ffffff; }
+    .hero-label {
+      display: inline-block;
+      background: rgba(168,192,144,0.2);
+      color: #a8c090;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 6vw, 44px);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-sub {
+      font-size: clamp(15px, 3vw, 18px);
+      color: rgba(255,255,255,0.65);
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    .hero-meta {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+    .hero-meta-item {
+      text-align: center;
+    }
+    .hero-meta-icon {
+      font-size: 24px;
+      margin-bottom: 4px;
+    }
+    .hero-meta-value {
+      font-weight: 700;
+      font-size: 16px;
+      color: #a8c090;
+    }
+    .hero-meta-label {
+      font-size: 11px;
+      color: rgba(255,255,255,0.45);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* ===== RECIPE IMAGE ===== */
+    .recipe-image {
+      max-width: 720px;
+      margin: -24px auto 0;
+      padding: 0 24px;
+      position: relative;
+      z-index: 2;
+    }
+    .recipe-image img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 16px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    }
+
+    /* ===== CONTENT ===== */
+    .content {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 48px 24px;
+    }
+
+    .intro-text {
+      font-size: 17px;
+      color: #333;
+      line-height: 1.8;
+      margin-bottom: 40px;
+      border-left: 3px solid #a8c090;
+      padding-left: 20px;
+    }
+
+    /* ===== RECIPE CARD ===== */
+    .recipe-card {
+      background: #f9f8f4;
+      border-radius: 16px;
+      padding: 40px;
+      margin-bottom: 48px;
+    }
+
+    .recipe-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: #2d3825;
+      margin-bottom: 32px;
+    }
+
+    .recipe-columns {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 40px;
+    }
+
+    .ingredients h3, .instructions h3 {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #4b5a3c;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e0ddd4;
+    }
+
+    .ingredients ul {
+      list-style: none;
+    }
+    .ingredients li {
+      padding: 10px 0;
+      border-bottom: 1px solid #e8e5dc;
+      font-size: 15px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .ingredients li:last-child { border-bottom: none; }
+    .ing-name { color: #333; }
+    .ing-amount { font-weight: 700; color: #2d3825; white-space: nowrap; margin-left: 12px; }
+
+    .instructions ol {
+      list-style: none;
+      counter-reset: steps;
+    }
+    .instructions li {
+      counter-increment: steps;
+      padding: 12px 0 12px 48px;
+      position: relative;
+      font-size: 15px;
+      line-height: 1.7;
+      border-bottom: 1px solid #e8e5dc;
+    }
+    .instructions li:last-child { border-bottom: none; }
+    .instructions li::before {
+      content: counter(steps);
+      position: absolute;
+      left: 0;
+      top: 12px;
+      width: 32px;
+      height: 32px;
+      background: #4b5a3c;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 14px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ===== TIPS ===== */
+    .tips-box {
+      background: linear-gradient(135deg, #f0ebe0 0%, #f5f2ea 100%);
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin-top: 32px;
+    }
+    .tips-box h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      color: #2d3825;
+      margin-bottom: 12px;
+    }
+    .tips-box p {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.7;
+    }
+
+    /* ===== WEEKMENU CTA ===== */
+    .weekmenu-cta {
+      background: linear-gradient(160deg, #2d3825 0%, #3a4a2e 100%);
+      border-radius: 20px;
+      padding: 56px 40px;
+      text-align: center;
+      color: #ffffff;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 48px;
+    }
+    .weekmenu-cta::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 200px;
+      height: 200px;
+      background: rgba(168,192,144,0.08);
+      border-radius: 50%;
+    }
+    .weekmenu-cta::after {
+      content: '';
+      position: absolute;
+      bottom: -40px;
+      left: -40px;
+      width: 160px;
+      height: 160px;
+      background: rgba(168,192,144,0.06);
+      border-radius: 50%;
+    }
+    .cta-eyebrow {
+      display: inline-block;
+      background: rgba(168,192,144,0.2);
+      color: #a8c090;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+    .weekmenu-cta h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(24px, 5vw, 36px);
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
+    }
+    .weekmenu-cta h2 span { color: #a8c090; }
+    .weekmenu-cta p {
+      font-size: 16px;
+      color: rgba(255,255,255,0.7);
+      max-width: 480px;
+      margin: 0 auto 8px;
+      line-height: 1.7;
+      position: relative;
+      z-index: 1;
+    }
+    .cta-features {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin: 24px 0 32px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+    .cta-feature {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.65);
+    }
+    .cta-feature-check {
+      width: 20px;
+      height: 20px;
+      background: rgba(168,192,144,0.25);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #a8c090;
+      flex-shrink: 0;
+    }
+    .cta-button {
+      display: inline-block;
+      background: #a8c090;
+      color: #2d3825;
+      font-weight: 700;
+      font-size: 16px;
+      padding: 16px 40px;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: all 0.3s;
+      position: relative;
+      z-index: 1;
+    }
+    .cta-button:hover {
+      background: #bdd4a8;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .cta-price {
+      margin-top: 16px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+      position: relative;
+      z-index: 1;
+    }
+    .cta-price span {
+      text-decoration: line-through;
+    }
+
+    /* ===== MORE RECIPES ===== */
+    .more-recipes {
+      margin-bottom: 48px;
+    }
+    .more-recipes h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: #2d3825;
+      margin-bottom: 24px;
+    }
+    .recipes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .recipe-thumb {
+      border-radius: 12px;
+      overflow: hidden;
+      background: #f9f8f4;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .recipe-thumb:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+    .recipe-thumb-img {
+      width: 100%;
+      height: 160px;
+      background: #e0ddd4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #999;
+      font-size: 13px;
+    }
+    .recipe-thumb-body {
+      padding: 16px;
+    }
+    .recipe-thumb-tag {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #4b5a3c;
+      margin-bottom: 6px;
+    }
+    .recipe-thumb-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #2d3825;
+      line-height: 1.3;
+    }
+    .recipe-thumb-meta {
+      font-size: 12px;
+      color: #999;
+      margin-top: 8px;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: #2d3825;
+      color: rgba(255,255,255,0.5);
+      padding: 40px 24px;
+      text-align: center;
+      font-size: 13px;
+    }
+    .footer a { color: #a8c090; text-decoration: none; }
+    .footer-links { margin-top: 12px; }
+    .footer-links a { margin: 0 12px; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 640px) {
+      .recipe-columns {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .recipe-card { padding: 28px 20px; }
+      .recipes-grid { grid-template-columns: 1fr; }
+      .hero-meta { gap: 20px; }
+      .weekmenu-cta { padding: 40px 24px; }
+      .cta-features { flex-direction: column; align-items: center; }
+      .header-nav { display: none; }
+      .recipe-image img { height: 260px; }
+    }
+
+    /* ===== PRINT ===== */
+    .print-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: 2px solid #e0ddd4;
+      color: #666;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 24px;
+    }
+    .print-btn:hover { border-color: #4b5a3c; color: #4b5a3c; }
+
+    @media print {
+      .header, .footer, .weekmenu-cta, .more-recipes, .print-btn { display: none; }
+      .hero { padding: 24px; background: #fff; color: #1a1a1a; }
+      .hero h1 { color: #1a1a1a; font-size: 28px; }
+      .hero-label { background: #eee; color: #333; }
+      .recipe-image { margin-top: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <a href="https://oergezond.com" class="header-logo">Oer<span>gezond</span></a>
+    <nav class="header-nav">
+      <a href="#">Recepten</a>
+      <a href="#">Weekmenu</a>
+      <a href="https://oergezond.com">Shop</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-breadcrumb">
+      <a href="#">Oergezond</a> &rsaquo; <a href="#">Recepten</a> &rsaquo; Oergehaktballetjes in tomatensaus
+    </div>
+    <div class="hero-label">Hoofdgerecht</div>
+    <h1>Oergehaktballetjes in tomatensaus</h1>
+    <p class="hero-sub">Simpel, voedzaam en zonder troep. Zoals je overgrootmoeder het zou maken.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <div class="hero-meta-icon">&#9201;</div>
+        <div class="hero-meta-value">35 min</div>
+        <div class="hero-meta-label">Bereidingstijd</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-icon">&#127860;</div>
+        <div class="hero-meta-value">4</div>
+        <div class="hero-meta-label">Porties</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-icon">&#9889;</div>
+        <div class="hero-meta-value">Makkelijk</div>
+        <div class="hero-meta-label">Niveau</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECIPE IMAGE -->
+  <div class="recipe-image">
+    <!-- Vervang src met je eigen foto -->
+    <img src="https://placehold.co/720x400/e8e5dc/999?text=Receptfoto+hier" alt="Oergehaktballetjes in tomatensaus">
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- INTRO -->
+    <p class="intro-text">
+      Gehaktballetjes in tomatensaus. Simpel. Maar dan zonder de suiker, zaadolien en E-nummers die je in de supermarktvariant vindt. 100% grasgevoerd rundvlees, verse kruiden en een saus van echte tomaten. Je lichaam herkent elk ingrediënt. Dat is het hele punt.
+    </p>
+
+    <button class="print-btn" onclick="window.print()">
+      &#128424; Print recept
+    </button>
+
+    <!-- RECIPE CARD -->
+    <div class="recipe-card">
+      <h2>Het recept</h2>
+
+      <div class="recipe-columns">
+
+        <!-- INGREDIENTEN -->
+        <div class="ingredients">
+          <h3>Ingrediënten</h3>
+          <ul>
+            <li><span class="ing-name">Grasgevoerd rundergehakt</span> <span class="ing-amount">500 g</span></li>
+            <li><span class="ing-name">Ei (scharrrel of biologisch)</span> <span class="ing-amount">1</span></li>
+            <li><span class="ing-name">Knoflook, fijngehakt</span> <span class="ing-amount">3 tenen</span></li>
+            <li><span class="ing-name">Zeezout</span> <span class="ing-amount">1 tl</span></li>
+            <li><span class="ing-name">Zwarte peper</span> <span class="ing-amount">naar smaak</span></li>
+            <li><span class="ing-name">Gedroogde oregano</span> <span class="ing-amount">1 tl</span></li>
+            <li><span class="ing-name">Gepelde tomaten (blik)</span> <span class="ing-amount">400 g</span></li>
+            <li><span class="ing-name">Tomatenpuree</span> <span class="ing-amount">2 el</span></li>
+            <li><span class="ing-name">Ui, fijngesneden</span> <span class="ing-amount">1 grote</span></li>
+            <li><span class="ing-name">Olijfolie (extra vierge)</span> <span class="ing-amount">2 el</span></li>
+            <li><span class="ing-name">Verse basilicum</span> <span class="ing-amount">handvol</span></li>
+          </ul>
+        </div>
+
+        <!-- BEREIDING -->
+        <div class="instructions">
+          <h3>Bereiding</h3>
+          <ol>
+            <li>Meng het gehakt met ei, 1 teen knoflook, zeezout, peper en oregano. Draai er balletjes van ter grootte van een walnoot.</li>
+            <li>Verhit de olijfolie in een grote pan op middelhoog vuur. Bak de gehaktballetjes rondom goudbruin (5-6 min). Haal ze uit de pan en zet apart.</li>
+            <li>Fruit de ui en resterende knoflook in dezelfde pan tot ze zacht zijn (3 min). Voeg de tomatenpuree toe en bak 1 minuut mee.</li>
+            <li>Voeg de gepelde tomaten toe, breek ze met een lepel in stukken. Breng op smaak met zout en peper. Laat 5 minuten pruttelen.</li>
+            <li>Leg de gehaktballetjes terug in de saus. Deksel erop, 15 minuten zachtjes laten sudderen op laag vuur.</li>
+            <li>Serveer met verse basilicum. Lekker met bloemkoolrijst, zoete aardappel of gewoon puur.</li>
+          </ol>
+
+          <!-- TIPS -->
+          <div class="tips-box">
+            <h4>Oertip</h4>
+            <p>Maak een dubbele portie en vries de helft in. Zo heb je altijd een snelle, gezonde maaltijd klaar zonder dat je naar bewerkte troep hoeft te grijpen. Gebruik voor de saus alleen blikken gepelde tomaten zonder toegevoegde suiker of citroenzuur.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ===== WEEKMENU CTA ===== -->
+    <div class="weekmenu-cta">
+      <div class="cta-eyebrow">Oermenu</div>
+      <h2>Elke week een compleet <span>weekmenu</span> zonder troep</h2>
+      <p>Geen nadenken, geen etiketten lezen. Gewoon elke week 7 dagen aan recepten die je lichaam herkent. Boodschappenlijst inbegrepen.</p>
+
+      <div class="cta-features">
+        <div class="cta-feature">
+          <div class="cta-feature-check">&#10003;</div>
+          7 dagen compleet uitgewerkt
+        </div>
+        <div class="cta-feature">
+          <div class="cta-feature-check">&#10003;</div>
+          Boodschappenlijst erbij
+        </div>
+        <div class="cta-feature">
+          <div class="cta-feature-check">&#10003;</div>
+          100% zonder zaadoliën
+        </div>
+      </div>
+
+      <!-- Vervang # met de echte betaalpagina URL -->
+      <a href="#" class="cta-button">Bekijk het Oermenu</a>
+      <div class="cta-price">Vanaf &euro;9,95 per week &middot; direct toegang</div>
+    </div>
+
+    <!-- MORE RECIPES -->
+    <div class="more-recipes">
+      <h2>Meer recepten</h2>
+      <div class="recipes-grid">
+        <a href="#" class="recipe-thumb">
+          <div class="recipe-thumb-img">Foto</div>
+          <div class="recipe-thumb-body">
+            <div class="recipe-thumb-tag">Ontbijt</div>
+            <div class="recipe-thumb-title">Oerpannenkoeken met blauwe bessen</div>
+            <div class="recipe-thumb-meta">15 min &middot; 2 porties</div>
+          </div>
+        </a>
+        <a href="#" class="recipe-thumb">
+          <div class="recipe-thumb-img">Foto</div>
+          <div class="recipe-thumb-body">
+            <div class="recipe-thumb-tag">Snack</div>
+            <div class="recipe-thumb-title">Bone broth met kurkuma en gember</div>
+            <div class="recipe-thumb-meta">10 min + trekken &middot; 4 porties</div>
+          </div>
+        </a>
+        <a href="#" class="recipe-thumb">
+          <div class="recipe-thumb-img">Foto</div>
+          <div class="recipe-thumb-body">
+            <div class="recipe-thumb-tag">Hoofdgerecht</div>
+            <div class="recipe-thumb-title">Zalm met geroosterde groenten</div>
+            <div class="recipe-thumb-meta">30 min &middot; 2 porties</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div>&copy; 2026 Oergezond &mdash; Echt eten. Echte producten. Geen troep.</div>
+    <div class="footer-links">
+      <a href="https://oergezond.com">Shop</a>
+      <a href="https://instagram.com/oergezond">Instagram</a>
+      <a href="#">Recepten</a>
+    </div>
+  </footer>
+
+</body>
+</html>

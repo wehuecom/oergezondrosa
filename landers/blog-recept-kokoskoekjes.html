@@ -1,0 +1,128 @@
+<!-- KOKOSKOEKJES — Plak dit in de HTML-editor van je blogpost -->
+<style>
+  .oer-r{font-family:-apple-system,BlinkMacSystemFont,sans-serif;color:#1a1a1a;line-height:1.7;max-width:720px;margin:0 auto}
+  .oer-r *{box-sizing:border-box}
+  .oer-r .r-hero{background:linear-gradient(160deg,#1A2E1A 0%,#2a3f22 100%);color:#fff;padding:40px 28px 36px;text-align:center;border-radius:16px;margin-bottom:28px}
+  .oer-r .r-label{display:inline-block;background:rgba(168,192,144,0.2);color:#a8c090;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:14px}
+  .oer-r .r-hero h2{font-family:Georgia,serif;font-size:32px;font-weight:800;line-height:1.2;margin:0 0 12px 0;color:#fff}
+  .oer-r .r-hero-sub{font-size:16px;color:rgba(255,255,255,0.6);margin:0;line-height:1.6}
+  .oer-r .r-meta{display:flex;justify-content:center;gap:28px;margin-top:24px;flex-wrap:wrap}
+  .oer-r .r-meta-item{text-align:center}
+  .oer-r .r-meta-val{font-weight:700;font-size:15px;color:#a8c090}
+  .oer-r .r-meta-lbl{font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px}
+  .oer-r .r-intro{font-size:16px;color:#333;line-height:1.85;margin-bottom:28px;border-left:3px solid #a8c090;padding-left:20px}
+  .oer-r .r-card{background:#f9f8f4;border-radius:16px;padding:32px;margin-bottom:32px}
+  .oer-r .r-card h3{font-family:Georgia,serif;font-size:22px;font-weight:800;color:#1A2E1A;margin:0 0 24px 0}
+  .oer-r .r-cols{display:grid;grid-template-columns:1fr 1.4fr;gap:32px}
+  .oer-r .r-col-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#1A2E1A;margin:0 0 12px 0;padding-bottom:8px;border-bottom:2px solid #e0ddd4}
+  .oer-r .r-ing{list-style:none;padding:0;margin:0}
+  .oer-r .r-ing li{padding:8px 0;border-bottom:1px solid #e8e5dc;font-size:14px;display:flex;justify-content:space-between;gap:8px}
+  .oer-r .r-ing li:last-child{border-bottom:none}
+  .oer-r .r-ing-name{color:#333}
+  .oer-r .r-ing-amt{font-weight:700;color:#1A2E1A;white-space:nowrap}
+  .oer-r .r-steps{list-style:none;padding:0;margin:0;counter-reset:s}
+  .oer-r .r-steps li{counter-increment:s;padding:10px 0 10px 44px;position:relative;font-size:14px;line-height:1.7;border-bottom:1px solid #e8e5dc}
+  .oer-r .r-steps li:last-child{border-bottom:none}
+  .oer-r .r-steps li::before{content:counter(s);position:absolute;left:0;top:10px;width:28px;height:28px;background:#1A2E1A;color:#fff;font-weight:700;font-size:13px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+  .oer-r .r-tip{background:linear-gradient(135deg,#f0ebe0,#f5f2ea);border-radius:10px;padding:20px 24px;margin-top:24px}
+  .oer-r .r-tip h4{font-family:Georgia,serif;font-size:16px;color:#1A2E1A;margin:0 0 8px 0}
+  .oer-r .r-tip p{font-size:13px;color:#555;line-height:1.7;margin:0}
+  .oer-r .r-cta{background:linear-gradient(160deg,#1A2E1A,#243A24);border-radius:20px;padding:44px 32px;text-align:center;color:#fff;position:relative;overflow:hidden;margin-bottom:20px}
+  .oer-r .r-cta::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:rgba(168,192,144,0.08);border-radius:50%}
+  .oer-r .r-cta>*{position:relative;z-index:1}
+  .oer-r .r-cta-eye{display:inline-block;background:rgba(168,192,144,0.2);color:#a8c090;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:16px}
+  .oer-r .r-cta h3{font-family:Georgia,serif;font-size:26px;font-weight:800;line-height:1.25;margin:0 0 12px 0;color:#fff}
+  .oer-r .r-cta h3 span{color:#a8c090}
+  .oer-r .r-cta>p{font-size:14px;color:rgba(255,255,255,0.65);max-width:440px;margin:0 auto;line-height:1.7}
+  .oer-r .r-cta-feats{display:flex;justify-content:center;gap:18px;margin:20px 0 24px;flex-wrap:wrap}
+  .oer-r .r-cta-feat{display:flex;align-items:center;gap:6px;font-size:13px;color:rgba(255,255,255,0.6)}
+  .oer-r .r-cta-chk{width:18px;height:18px;background:rgba(168,192,144,0.25);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:10px;color:#a8c090}
+  .oer-r .r-cta-btn{display:inline-block;background:#a8c090;color:#1A2E1A;font-weight:700;font-size:15px;padding:13px 34px;border-radius:50px;text-decoration:none}
+  .oer-r .r-cta-btn:hover{background:#bdd4a8}
+  .oer-r .r-cta-price{margin-top:12px;font-size:12px;color:rgba(255,255,255,0.35)}
+  @media(max-width:640px){.oer-r .r-cols{grid-template-columns:1fr;gap:24px}.oer-r .r-card{padding:24px 18px}.oer-r .r-cta{padding:32px 20px}.oer-r .r-cta-feats{flex-direction:column;align-items:center}}
+</style>
+
+<div class="oer-r">
+
+  <!-- HERO -->
+  <div class="r-hero">
+    <div class="r-label">Snack</div>
+    <h2>Kokoskoekjes met pure chocolade</h2>
+    <p class="r-hero-sub">Twee ingredi&euml;nten. Geen meel, geen suiker, geen gedoe. Gewoon kokos en banaan.</p>
+    <div class="r-meta">
+      <div class="r-meta-item">
+        <div class="r-meta-val">20 min</div>
+        <div class="r-meta-lbl">Bereidingstijd</div>
+      </div>
+      <div class="r-meta-item">
+        <div class="r-meta-val">3-4</div>
+        <div class="r-meta-lbl">Koekjes</div>
+      </div>
+      <div class="r-meta-item">
+        <div class="r-meta-val">Makkelijk</div>
+        <div class="r-meta-lbl">Niveau</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTRO -->
+  <p class="r-intro">Twee ingredi&euml;nten. Dat is alles. Kokos en banaan. Geen meel, geen suiker, geen E-nummers. De pure chocolade en walnoten maken het af, maar zijn niet eens nodig. Zo simpel kan een koekje zijn als je de troep weglaat.</p>
+
+  <!-- RECEPT KAART -->
+  <div class="r-card">
+    <h3>Het recept</h3>
+    <div class="r-cols">
+
+      <!-- INGREDIENTEN -->
+      <div>
+        <div class="r-col-title">Ingredi&euml;nten</div>
+        <ul class="r-ing">
+          <li><span class="r-ing-name">Rijpe banaan (groot)</span><span class="r-ing-amt">1 (130 g)</span></li>
+          <li><span class="r-ing-name">Geraspte ongezoete kokos</span><span class="r-ing-amt">1 kopje (65 g)</span></li>
+        </ul>
+        <div class="r-col-title" style="margin-top:20px">Optionele toppings</div>
+        <ul class="r-ing">
+          <li><span class="r-ing-name">Pure chocolade, fijngehakt</span><span class="r-ing-amt">naar smaak</span></li>
+          <li><span class="r-ing-name">Walnoten, fijngehakt</span><span class="r-ing-amt">naar smaak</span></li>
+          <li><span class="r-ing-name">Zeezoutvlokken</span><span class="r-ing-amt">naar smaak</span></li>
+        </ul>
+      </div>
+
+      <!-- BEREIDING -->
+      <div>
+        <div class="r-col-title">Bereiding</div>
+        <ol class="r-steps">
+          <li>Doe de geraspte kokos en banaan in een grote kom. Prak de banaan met een vork fijn en meng goed met de kokos.</li>
+          <li>Voeg naar smaak gehakte pure chocolade en walnoten toe.</li>
+          <li>Vorm kleine koekjes met een lepel of ijsschep.</li>
+          <li>Bak de koekjes 12-15 minuten op 175&deg;C, of totdat de randjes goudbruin zijn.</li>
+          <li>Bestrooi na het bakken met wat zeezoutvlokken.</li>
+        </ol>
+
+        <!-- TIP -->
+        <div class="r-tip">
+          <h4>Oertip</h4>
+          <p>Gebruik een echt rijpe banaan — hoe rijper, hoe zoeter het koekje zonder dat je iets hoeft toe te voegen. Het lekkerst binnen een dag, maar in een afgesloten pot blijven ze 1-2 dagen goed.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- WEEKMENU BANNER -->
+  <div class="r-cta">
+    <div class="r-cta-eye">Oermenu</div>
+    <h3>Elke week een compleet <span>weekmenu zonder troep</span></h3>
+    <p>Geen nadenken, geen etiketten lezen. Gewoon elke week 7 dagen aan recepten die je lichaam herkent. Personaliseerbaar op jouw behoeftes en allergie&euml;n.</p>
+    <div class="r-cta-feats">
+      <div class="r-cta-feat"><span class="r-cta-chk">&#10003;</span> 7 dagen compleet uitgewerkt</div>
+      <div class="r-cta-feat"><span class="r-cta-chk">&#10003;</span> Boodschappenlijst erbij</div>
+      <div class="r-cta-feat"><span class="r-cta-chk">&#10003;</span> 100% zonder zaadoli&euml;n</div>
+      <div class="r-cta-feat"><span class="r-cta-chk">&#10003;</span> Gepersonaliseerd op jouw allergie&euml;n</div>
+    </div>
+    <a href="https://checkout.menuut.nl/checkout/oergezond" class="r-cta-btn">Bekijk het Oermenu</a>
+    <div class="r-cta-price">Vanaf &euro;7,95 per maand &middot; direct toegang</div>
+  </div>
+
+</div>

@@ -1,0 +1,119 @@
+<style>
+  .ro{max-width:1000px;margin:0 auto;padding:48px 24px;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+  .ro-hero{text-align:center;margin-bottom:40px}
+  .ro-hero h1{font-family:Georgia,serif;font-size:clamp(28px,6vw,44px);font-weight:800;color:#1A2E1A;margin:0 0 12px 0}
+  .ro-hero p{font-size:17px;color:#666;max-width:500px;margin:0 auto;line-height:1.7}
+  .ro-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .ro-card{border-radius:14px;overflow:hidden;background:#f9f8f4;text-decoration:none;color:inherit;transition:transform 0.2s,box-shadow 0.2s}
+  .ro-card:hover{transform:translateY(-4px);box-shadow:0 8px 28px rgba(0,0,0,0.1)}
+  .ro-card-img{width:100%;height:200px;object-fit:cover;display:block}
+  .ro-card-img-placeholder{width:100%;height:200px;background:#e0ddd4;display:flex;align-items:center;justify-content:center;color:#999;font-size:13px}
+  .ro-card-body{padding:20px}
+  .ro-card-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#1A2E1A;margin-bottom:6px}
+  .ro-card-title{font-family:Georgia,serif;font-size:18px;font-weight:700;color:#1A2E1A;line-height:1.3;margin-bottom:8px}
+  .ro-card-desc{font-size:13px;color:#888;line-height:1.5}
+  .ro-card-arrow{display:inline-block;margin-top:12px;font-size:13px;font-weight:700;color:#1A2E1A}
+  @media(max-width:768px){.ro-grid{grid-template-columns:repeat(2,1fr);gap:16px}}
+  @media(max-width:480px){.ro-grid{grid-template-columns:1fr}}
+</style>
+
+<div class="ro">
+  <div class="ro-hero">
+    <h1>{{ section.settings.titel }}</h1>
+    {% if section.settings.subtitel != blank %}
+      <p>{{ section.settings.subtitel }}</p>
+    {% endif %}
+  </div>
+
+  <div class="ro-grid">
+    {% for block in section.blocks %}
+      <a href="{{ block.settings.link }}" class="ro-card">
+        {% if block.settings.foto != blank %}
+          <img class="ro-card-img" src="{{ block.settings.foto | image_url: width: 600 }}" alt="{{ block.settings.naam }}">
+        {% else %}
+          <div class="ro-card-img-placeholder">Foto</div>
+        {% endif %}
+        <div class="ro-card-body">
+          {% if block.settings.categorie != blank %}
+            <div class="ro-card-tag">{{ block.settings.categorie }}</div>
+          {% endif %}
+          <div class="ro-card-title">{{ block.settings.naam }}</div>
+          {% if block.settings.beschrijving != blank %}
+            <div class="ro-card-desc">{{ block.settings.beschrijving }}</div>
+          {% endif %}
+          <div class="ro-card-arrow">Bekijk recept &rarr;</div>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Recepten Overzicht",
+  "settings": [
+    {
+      "type": "text",
+      "id": "titel",
+      "label": "Paginatitel",
+      "default": "Onze recepten"
+    },
+    {
+      "type": "text",
+      "id": "subtitel",
+      "label": "Subtitel",
+      "default": "Simpel, voedzaam en zonder troep. Echt eten dat je lichaam herkent."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "recept",
+      "name": "Recept",
+      "settings": [
+        {
+          "type": "text",
+          "id": "naam",
+          "label": "Receptnaam",
+          "default": "Receptnaam"
+        },
+        {
+          "type": "select",
+          "id": "categorie",
+          "label": "Categorie",
+          "options": [
+            { "value": "Hoofdgerecht", "label": "Hoofdgerecht" },
+            { "value": "Ontbijt", "label": "Ontbijt" },
+            { "value": "Lunch", "label": "Lunch" },
+            { "value": "Snack", "label": "Snack" },
+            { "value": "Bijgerecht", "label": "Bijgerecht" },
+            { "value": "Drank", "label": "Drank" },
+            { "value": "Dessert", "label": "Dessert" }
+          ],
+          "default": "Hoofdgerecht"
+        },
+        {
+          "type": "text",
+          "id": "beschrijving",
+          "label": "Korte beschrijving",
+          "default": "Kort beschrijving van het recept"
+        },
+        {
+          "type": "image_picker",
+          "id": "foto",
+          "label": "Foto"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link naar receptpagina"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Recepten Overzicht"
+    }
+  ]
+}
+{% endschema %}

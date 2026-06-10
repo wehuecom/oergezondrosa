@@ -1,0 +1,125 @@
+<style>
+  .ri-wrap{max-width:720px;margin:0 auto;padding:40px 24px 0;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+  .ri-intro{font-size:16px;color:#333;line-height:1.85;margin-bottom:32px;border-left:3px solid #a8c090;padding-left:20px}
+  .ri-card{background:#f9f8f4;border-radius:16px;padding:36px}
+  .ri-card h2{font-family:Georgia,serif;font-size:26px;font-weight:800;color:#1A2E1A;margin:0 0 28px 0}
+  .ri-cols{display:grid;grid-template-columns:1fr 1.4fr;gap:36px}
+  .ri-card h3{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#1A2E1A;margin:0 0 14px 0;padding-bottom:8px;border-bottom:2px solid #e0ddd4}
+  .ri-ing{list-style:none;padding:0;margin:0}
+  .ri-ing li{padding:9px 0;border-bottom:1px solid #e8e5dc;font-size:14px;display:flex;justify-content:space-between;gap:8px}
+  .ri-ing li:last-child{border-bottom:none}
+  .ri-ing-name{color:#333}
+  .ri-ing-amt{font-weight:700;color:#1A2E1A;white-space:nowrap}
+  .ri-steps{list-style:none;padding:0;margin:0;counter-reset:s}
+  .ri-steps li{counter-increment:s;padding:11px 0 11px 46px;position:relative;font-size:14px;line-height:1.7;border-bottom:1px solid #e8e5dc}
+  .ri-steps li:last-child{border-bottom:none}
+  .ri-steps li::before{content:counter(s);position:absolute;left:0;top:11px;width:30px;height:30px;background:#1A2E1A;color:#fff;font-weight:700;font-size:13px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+  .ri-tip{background:#f0ebe0;border-radius:10px;padding:24px 28px;margin-top:28px}
+  .ri-tip h4{font-family:Georgia,serif;font-size:17px;color:#1A2E1A;margin:0 0 10px 0}
+  .ri-tip p{font-size:13px;color:#555;line-height:1.7;margin:0}
+  @media(max-width:640px){.ri-cols{grid-template-columns:1fr;gap:28px}.ri-card{padding:24px 18px}}
+</style>
+
+<div class="ri-wrap">
+
+  {% if section.settings.intro != blank %}
+    <div class="ri-intro">{{ section.settings.intro }}</div>
+  {% endif %}
+
+  <div class="ri-card">
+    <h2>Het recept</h2>
+    <div class="ri-cols">
+
+      <div>
+        <h3>Ingredienten</h3>
+        <ul class="ri-ing">
+          {% for block in section.blocks %}
+            {% if block.type == 'ingredient' %}
+              <li>
+                <span class="ri-ing-name">{{ block.settings.naam }}</span>
+                <span class="ri-ing-amt">{{ block.settings.hoeveelheid }}</span>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div>
+        <h3>Bereiding</h3>
+        <ol class="ri-steps">
+          {% for block in section.blocks %}
+            {% if block.type == 'stap' %}
+              <li>{{ block.settings.tekst }}</li>
+            {% endif %}
+          {% endfor %}
+        </ol>
+
+        {% if section.settings.tip != blank %}
+          <div class="ri-tip">
+            <h4>Oertip</h4>
+            <p>{{ section.settings.tip }}</p>
+          </div>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "Recept Ingredienten",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Intro tekst",
+      "default": "Beschrijf hier kort het recept."
+    },
+    {
+      "type": "textarea",
+      "id": "tip",
+      "label": "Oertip (optioneel)",
+      "default": "Tip hier invullen"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ingredient",
+      "name": "Ingredient",
+      "settings": [
+        {
+          "type": "text",
+          "id": "naam",
+          "label": "Naam",
+          "default": "Ingredient"
+        },
+        {
+          "type": "text",
+          "id": "hoeveelheid",
+          "label": "Hoeveelheid",
+          "default": "500 g"
+        }
+      ]
+    },
+    {
+      "type": "stap",
+      "name": "Bereidingsstap",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "tekst",
+          "label": "Stap omschrijving",
+          "default": "Beschrijf hier de stap."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Recept Ingredienten"
+    }
+  ]
+}
+{% endschema %}

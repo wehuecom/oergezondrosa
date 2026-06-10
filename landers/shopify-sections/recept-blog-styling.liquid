@@ -1,0 +1,225 @@
+<style>
+  .article-template .rte {
+    max-width: 720px;
+    margin: 0 auto;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #1a1a1a;
+    line-height: 1.7;
+  }
+
+  /* HERO TABLE */
+  .article-template .rte > table:first-child,
+  .article-template .rte > table:first-of-type {
+    background: #1A2E1A !important;
+    border-radius: 16px;
+    margin-bottom: 28px;
+    width: 100%;
+  }
+  .article-template .rte > table:first-child td,
+  .article-template .rte > table:first-of-type td {
+    padding: 40px 28px 36px;
+    text-align: center;
+  }
+  .article-template .rte > table:first-child h1,
+  .article-template .rte > table:first-of-type h1 {
+    font-family: Georgia, serif;
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin: 0 0 12px 0;
+    color: #ffffff !important;
+  }
+  .article-template .rte > table:first-child p,
+  .article-template .rte > table:first-of-type p {
+    color: rgba(255,255,255,0.6) !important;
+    font-size: 16px;
+    margin: 0 0 8px 0;
+  }
+  .article-template .rte > table:first-child strong,
+  .article-template .rte > table:first-of-type strong {
+    color: #a8c090 !important;
+    font-size: 15px;
+  }
+  .article-template .rte > table:first-child em,
+  .article-template .rte > table:first-of-type em {
+    color: rgba(255,255,255,0.4) !important;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-style: normal;
+  }
+
+  /* INTRO - first paragraph after hero */
+  .article-template .rte > blockquote:first-of-type {
+    font-size: 16px;
+    color: #333;
+    line-height: 1.85;
+    margin: 0 0 28px 0;
+    border-left: 3px solid #a8c090;
+    padding: 0 0 0 20px;
+    font-style: normal;
+  }
+
+  /* H2 = section titles */
+  .article-template .rte h2 {
+    font-family: Georgia, serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: #1A2E1A;
+    margin: 32px 0 20px 0;
+  }
+
+  /* H3 = sub-section titles (Ingredienten, Bereiding) */
+  .article-template .rte h3 {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #1A2E1A;
+    margin: 24px 0 12px 0;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #e0ddd4;
+  }
+
+  /* INGREDIENT TABLES */
+  .article-template .rte table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  .article-template .rte table td {
+    padding: 8px 0;
+    font-size: 14px;
+    border-bottom: 1px solid #e8e5dc;
+  }
+  .article-template .rte table td:last-child {
+    text-align: right;
+    font-weight: 700;
+    color: #1A2E1A;
+  }
+  .article-template .rte table tr:last-child td {
+    border-bottom: none;
+  }
+
+  /* STEPS */
+  .article-template .rte ol {
+    padding-left: 0;
+    margin: 0 0 24px 0;
+    list-style: none;
+    counter-reset: recept-stap;
+  }
+  .article-template .rte ol li {
+    counter-increment: recept-stap;
+    padding: 10px 0 10px 44px;
+    font-size: 14px;
+    line-height: 1.7;
+    border-bottom: 1px solid #e8e5dc;
+    position: relative;
+  }
+  .article-template .rte ol li:last-child {
+    border-bottom: none;
+  }
+  .article-template .rte ol li::before {
+    content: counter(recept-stap);
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 28px;
+    height: 28px;
+    background: #1A2E1A;
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* TIP BOX - using h4 */
+  .article-template .rte h4 {
+    background: #f0ebe0;
+    border-radius: 10px;
+    padding: 20px 24px 4px 24px;
+    font-family: Georgia, serif;
+    font-size: 16px;
+    color: #1A2E1A;
+    margin: 24px 0 0 0;
+  }
+  .article-template .rte h4 + p {
+    background: #f0ebe0;
+    border-radius: 0 0 10px 10px;
+    padding: 0 24px 20px 24px;
+    font-size: 13px;
+    color: #555;
+    line-height: 1.7;
+    margin: 0 0 32px 0;
+  }
+
+  /* WEEKMENU BANNER - last table */
+  .article-template .rte > table:last-child,
+  .article-template .rte > table:last-of-type {
+    background: #1A2E1A !important;
+    border-radius: 20px;
+    margin: 32px 0 20px 0;
+  }
+  .article-template .rte > table:last-child td,
+  .article-template .rte > table:last-of-type td {
+    padding: 44px 32px;
+    text-align: center;
+  }
+  .article-template .rte > table:last-child h3,
+  .article-template .rte > table:last-of-type h3 {
+    font-family: Georgia, serif;
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1.25;
+    color: #ffffff !important;
+    text-transform: none;
+    letter-spacing: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+    margin: 0 0 12px 0;
+  }
+  .article-template .rte > table:last-child p,
+  .article-template .rte > table:last-of-type p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.6) !important;
+    margin: 0 0 6px 0;
+    line-height: 1.7;
+  }
+  .article-template .rte > table:last-child a,
+  .article-template .rte > table:last-of-type a {
+    display: inline-block;
+    background: #a8c090;
+    color: #1A2E1A !important;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 13px 34px;
+    border-radius: 50px;
+    text-decoration: none;
+    margin: 16px 0 12px 0;
+  }
+  .article-template .rte > table:last-child a:hover,
+  .article-template .rte > table:last-of-type a:hover {
+    background: #bdd4a8;
+  }
+  .article-template .rte > table:last-child em,
+  .article-template .rte > table:last-of-type em {
+    color: rgba(255,255,255,0.35) !important;
+    font-size: 12px;
+    font-style: normal;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Recept Blog Styling",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Recept Blog Styling"
+    }
+  ]
+}
+{% endschema %}

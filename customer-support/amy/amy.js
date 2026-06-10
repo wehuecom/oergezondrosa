@@ -518,6 +518,155 @@ async function sendReply(state, originalEmailId, toEmail, subject, bodyText) {
 }
 
 // ============================================================
+// FACTUUR FORWARDING NAAR YUKI (BTW-TERUGGAVE)
+// ============================================================
+
+const YUKI_EMAIL = "oergezond@yukiworks.nl";
+const INVOICE_POLL_INTERVAL_MS = 5 * 60 * 1000; // 5 minuten
+
+// Nederlandse leveranciers waarvan we 21% BTW terugvragen
+const NL_INVOICE_SENDERS = [
+  // Fulfillment & Verzending
+  "nhfulfilment", "nh fulfilment", "nh-fulfilment", "nhfulfillment",
+  "jojoli", "winning", "returnless",
+  // Administratie & Zakelijk
+  "huijser", "hfd", "interpolis", "rabobank",
+  // Print & Verpakking
+  "vistaprint",
+  // Leveranciers NL
+  "oliemeesters", "berivita", "lunavia",
+  // Telecom
+  "simpel",
+  // Software NL
+  "mollie", "channeldock",
+  // Productie & Leveranciers
+  "happycustomercare", "ancestralis",
+];
+
+// Check of een email van een NL-leverancier komt
+function isNlInvoiceSender(email) {
+  const addr = (email.from?.emailAddress?.address || "").toLowerCase();
+  const name = (email.from?.emailAddress?.name || "").toLowerCase();
+  const combined = addr + " " + name;
+  return NL_INVOICE_SENDERS.some(pattern => combined.includes(pattern));
+}
+
+// Haal bijlages op van een email
+async function getAttachments(state, emailId) {
+  const resp = await get(
+    `https://graph.microsoft.com/v1.0/me/messages/${emailId}/attachments`,
+    { headers: msHeaders(state) }
+  );
+  if (!resp.ok) return [];
+  const attachments = resp.json().value || [];
+  // Alleen bestanden met factuur-achtige namen (PDF/afbeelding)
+  return attachments.filter(a => {
+    if (a["@odata.type"] !== "#microsoft.graph.fileAttachment" || !a.contentBytes) return false;
+    const name = (a.name || "").toLowerCase();
+    const isPdfOrImage = name.endsWith(".pdf") || name.endsWith(".png") || name.endsWith(".jpg") || name.endsWith(".jpeg") ||
+      a.contentType?.includes("pdf") || a.contentType?.includes("image");
+    if (!isPdfOrImage) return false;
+    // Filter op factuur-achtige bestandsnamen of subjects
+    const invoicePatterns = ["factuur", "invoice", "rekening", "nota", "credit", "debit", "afrekening", "betaling", "overzicht"];
+    const nameAndSubject = name + " " + (a._parentSubject || "").toLowerCase();
+    return invoicePatterns.some(p => nameAndSubject.includes(p)) || name.endsWith(".pdf"); // PDFs van NL-leveranciers zijn vrijwel altijd facturen
+  });
+}
+
+// Stuur factuur door naar Yuki
+async function forwardInvoiceToYuki(state, email, attachments) {
+  const senderName = email.from?.emailAddress?.name || "Onbekend";
+  const senderAddr = email.from?.emailAddress?.address || "";
+  const subject = email.subject || "(geen onderwerp)";
+  const date = email.receivedDateTime ? new Date(email.receivedDateTime).toLocaleDateString("nl-NL") : "";
+
+  const htmlBody = `<p>Automatisch doorgestuurd door Amy — factuur van Nederlandse leverancier.</p>
+<p><strong>Van:</strong> ${senderName} (${senderAddr})<br>
+<strong>Datum:</strong> ${date}<br>
+<strong>Onderwerp:</strong> ${subject}</p>
+<p><em>${attachments.length} bijlage(s) bijgevoegd.</em></p>`;
+
+  const mailPayload = {
+    message: {
+      subject: `[Factuur] ${senderName} - ${subject}`,
+      body: { contentType: "HTML", content: htmlBody },
+      toRecipients: [{ emailAddress: { address: YUKI_EMAIL } }],
+      attachments: attachments.map(a => ({
+        "@odata.type": "#microsoft.graph.fileAttachment",
+        name: a.name,
+        contentType: a.contentType,
+        contentBytes: a.contentBytes,
+      })),
+    },
+    saveToSentItems: false,
+  };
+
+  const resp = await post(
+    "https://graph.microsoft.com/v1.0/me/sendMail",
+    { headers: msHeaders(state), json: mailPayload }
+  );
+
+  return resp.ok || resp.status === 202;
+}
+
+// Check recente emails op NL-facturen met bijlages
+async function checkInvoices(state) {
+  const headers = msHeaders(state);
+  const since = state.lastInvoiceCheck || new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+
+  const resp = await get("https://graph.microsoft.com/v1.0/me/messages", {
+    headers,
+    params: {
+      "$filter": `receivedDateTime ge ${since} and hasAttachments eq true`,
+      "$select": "id,subject,from,receivedDateTime,hasAttachments",
+      "$top": "50",
+      "$orderby": "receivedDateTime desc",
+    },
+  });
+
+  if (!resp.ok) {
+    console.log(`  [WARN] Factuur-check mislukt: ${resp.status}`);
+    return;
+  }
+
+  const emails = resp.json().value || [];
+  const forwarded = state.forwardedInvoices || [];
+  let count = 0;
+
+  for (const email of emails) {
+    // Skip als al doorgestuurd
+    if (forwarded.includes(email.id)) continue;
+
+    // Check of het van een NL-leverancier is
+    if (!isNlInvoiceSender(email)) continue;
+
+    // Haal bijlages op
+    const attachments = await getAttachments(state, email.id);
+    if (attachments.length === 0) continue;
+
+    // Stuur door naar Yuki
+    const senderName = email.from?.emailAddress?.name || "Onbekend";
+    console.log(`  [FACTUUR] ${senderName}: ${attachments.length} bijlage(s) → Yuki`);
+
+    const ok = await forwardInvoiceToYuki(state, email, attachments);
+    if (ok) {
+      forwarded.push(email.id);
+      count++;
+    } else {
+      console.log(`  [WARN] Doorsturen naar Yuki mislukt voor ${senderName}`);
+    }
+  }
+
+  // Bewaar max 500 IDs (voorkom oneindige groei)
+  state.forwardedInvoices = forwarded.slice(-500);
+  state.lastInvoiceCheck = new Date().toISOString();
+
+  if (count > 0) {
+    console.log(`  [FACTUUR] ${count} factuur/facturen doorgestuurd naar Yuki`);
+  }
+}
+
+// ============================================================
 // AUTO-SENDER FILTER
 // ============================================================
 
@@ -1787,6 +1936,7 @@ async function main() {
   console.log(`  Gestart: ${new Date().toLocaleString("nl-NL")}`);
   console.log(`  Email polling: elke minuut`);
   console.log(`  Telegram polling: elke 5 seconden`);
+  console.log(`  Factuur-check: elke 5 minuten → ${YUKI_EMAIL}`);
   console.log("  Ctrl+C om te stoppen.\n");
 
   const state = loadState();
@@ -1817,6 +1967,7 @@ async function main() {
   }
 
   let lastEmailCheck = 0;
+  let lastInvoiceCheck = 0;
   let telegramErrorCount = 0;
 
   const loop = async () => {
@@ -1840,6 +1991,18 @@ async function main() {
         console.log(`  [ERROR] Email check: ${e.message}`);
       }
       lastEmailCheck = now;
+    }
+
+    // Factuur-check (NL leveranciers → Yuki)
+    if (now - lastInvoiceCheck >= INVOICE_POLL_INTERVAL_MS) {
+      try {
+        await getAccessToken(state);
+        await checkInvoices(state);
+        saveState(state);
+      } catch (e) {
+        console.log(`  [ERROR] Factuur-check: ${e.message}`);
+      }
+      lastInvoiceCheck = now;
     }
 
     // Telegram polling

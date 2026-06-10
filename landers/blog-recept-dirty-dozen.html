@@ -1,0 +1,170 @@
+<!-- DIRTY DOZEN & CLEAN FIFTEEN 2026 — Plak dit in de HTML-editor van je blogpost -->
+<style>
+  .oer-r{font-family:-apple-system,BlinkMacSystemFont,sans-serif;color:#1a1a1a;line-height:1.7;max-width:720px;margin:0 auto}
+  .oer-r *{box-sizing:border-box}
+  .oer-r .r-hero{background:linear-gradient(160deg,#1A2E1A 0%,#2a3f22 100%);color:#fff;padding:40px 28px 36px;text-align:center;border-radius:16px;margin-bottom:28px}
+  .oer-r .r-label{display:inline-block;background:rgba(168,192,144,0.2);color:#a8c090;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:14px}
+  .oer-r .r-hero h2{font-family:Georgia,serif;font-size:32px;font-weight:800;line-height:1.2;margin:0 0 12px 0;color:#fff}
+  .oer-r .r-hero-sub{font-size:16px;color:rgba(255,255,255,0.6);margin:0;line-height:1.6}
+  .oer-r .r-meta{display:flex;justify-content:center;gap:28px;margin-top:24px;flex-wrap:wrap}
+  .oer-r .r-meta-item{text-align:center}
+  .oer-r .r-meta-val{font-weight:700;font-size:22px;color:#a8c090}
+  .oer-r .r-meta-lbl{font-size:10px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px}
+  .oer-r .r-intro{font-size:16px;color:#333;line-height:1.85;margin-bottom:28px;border-left:3px solid #a8c090;padding-left:20px}
+  .oer-r .r-card{background:#f9f8f4;border-radius:16px;padding:32px;margin-bottom:32px}
+  .oer-r .r-card h3{font-family:Georgia,serif;font-size:22px;font-weight:800;color:#1A2E1A;margin:0 0 8px 0}
+  .oer-r .r-card-sub{font-size:13px;color:#888;margin:0 0 20px 0}
+  .oer-r .r-cols{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+  .oer-r .r-dirty-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#c0392b;margin:0 0 12px 0;padding-bottom:8px;border-bottom:2px solid #e8c4c4}
+  .oer-r .r-clean-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#1A2E1A;margin:0 0 12px 0;padding-bottom:8px;border-bottom:2px solid #c8d9bc}
+  .oer-r .r-list{list-style:none;padding:0;margin:0;counter-reset:item}
+  .oer-r .r-list li{counter-increment:item;padding:7px 0;border-bottom:1px solid #e8e5dc;font-size:14px;display:flex;align-items:center;gap:10px}
+  .oer-r .r-list li:last-child{border-bottom:none}
+  .oer-r .r-list li::before{content:counter(item);min-width:24px;height:24px;border-radius:50%;font-weight:700;font-size:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .oer-r .r-dirty .r-list li::before{background:#fdeaea;color:#c0392b}
+  .oer-r .r-clean .r-list li::before{background:#e8f0e2;color:#1A2E1A}
+  .oer-r .r-detail{font-size:11px;color:#999;margin-left:auto;white-space:nowrap}
+  .oer-r .r-section{margin-bottom:32px}
+  .oer-r .r-section h3{font-family:Georgia,serif;font-size:20px;font-weight:800;color:#1A2E1A;margin:0 0 12px 0}
+  .oer-r .r-section p{font-size:14px;color:#333;line-height:1.8;margin:0 0 12px 0}
+  .oer-r .r-highlight{background:#fdeaea;border-radius:10px;padding:20px 24px;margin:20px 0}
+  .oer-r .r-highlight p{font-size:13px;color:#333;line-height:1.7;margin:0}
+  .oer-r .r-highlight strong{color:#c0392b}
+  .oer-r .r-tip{background:linear-gradient(135deg,#f0ebe0,#f5f2ea);border-radius:10px;padding:20px 24px;margin-top:24px}
+  .oer-r .r-tip h4{font-family:Georgia,serif;font-size:16px;color:#1A2E1A;margin:0 0 8px 0}
+  .oer-r .r-tip p{font-size:13px;color:#555;line-height:1.7;margin:0}
+  .oer-r .r-cta{background:linear-gradient(160deg,#1A2E1A,#243A24);border-radius:20px;padding:44px 32px;text-align:center;color:#fff;position:relative;overflow:hidden;margin-bottom:20px}
+  .oer-r .r-cta::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:rgba(168,192,144,0.08);border-radius:50%}
+  .oer-r .r-cta>*{position:relative;z-index:1}
+  .oer-r .r-cta-eye{display:inline-block;background:rgba(168,192,144,0.2);color:#a8c090;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:16px}
+  .oer-r .r-cta h3{font-family:Georgia,serif;font-size:26px;font-weight:800;line-height:1.25;margin:0 0 12px 0;color:#fff}
+  .oer-r .r-cta h3 span{color:#a8c090}
+  .oer-r .r-cta>p{font-size:14px;color:rgba(255,255,255,0.65);max-width:440px;margin:0 auto;line-height:1.7}
+  .oer-r .r-cta-feats{display:flex;justify-content:center;gap:18px;margin:20px 0 24px;flex-wrap:wrap}
+  .oer-r .r-cta-feat{display:flex;align-items:center;gap:6px;font-size:13px;color:rgba(255,255,255,0.6)}
+  .oer-r .r-cta-chk{width:18px;height:18px;background:rgba(168,192,144,0.25);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:10px;color:#a8c090}
+  .oer-r .r-cta-btn{display:inline-block;background:#a8c090;color:#1A2E1A;font-weight:700;font-size:15px;padding:13px 34px;border-radius:50px;text-decoration:none}
+  .oer-r .r-cta-btn:hover{background:#bdd4a8}
+  .oer-r .r-cta-price{margin-top:12px;font-size:12px;color:rgba(255,255,255,0.35)}
+  @media(max-width:640px){.oer-r .r-cols{grid-template-columns:1fr;gap:24px}.oer-r .r-card{padding:24px 18px}.oer-r .r-cta{padding:32px 20px}.oer-r .r-cta-feats{flex-direction:column;align-items:center}}
+</style>
+
+<div class="oer-r">
+
+  <!-- HERO -->
+  <div class="r-hero">
+    <div class="r-label">Voeding</div>
+    <h2>De Dirty Dozen &amp; Clean Fifteen van 2026</h2>
+    <p class="r-hero-sub">Welke groenten en fruit moet je biologisch kopen? En welke niet? Dit is de lijst.</p>
+    <div class="r-meta">
+      <div class="r-meta-item">
+        <div class="r-meta-val">96%</div>
+        <div class="r-meta-lbl">Bevat pesticiden</div>
+      </div>
+      <div class="r-meta-item">
+        <div class="r-meta-val">203</div>
+        <div class="r-meta-lbl">Pesticiden gevonden</div>
+      </div>
+      <div class="r-meta-item">
+        <div class="r-meta-val">63%</div>
+        <div class="r-meta-lbl">Bevat PFAS</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTRO -->
+  <p class="r-intro">Elk jaar test de Environmental Working Group (EWG) duizenden groente- en fruitmonsters op pesticiden. Het resultaat: de Dirty Dozen (de 12 meest bespoten producten) en de Clean Fifteen (de 15 schoonste). Dit is de lijst van 2026. Print hem uit, bewaar hem op je telefoon. Neem hem mee naar de supermarkt.</p>
+
+  <!-- LIJSTEN -->
+  <div class="r-card">
+    <div class="r-cols">
+
+      <!-- DIRTY DOZEN -->
+      <div class="r-dirty">
+        <div class="r-dirty-title">Dirty Dozen &mdash; Koop biologisch</div>
+        <ol class="r-list">
+          <li>Spinazie</li>
+          <li>Boerenkool &amp; bladgroenten</li>
+          <li>Aardbeien</li>
+          <li>Druiven</li>
+          <li>Nectarines</li>
+          <li>Bramen</li>
+          <li>Aardappelen</li>
+          <li>Peren</li>
+          <li>Appels</li>
+          <li>Kersen</li>
+          <li>Perziken</li>
+          <li>Bosbessen</li>
+        </ol>
+      </div>
+
+      <!-- CLEAN FIFTEEN -->
+      <div class="r-clean">
+        <div class="r-clean-title">Clean Fifteen &mdash; Niet-bio is prima</div>
+        <ol class="r-list">
+          <li>Ananas</li>
+          <li>Mais</li>
+          <li>Avocado</li>
+          <li>Papaya</li>
+          <li>Uien</li>
+          <li>Doperwten (diepvries)</li>
+          <li>Asperges</li>
+          <li>Kool</li>
+          <li>Bloemkool</li>
+          <li>Watermeloen</li>
+          <li>Mango</li>
+          <li>Bananen</li>
+          <li>Wortelen</li>
+          <li>Champignons</li>
+          <li>Kiwi</li>
+        </ol>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- UITLEG -->
+  <div class="r-section">
+    <h3>Waarom dit ertoe doet</h3>
+    <p>96% van alle Dirty Dozen-monsters testte positief op pesticiden. De meeste bevatten vier of meer verschillende pesticiden per stuk. Dat zijn stoffen die je lichaam niet herkent en die zich ophopen in je weefsels.</p>
+
+    <div class="r-highlight">
+      <p><strong>Nieuw in 2026:</strong> voor het eerst is er getest op PFAS-pesticiden ("forever chemicals"). Resultaat: 63% van alle Dirty Dozen-monsters bevatte PFAS. De meest gevonden stof was fludioxonil &mdash; een schimmelbestrijder die nooit afbreekt in je lichaam.</p>
+    </div>
+
+    <p>90% van de aardappelen bevatte chlorpropham, een kiemremmer. Bijna 90% van de perziken en pruimen bevatte fludioxonil. Dit zijn geen uitzonderingen &mdash; dit is standaard.</p>
+  </div>
+
+  <div class="r-section">
+    <h3>De Clean Fifteen: hier hoef je geen bio te kopen</h3>
+    <p>Bijna 60% van de Clean Fifteen-monsters had geen enkel detecteerbaar pesticide. Slechts 16% had residuen van twee of meer pesticiden. Ananas, mais en avocado zijn het schoonst &mdash; hun dikke schil beschermt tegen bespuiting.</p>
+    <p>Dit betekent niet dat pesticiden oké zijn. Het betekent dat je budget voor biologisch eten het slimst besteed wordt aan de Dirty Dozen.</p>
+  </div>
+
+  <!-- TIP -->
+  <div class="r-tip">
+    <h4>Oertip</h4>
+    <p>Kan je niet alles biologisch kopen? Focus dan op de Dirty Dozen. Koop spinazie, aardbeien, druiven en boerenkool altijd biologisch. Bij de Clean Fifteen (ananas, avocado, uien, kool) maakt het veel minder uit. Zo bescherm je jezelf zonder je portemonnee leeg te trekken.</p>
+  </div>
+
+  <!-- BRON -->
+  <div class="r-section" style="margin-top:28px">
+    <p style="font-size:12px;color:#999">Bron: Environmental Working Group (EWG), Shopper's Guide to Pesticides in Produce 2026. Gebaseerd op USDA-testresultaten van duizenden monsters groenten en fruit.</p>
+  </div>
+
+  <!-- WEEKMENU BANNER -->
+  <div class="r-cta">
+    <div class="r-cta-eye">Oermenu</div>
+    <h3>Elke week een compleet <span>weekmenu zonder troep</span></h3>
+    <p>Geen nadenken, geen etiketten lezen. Gewoon elke week 7 dagen aan recepten die je lichaam herkent. Personaliseerbaar op jouw behoeftes en allergie&euml;n.</p>
+    <div class="r-cta-feats">
+      <div class="r-cta-feat"><span class="r-cta-chk">&#10003;</span> 7 dagen compleet uitgewerkt</div>
+      <div class="r-cta-feat"><span class="r-cta-chk">&#10003;</span> Boodschappenlijst erbij</div>
+      <div class="r-cta-feat"><span class="r-cta-chk">&#10003;</span> 100% zonder zaadoli&euml;n</div>
+      <div class="r-cta-feat"><span class="r-cta-chk">&#10003;</span> Gepersonaliseerd op jouw allergie&euml;n</div>
+    </div>
+    <a href="https://checkout.menuut.nl/checkout/oergezond" class="r-cta-btn">Bekijk het Oermenu</a>
+    <div class="r-cta-price">Vanaf &euro;7,95 per maand &middot; direct toegang</div>
+  </div>
+
+</div>
