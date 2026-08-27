@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oergezond — Wholesale / B2B Brochure</title>
+<style>
+  @page { size: A4; margin: 16mm; }
+  :root {
+    --cream:#FAF6F0; --warm:#F5EFE3; --forest:#1A2E1A; --forest2:#0F1A0F;
+    --terra:#C4714A; --dark:#2C1810; --gold:#D4A574; --zand:#C9BEA9; --soft:#55524B;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Georgia','Times New Roman',serif; color:var(--dark); background:var(--cream); line-height:1.6; }
+  .page { max-width:820px; margin:0 auto; padding:40px; }
+
+  /* Header */
+  .top { text-align:center; background:var(--forest); border-radius:14px; padding:40px 28px 32px; margin-bottom:8px; }
+  .top img.logo { height:64px; width:auto; display:inline-block; }
+  .tagline { font-size:14px; color:var(--gold); font-style:italic; margin-top:12px; }
+  .doctype { display:inline-block; margin-top:18px; background:var(--gold); color:var(--forest);
+    font-family:Arial,sans-serif; font-size:12px; letter-spacing:2px; text-transform:uppercase;
+    padding:8px 22px; border-radius:100px; font-weight:bold; }
+
+  /* Intro */
+  .intro { background:var(--warm); border-radius:12px; padding:26px 30px; margin:28px 0; }
+  .intro h2 { font-size:22px; color:var(--forest); margin-bottom:10px; }
+  .intro p { font-size:14px; color:var(--soft); }
+
+  /* Terms box */
+  .terms { display:flex; flex-wrap:wrap; gap:14px; margin:24px 0 32px; }
+  .term { flex:1; min-width:150px; background:#fff; border:1px solid var(--zand); border-radius:10px; padding:16px 18px; }
+  .term .k { font-family:Arial,sans-serif; font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--terra); font-weight:bold; }
+  .term .v { font-size:15px; color:var(--dark); font-weight:bold; margin-top:4px; }
+  .term .s { font-size:12px; color:var(--soft); margin-top:2px; }
+
+  /* Category */
+  .cat { margin-bottom:30px; }
+  .cat h3 { font-size:18px; color:var(--forest); border-bottom:1px solid var(--zand); padding-bottom:8px; margin-bottom:4px; }
+
+  table { width:100%; border-collapse:collapse; font-size:13.5px; }
+  thead th { font-family:Arial,sans-serif; font-size:10.5px; letter-spacing:0.5px; text-transform:uppercase;
+    color:var(--forest); text-align:left; padding:10px 8px; border-bottom:2px solid var(--zand); }
+  th.num, td.num { text-align:right; }
+  tbody td { padding:9px 8px; border-bottom:1px solid #eee; color:var(--dark); }
+  tbody tr:nth-child(even){ background:rgba(201,190,169,0.10); }
+  .pname { font-weight:bold; }
+  .retail { color:var(--soft); }
+  .whole { color:var(--terra); font-weight:bold; }
+  .moq { color:var(--forest); font-weight:bold; }
+
+  .note { font-size:12px; color:var(--soft); font-style:italic; margin-top:6px; }
+
+  /* Footer */
+  .foot { margin-top:36px; border-top:2px solid var(--forest); padding-top:20px; text-align:center; font-size:13px; color:var(--soft); }
+  .foot a { color:var(--forest); }
+  .cta { background:var(--forest); color:var(--cream); border-radius:12px; padding:24px 28px; text-align:center; margin:30px 0; }
+  .cta h3 { color:var(--cream); font-size:20px; margin-bottom:8px; }
+  .cta p { font-size:14px; color:rgba(250,246,240,0.8); }
+
+  @media print { body { background:#fff; } .page { padding:0; } .cat { page-break-inside:avoid; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="top">
+    <img class="logo" src="logo_oer3.png" alt="Oergezond">
+    <div class="tagline">Zoals de natuur het bedoeld heeft.</div>
+    <div class="doctype">Wholesale &middot; B2B Prijslijst</div>
+  </div>
+
+  <!-- INTRO -->
+  <div class="intro">
+    <h2>Oergezond voor de wederverkoop</h2>
+    <p>Oergezond is een Nederlands gezondheidsmerk met pure, non-toxische producten op basis van oervoeding en een natuurlijke leefstijl — van grasgevoerde tallow-crèmes tot supplementen zonder troep. Deze prijslijst is bestemd voor zakelijke partners: winkels, praktijken, salons en distributeurs. De meeste producten kennen een wholesale-korting van <strong>50% op de adviesverkoopprijs</strong>; voor supplementen en de deodorant geldt <strong>30% korting</strong> en voor huishoudproducten <strong>20% korting</strong>. Alle prijzen zijn exclusief btw.</p>
+  </div>
+
+  <!-- TERMS -->
+  <div class="terms">
+    <div class="term">
+      <div class="k">Wholesale-korting</div>
+      <div class="v">50% / 30%</div>
+      <div class="s">30% op supplementen &amp; deodorant</div>
+    </div>
+    <div class="term">
+      <div class="k">MOQ</div>
+      <div class="v">20 stuks</div>
+      <div class="s">Per product</div>
+    </div>
+    <div class="term">
+      <div class="k">Prijzen</div>
+      <div class="v">Excl. btw</div>
+      <div class="s">In euro&rsquo;s</div>
+    </div>
+    <div class="term">
+      <div class="k">Staffelkorting</div>
+      <div class="v">In overleg</div>
+      <div class="s">Bij hogere afname</div>
+    </div>
+  </div>
+
+  <!-- STAFFEL -->
+  <div class="cat">
+    <h3>Staffelkorting</h3>
+    <p class="note">Bij grotere afname is een aanvullende staffelkorting mogelijk. Neem contact op, dan bespreken we in overleg de mogelijkheden voor jouw volume en vaste afnameafspraken.</p>
+  </div>
+
+  <!-- SUPPLEMENTEN -->
+  <div class="cat">
+    <h3>Supplementen <span style="font-family:Arial,sans-serif; font-size:11px; font-weight:normal; color:var(--terra);">— 30% korting</span></h3>
+    <table>
+      <thead><tr><th>Product</th><th class="num">RRP</th><th class="num">Wholesale</th><th class="num">MOQ</th></tr></thead>
+      <tbody>
+        <tr><td class="pname">Omega 3</td><td class="num retail">&euro;34,95</td><td class="num whole">&euro;24,47</td><td class="num moq">20</td></tr>
+        <tr><td class="pname">Vitamine D3 + K2</td><td class="num retail">&euro;29,95</td><td class="num whole">&euro;20,97</td><td class="num moq">20</td></tr>
+        <tr><td class="pname">Magnesium Bisglycinaat</td><td class="num retail">&euro;32,95</td><td class="num whole">&euro;23,07</td><td class="num moq">20</td></tr>
+        <tr><td class="pname">Grasgevoerde Rundercollageen</td><td class="num retail">&euro;34,95</td><td class="num whole">&euro;24,47</td><td class="num moq">20</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- HUIDVERZORGING -->
+  <div class="cat">
+    <h3>Huidverzorging</h3>
+    <table>
+      <thead><tr><th>Product</th><th class="num">RRP</th><th class="num">Wholesale</th><th class="num">MOQ</th></tr></thead>
+      <tbody>
+        <tr><td class="pname">Oercrème</td><td class="num retail">&euro;28,95</td><td class="num whole">&euro;14,48</td><td class="num moq">20</td></tr>
+        <tr><td class="pname">Oercrème Vitamine E</td><td class="num retail">&euro;32,50</td><td class="num whole">&euro;16,25</td><td class="num moq">20</td></tr>
+        <tr><td class="pname">Luierzalf</td><td class="num retail">&euro;22,95</td><td class="num whole">&euro;11,48</td><td class="num moq">20</td></tr>
+        <tr><td class="pname">Deodorant <span style="font-size:11px; color:var(--terra);">(30%)</span></td><td class="num retail">&euro;18,95</td><td class="num whole">&euro;13,27</td><td class="num moq">20</td></tr>
+        <tr><td class="pname">Lippenbalsem</td><td class="num retail">&euro;7,95</td><td class="num whole">&euro;3,98</td><td class="num moq">20</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- HAARVERZORGING -->
+  <div class="cat">
+    <h3>Haarverzorging</h3>
+    <table>
+      <thead><tr><th>Product</th><th class="num">RRP</th><th class="num">Wholesale</th><th class="num">MOQ</th></tr></thead>
+      <tbody>
+        <tr><td class="pname">Haarwax</td><td class="num retail">&euro;26,95</td><td class="num whole">&euro;13,48</td><td class="num moq">20</td></tr>
+        <tr><td class="pname">Haarolie</td><td class="num retail">&euro;29,95</td><td class="num whole">&euro;14,98</td><td class="num moq">20</td></tr>
+        <tr><td class="pname">Shampoo Bar</td><td class="num retail">&euro;17,95</td><td class="num whole">&euro;8,98</td><td class="num moq">20</td></tr>
+        <tr><td class="pname">Conditioner Bar</td><td class="num retail">&euro;17,95</td><td class="num whole">&euro;8,98</td><td class="num moq">20</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- LIFESTYLE & VOEDING -->
+  <div class="cat">
+    <h3>Lifestyle &amp; Voeding</h3>
+    <table>
+      <thead><tr><th>Product</th><th class="num">RRP</th><th class="num">Wholesale</th><th class="num">MOQ</th></tr></thead>
+      <tbody>
+        <tr><td class="pname">Oerbril</td><td class="num retail">&euro;39,95</td><td class="num whole">&euro;19,98</td><td class="num moq">20</td></tr>
+        <tr><td class="pname">Oerfles</td><td class="num retail">&euro;24,95</td><td class="num whole">&euro;12,48</td><td class="num moq">20</td></tr>
+        <tr><td class="pname">Oerboullion</td><td class="num retail">&euro;4,95</td><td class="num whole">&euro;3,50</td><td class="num moq">20</td></tr>
+        <tr><td class="pname">Oerbars Pouch</td><td class="num retail">&euro;4,95</td><td class="num whole">&euro;2,48</td><td class="num moq">20</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- HUISHOUDEN -->
+  <div class="cat">
+    <h3>Huishouden <span style="font-family:Arial,sans-serif; font-size:11px; font-weight:normal; color:var(--terra);">— 20% korting</span></h3>
+    <table>
+      <thead><tr><th>Product</th><th class="num">RRP</th><th class="num">Wholesale</th><th class="num">MOQ</th></tr></thead>
+      <tbody>
+        <tr><td class="pname">Afwasmiddel</td><td class="num retail">&euro;8,95</td><td class="num whole">&euro;7,16</td><td class="num moq">20</td></tr>
+        <tr><td class="pname">Afwasmiddel Refill</td><td class="num retail">&euro;6,49</td><td class="num whole">&euro;5,19</td><td class="num moq">20</td></tr>
+        <tr><td class="pname">Afwasborstel</td><td class="num retail">&euro;3,95</td><td class="num whole">&euro;3,16</td><td class="num moq">20</td></tr>
+      </tbody>
+    </table>
+    <p class="note">MOQ = Minimum Order Quantity: minimale afname van 20 stuks per product. Kortingsstructuur: supplementen &amp; deodorant 30%, huishoudproducten 20%, alle overige producten 50%.</p>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta">
+    <h3>Partner worden van Oergezond?</h3>
+    <p>Neem contact op voor een eerste bestelling, een sampletest of maatwerkafspraken over volume en levering.</p>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="foot">
+    <strong>Oergezond</strong> &middot; contact@oergezond.com &middot; <a href="https://www.oergezond.com">www.oergezond.com</a><br>
+    Alle prijzen exclusief btw. Prijswijzigingen voorbehouden. Prijslijst geldig vanaf augustus 2026.
+  </div>
+
+</div>
+</body>
+</html>

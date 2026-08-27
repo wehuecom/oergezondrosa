@@ -1,0 +1,1016 @@
+{%- comment -%}
+  Oergezond Magnesium Bisglycinaat — Custom Product Page Section
+  Paste als Custom Liquid block in de product page template (onder de buy-box)
+  Brand: Oergezond — Montserrat + Poppins, cream/forest/terracotta palette
+  Formule: 2 ingredienten — magnesium bisglycinaat + plantaardige capsule (HPMC). 120 mg elementair magnesium per capsule.
+{%- endcomment -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============ RESET & SCOPING ============ */
+.oc-custom *, .oc-custom *::before, .oc-custom *::after { margin: 0; padding: 0; box-sizing: border-box; }
+.oc-custom img { max-width: 100%; display: block; }
+
+/* ============ BRAND TOKENS ============ */
+.oc-custom {
+  --cream: #FAF6F0;
+  --warm-white: #F5EFE3;
+  --forest: #1A2E1A;
+  --forest-dark: #0F1A0F;
+  --terracotta: #C4714A;
+  --terracotta-dark: #A55939;
+  --dark: #2C1810;
+  --sage: #A8B89A;
+  --gold: #D4A574;
+  --red-accent: #A63D2A;
+
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  color: var(--dark);
+  line-height: 1.7;
+  font-size: 15px !important;
+  overflow-x: hidden;
+
+  /* Break out of Shopify container */
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw !important;
+  margin-right: -50vw !important;
+}
+.oc-custom h1, .oc-custom h2, .oc-custom h3, .oc-custom h4 {
+  font-family: 'Montserrat', sans-serif !important;
+  font-weight: 700 !important;
+  color: var(--dark);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+.oc-custom h2 { font-size: clamp(26px, 4.0vw, 38px) !important; }
+.oc-custom h3 { font-size: clamp(18px, 2.4vw, 22px) !important; }
+
+.oc-container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+.oc-section { padding: clamp(4rem, 10vw, 7rem) 0; }
+
+.oc-eyebrow {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  margin-bottom: 1.2rem;
+  display: inline-block;
+}
+.oc-accent { color: var(--terracotta); }
+.oc-section-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 4rem;
+}
+.oc-section-header p {
+  font-size: 16px !important;
+  opacity: 0.8;
+  margin-top: 1.2rem;
+  line-height: 1.7;
+}
+
+
+/* ============================================================
+   SECTION 1 — PUURHEID WINT
+   ============================================================ */
+.oc-natuur {
+  background: linear-gradient(135deg, var(--cream) 0%, var(--warm-white) 100%);
+  position: relative;
+}
+.oc-natuur::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  right: -5%;
+  width: 40%;
+  height: 80%;
+  background: radial-gradient(circle, rgba(196,113,74,0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+.oc-natuur-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: stretch;
+}
+.oc-compare-card {
+  border-radius: 1.2rem;
+  padding: 2.5rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.oc-compare-card--bad {
+  background: #fff;
+  border: 1px solid rgba(166,61,42,0.15);
+}
+.oc-compare-card--bad::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 4px;
+  background: var(--red-accent);
+}
+.oc-compare-card--good {
+  background: var(--forest);
+  color: var(--cream);
+  border: none;
+}
+.oc-compare-card--good::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 4px;
+  background: var(--gold);
+}
+.oc-compare-card--good h3,
+.oc-compare-card--good .oc-compare-label { color: var(--cream); }
+.oc-compare-card--good .oc-compare-count { color: var(--gold); }
+
+.oc-compare-label {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin-bottom: 0.5rem;
+}
+.oc-compare-card h3 { margin-bottom: 1.2rem; }
+.oc-compare-count {
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 64px !important;
+  font-weight: 900;
+  font-style: italic;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+  color: var(--red-accent);
+}
+.oc-compare-count-label {
+  font-size: 14px !important;
+  font-weight: 600;
+  opacity: 0.7;
+  margin-bottom: 1.5rem;
+}
+.oc-ingredient-list {
+  list-style: none;
+  padding: 0;
+  font-size: 14px !important;
+  line-height: 2;
+}
+.oc-ingredient-list li { display: flex; align-items: flex-start; gap: 0.5rem; }
+.oc-ingredient-list .x { color: var(--red-accent); font-weight: 700; flex-shrink: 0; }
+.oc-ingredient-list .check { color: var(--gold); font-weight: 700; flex-shrink: 0; }
+
+.oc-natuur-bottom {
+  text-align: center;
+  margin-top: 2.5rem;
+  padding: 1.8rem 2.5rem;
+  background: rgba(45,74,45,0.06);
+  border-radius: 0.8rem;
+  font-size: 16px !important;
+  font-weight: 600;
+}
+.oc-natuur-bottom strong { color: var(--forest); }
+
+
+/* ============================================================
+   SECTION 2 — INGREDIËNTEN UITGELICHT
+   ============================================================ */
+.oc-ingredienten {
+  background: #fff;
+}
+.oc-ingr-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+}
+.oc-ingr-card {
+  background: var(--cream);
+  border-radius: 1.2rem;
+  padding: 3rem 2.5rem;
+  border: 1px solid rgba(44,24,16,0.06);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.oc-ingr-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -15px rgba(44,24,16,0.12);
+}
+.oc-ingr-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 3px;
+  background: var(--terracotta);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s;
+}
+.oc-ingr-card:hover::before { transform: scaleX(1); }
+
+.oc-ingr-icon {
+  width: 72px;
+  height: 72px;
+  background: var(--forest);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  margin-bottom: 1.5rem;
+}
+.oc-ingr-card h3 { margin-bottom: 0.75rem; }
+.oc-ingr-card > p { font-size: 14px !important; opacity: 0.8; margin-bottom: 1.5rem; line-height: 1.7; }
+
+.oc-ingr-facts {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.oc-ingr-facts li {
+  font-size: 14px !important;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--forest);
+}
+.oc-ingr-facts li::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--terracotta);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.oc-ingr-bottom {
+  margin-top: 3rem;
+  text-align: center;
+  font-size: 16px !important;
+  opacity: 0.7;
+  font-style: italic;
+}
+
+
+/* ============================================================
+   SECTION 3 — TOEGESTANE CLAIMS
+   ============================================================ */
+.oc-werkt {
+  background: var(--cream);
+  position: relative;
+}
+.oc-werkt-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+  position: relative;
+}
+/* connector line between steps */
+.oc-werkt-grid::before {
+  content: '';
+  position: absolute;
+  top: 40px;
+  left: calc(16.66% + 28px);
+  right: calc(16.66% + 28px);
+  height: 2px;
+  background: linear-gradient(90deg, var(--terracotta), var(--forest), var(--gold));
+  z-index: 0;
+}
+.oc-werkt-step {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.oc-werkt-num {
+  width: 72px;
+  height: 72px;
+  background: var(--forest);
+  color: var(--cream);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 30px !important;
+  font-weight: 900;
+  margin: 0 auto 1.5rem;
+  box-shadow: 0 8px 20px -6px rgba(45,74,45,0.4);
+}
+.oc-werkt-step h3 { margin-bottom: 0.75rem; }
+.oc-werkt-step p { font-size: 14px !important; opacity: 0.8; line-height: 1.7; max-width: 380px; margin: 0 auto; }
+.oc-werkt-note {
+  margin-top: 3rem;
+  text-align: center;
+  font-size: 13px !important;
+  opacity: 0.6;
+  font-style: italic;
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+/* ============================================================
+   SECTION 4 — HOE JE HET GEBRUIKT
+   ============================================================ */
+.oc-gebruik {
+  background: #fff;
+}
+.oc-gebruik-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+.oc-gebruik-stap {
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  background: var(--cream);
+  border-radius: 1rem;
+  border: 1px solid rgba(44,24,16,0.06);
+  transition: transform 0.3s ease;
+}
+.oc-gebruik-stap:hover { transform: translateY(-3px); }
+
+.oc-gebruik-icon {
+  font-size: 34px !important;
+  margin-bottom: 1rem;
+  display: block;
+}
+.oc-gebruik-stap h4 {
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  color: var(--dark);
+}
+.oc-gebruik-stap p {
+  font-size: 14px !important;
+  opacity: 0.75;
+  line-height: 1.7;
+}
+
+
+/* ============================================================
+   SECTION 5 — WAAROM BISGLYCINAAT
+   ============================================================ */
+.oc-timeline {
+  background: var(--forest);
+  color: var(--cream);
+  position: relative;
+  overflow: hidden;
+}
+.oc-timeline::before {
+  content: '';
+  position: absolute;
+  top: -30%; right: -10%;
+  width: 50%; height: 120%;
+  background: radial-gradient(circle, rgba(212,165,116,0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+.oc-timeline .oc-section-header h2 { color: var(--cream); }
+.oc-timeline .oc-section-header p { color: rgba(250,246,240,0.7); }
+.oc-timeline .oc-eyebrow { color: var(--gold); }
+
+.oc-timeline-track {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  position: relative;
+}
+/* timeline connector */
+.oc-timeline-track::before {
+  content: '';
+  position: absolute;
+  top: 36px;
+  left: calc(12.5% + 24px);
+  right: calc(12.5% + 24px);
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--terracotta), var(--sage), var(--gold));
+  opacity: 0.4;
+}
+.oc-timeline-point {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.oc-timeline-dot {
+  width: 72px; height: 72px;
+  background: transparent;
+  border: 2px solid var(--gold);
+  border-radius: 50% !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 26px !important;
+  font-weight: 700;
+  color: var(--gold);
+}
+.oc-timeline-point h4 {
+  font-family: 'Montserrat', sans-serif !important;
+  color: var(--cream);
+  font-size: 19px !important;
+  margin-bottom: 0.6rem;
+}
+.oc-timeline-point p {
+  font-size: 14px !important;
+  color: rgba(250,246,240,0.7);
+  line-height: 1.7;
+  max-width: 280px;
+  margin: 0 auto;
+}
+.oc-totox-note {
+  margin-top: 4rem;
+  max-width: 820px;
+  margin-left: auto;
+  margin-right: auto;
+  background: rgba(250,246,240,0.05);
+  border: 1px solid rgba(212,165,116,0.25);
+  border-radius: 1.2rem;
+  padding: 2.5rem 2.5rem;
+  position: relative;
+  z-index: 1;
+}
+.oc-totox-note h3 {
+  font-family: 'Montserrat', sans-serif !important;
+  color: var(--gold) !important;
+  font-size: 20px !important;
+  margin-bottom: 1rem;
+}
+.oc-totox-note p {
+  font-size: 14px !important;
+  color: rgba(250,246,240,0.82);
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+.oc-totox-note p:last-child { margin-bottom: 0; }
+.oc-totox-note strong { color: var(--cream); font-weight: 700; }
+
+
+/* ============================================================
+   SECTION 6 — WAAROM KIEZEN
+   ============================================================ */
+.oc-proof {
+  background: var(--cream);
+}
+.oc-proof-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+.oc-proof-card {
+  background: #fff;
+  border-radius: 1.2rem;
+  padding: 2.5rem;
+  border: 1px solid rgba(44,24,16,0.06);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.oc-proof-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px -10px rgba(44,24,16,0.1);
+}
+.oc-proof-stars {
+  color: var(--gold);
+  font-size: 26px !important;
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+}
+.oc-proof-quote {
+  font-size: 14px !important;
+  line-height: 1.7;
+  opacity: 0.85;
+  flex: 1;
+  margin-bottom: 1.2rem;
+}
+.oc-proof-author {
+  font-size: 14px !important;
+  font-weight: 700;
+  color: var(--forest);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.oc-proof-badge {
+  font-size: 10px !important;
+  font-weight: 600;
+  background: rgba(45,74,45,0.1);
+  color: var(--forest);
+  padding: 0.25rem 0.7rem;
+  border-radius: 100px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.oc-proof-summary {
+  text-align: center;
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(44,24,16,0.08);
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+.oc-proof-stat { text-align: center; }
+.oc-proof-stat-num {
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 38px !important;
+  font-weight: 900;
+  color: var(--forest);
+  line-height: 1;
+}
+.oc-proof-stat-label {
+  font-size: 12px !important;
+  font-family: 'Poppins', sans-serif !important;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: 0.6;
+  margin-top: 0.3rem;
+}
+
+
+/* ============================================================
+   SECTION 7 — FAQ
+   ============================================================ */
+.oc-faq {
+  background: #fff;
+}
+.oc-faq-list {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.oc-faq-item {
+  border-bottom: 1px solid rgba(44,24,16,0.08);
+}
+.oc-faq-q {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 1.5rem 0;
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 700;
+  color: var(--dark);
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  transition: color 0.2s;
+}
+.oc-faq-q:hover { color: var(--forest); }
+.oc-faq-q::after {
+  content: '+';
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 18px !important;
+  font-weight: 300;
+  color: var(--terracotta);
+  transition: transform 0.3s;
+  flex-shrink: 0;
+}
+.oc-faq-item.active .oc-faq-q::after {
+  transform: rotate(45deg);
+}
+.oc-faq-a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.35s ease;
+  font-size: 12px !important;
+  line-height: 1.7;
+  opacity: 0.8;
+}
+.oc-faq-item.active .oc-faq-a {
+  max-height: 400px;
+  padding-bottom: 1.5rem;
+}
+
+
+/* ============================================================
+   SECTION 8 — CTA
+   ============================================================ */
+.oc-cta {
+  background: linear-gradient(135deg, var(--forest) 0%, var(--forest-dark) 100%);
+  color: var(--cream);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.oc-cta::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle at 30% 70%, rgba(196,113,74,0.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+.oc-cta h2 { color: var(--cream); margin-bottom: 1rem; }
+.oc-cta p { color: rgba(250,246,240,0.7); font-size: 16px !important; max-width: 700px; margin: 0 auto 2.5rem; }
+
+.oc-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1.3rem 3rem;
+  background: var(--terracotta);
+  color: #fff;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+.oc-btn:hover {
+  background: var(--terracotta-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px -10px rgba(196,113,74,0.5);
+}
+.oc-btn::after { content: '\2192'; font-size: 1.2rem; transition: transform 0.2s; }
+.oc-btn:hover::after { transform: translateX(4px); }
+
+.oc-cta-trust {
+  margin-top: 1.5rem;
+  font-size: 13px !important;
+  opacity: 0.5;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 900px) {
+  .oc-natuur-grid { grid-template-columns: 1fr; }
+  .oc-ingr-grid { grid-template-columns: 1fr; }
+  .oc-werkt-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .oc-werkt-grid::before { display: none; }
+  .oc-gebruik-grid { grid-template-columns: 1fr 1fr; }
+  .oc-timeline-track { grid-template-columns: 1fr 1fr; }
+  .oc-timeline-track::before { display: none; }
+  .oc-proof-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 550px) {
+  .oc-gebruik-grid { grid-template-columns: 1fr; }
+  .oc-timeline-track { grid-template-columns: 1fr; }
+  .oc-proof-summary { gap: 2rem; }
+}
+</style>
+
+
+<!-- ============================================================
+     HTML
+     ============================================================ -->
+<div class="oc-custom">
+
+  <!-- ========== 1. PUURHEID WINT ========== -->
+  <section class="oc-section oc-natuur">
+    <div class="oc-container">
+      <div class="oc-section-header">
+        <span class="oc-eyebrow">Waarom Oergezond Magnesium</span>
+        <h2>Puur wint van <span class="oc-accent">de rest</span></h2>
+        <p>Draai een willekeurig magnesiumpotje om. Tel de ingredi&euml;nten. Herken je ze? Wij hebben er twee.</p>
+      </div>
+
+      <div class="oc-natuur-grid">
+        <!-- BAD: regular magnesium supplement -->
+        <div class="oc-compare-card oc-compare-card--bad">
+          <span class="oc-compare-label">Gemiddeld magnesiumsupplement</span>
+          <div class="oc-compare-count">8+</div>
+          <div class="oc-compare-count-label">ingredi&euml;nten &amp; toevoegingen</div>
+          <ul class="oc-ingredient-list">
+            <li><span class="x">&times;</span> Magnesiumoxide (goedkope, mindere vorm)</li>
+            <li><span class="x">&times;</span> Magnesiumstearaat &amp; vulstoffen</li>
+            <li><span class="x">&times;</span> Bulkvormen voor een laag prijskaartje</li>
+            <li><span class="x">&times;</span> Kunstmatige kleur- of glansmiddelen</li>
+            <li><span class="x">&times;</span> Titaandioxide</li>
+            <li><span class="x">&times;</span> Onnodige additieven</li>
+          </ul>
+        </div>
+
+        <!-- GOOD: Oergezond Magnesium -->
+        <div class="oc-compare-card oc-compare-card--good">
+          <span class="oc-compare-label">Oergezond Magnesium Bisglycinaat</span>
+          <div class="oc-compare-count" style="color: var(--gold);">2</div>
+          <div class="oc-compare-count-label">ingredi&euml;nten</div>
+          <ul class="oc-ingredient-list">
+            <li><span class="check">&#10003;</span> Magnesium bisglycinaat</li>
+            <li><span class="check">&#10003;</span> Plantaardige capsule (HPMC)</li>
+          </ul>
+          <div style="margin-top: 1.5rem; padding-top: 1.2rem; border-top: 1px solid rgba(250,246,240,0.15); font-size: 14px; opacity: 0.7;">
+            Geen magnesiumoxide. Geen vulstoffen. Geen synthetische toevoegingen. Alleen wat nodig is.
+          </div>
+        </div>
+      </div>
+
+      <div class="oc-natuur-bottom">
+        Slechts <strong>twee ingredi&euml;nten</strong>. 120 mg elementair magnesium in de bisglycinaatvorm.
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========== 2. INGREDIËNTEN UITGELICHT ========== -->
+  <section class="oc-section oc-ingredienten">
+    <div class="oc-container">
+      <div class="oc-section-header">
+        <span class="oc-eyebrow">Ingredi&euml;nten</span>
+        <h2>Twee ingredi&euml;nten. <span class="oc-accent">Alleen wat nodig is.</span></h2>
+        <p>Magnesium bisglycinaat en een plantaardige capsule. Dat is de hele lijst.</p>
+      </div>
+
+      <div class="oc-ingr-grid">
+        <!-- Magnesium bisglycinaat -->
+        <div class="oc-ingr-card">
+          <div class="oc-ingr-icon">&#x26A1;</div>
+          <h3>Magnesium bisglycinaat</h3>
+          <p>De hoogwaardige vorm: magnesium gebonden aan het aminozuur glycine. Een chelaatvorm, bewust gekozen &mdash; geen goedkope oxide.</p>
+          <ul class="oc-ingr-facts">
+            <li>120 mg elementair magnesium per capsule &mdash; 32% RI</li>
+            <li>Gebonden aan het aminozuur glycine</li>
+            <li>Een milde, prettige vorm voor dagelijks gebruik</li>
+            <li>Geen magnesiumoxide of goedkope bulkvorm</li>
+          </ul>
+        </div>
+
+        <!-- Plantaardige capsule -->
+        <div class="oc-ingr-card">
+          <div class="oc-ingr-icon">&#x1F33F;</div>
+          <h3>Plantaardige capsule</h3>
+          <p>Het omhulsel: een plantaardige capsule van HPMC (plantaardige cellulose). Een simpel, neutraal omhulsel voor de magnesium.</p>
+          <ul class="oc-ingr-facts">
+            <li>Plantaardige capsule (HPMC)</li>
+            <li>Neutraal en reukloos</li>
+            <li>Geen kunstmatige coatings</li>
+            <li>Slikt makkelijk weg</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="oc-ingr-bottom">Dat is alles. Geen vulstoffen, geen kleurstoffen, geen synthetische toevoegingen.</p>
+    </div>
+  </section>
+
+
+  <!-- ========== 3. TOEGESTANE CLAIMS ========== -->
+  <section class="oc-section oc-werkt">
+    <div class="oc-container">
+      <div class="oc-section-header">
+        <span class="oc-eyebrow">Wat het mag zeggen</span>
+        <h2>De <span class="oc-accent">toegestane</span> claims</h2>
+        <p>Dit zijn de gezondheidsclaims die offici&euml;el zijn goedgekeurd door de EU (EFSA) voor magnesium. Geen marketingpraat &mdash; wettelijk onderbouwd.</p>
+      </div>
+
+      <div class="oc-werkt-grid">
+        <div class="oc-werkt-step">
+          <div class="oc-werkt-num">&#x1F50B;</div>
+          <h3>Minder vermoeidheid</h3>
+          <p>&ldquo;Magnesium draagt bij tot de vermindering van vermoeidheid en moeheid.&rdquo;</p>
+        </div>
+        <div class="oc-werkt-step">
+          <div class="oc-werkt-num">&#x1F4AA;</div>
+          <h3>Spieren &amp; zenuwstelsel</h3>
+          <p>&ldquo;Magnesium draagt bij tot een normale spierfunctie en een normale werking van het zenuwstelsel.&rdquo;</p>
+        </div>
+        <div class="oc-werkt-step">
+          <div class="oc-werkt-num">&#x1F9E0;</div>
+          <h3>Mentale balans</h3>
+          <p>&ldquo;Magnesium draagt bij tot een normale psychologische functie.&rdquo;</p>
+        </div>
+      </div>
+
+      <p class="oc-werkt-note">Bovenstaande gezondheidsclaims zijn offici&euml;el goedgekeurd door de EU (EFSA) voor magnesium. Bij 120 mg per capsule (32% RI) is dit een bron van magnesium.</p>
+    </div>
+  </section>
+
+
+  <!-- ========== 4. HOE JE HET GEBRUIKT ========== -->
+  <section class="oc-section oc-gebruik">
+    <div class="oc-container">
+      <div class="oc-section-header">
+        <span class="oc-eyebrow">Zo neem je het in</span>
+        <h2>Simpel en <span class="oc-accent">dagelijks</span></h2>
+      </div>
+
+      <div class="oc-gebruik-grid">
+        <div class="oc-gebruik-stap">
+          <span class="oc-gebruik-icon">&#x1F48A;</span>
+          <h4>1 capsule per dag</h4>
+          <p>Eén capsule levert 120 mg elementair magnesium in de bisglycinaatvorm.</p>
+        </div>
+        <div class="oc-gebruik-stap">
+          <span class="oc-gebruik-icon">&#x1F4A7;</span>
+          <h4>Met een slok water</h4>
+          <p>Slik de capsule heel door met wat water. Meer is het niet.</p>
+        </div>
+        <div class="oc-gebruik-stap">
+          <span class="oc-gebruik-icon">&#x1F37D;&#xFE0F;</span>
+          <h4>Met of zonder eten</h4>
+          <p>Bisglycinaat is een milde vorm en kan op elk moment van de dag.</p>
+        </div>
+        <div class="oc-gebruik-stap">
+          <span class="oc-gebruik-icon">&#x1F319;</span>
+          <h4>Veel mensen &rsquo;s avonds</h4>
+          <p>Magnesium wordt vaak aan het einde van de dag ingenomen. Kies wat bij jouw ritme past.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========== 5. WAAROM BISGLYCINAAT ========== -->
+  <section class="oc-section oc-timeline">
+    <div class="oc-container">
+      <div class="oc-section-header">
+        <span class="oc-eyebrow">De vorm</span>
+        <h2>Waarom <span class="oc-accent">bisglycinaat</span>?</h2>
+        <p>Niet alle magnesium is gelijk. De vorm bepaalt alles &mdash; en wij kozen bewust voor de hoogwaardige variant.</p>
+      </div>
+
+      <div class="oc-timeline-track">
+        <div class="oc-timeline-point">
+          <div class="oc-timeline-dot">&#x1F517;</div>
+          <h4>Gebonden aan glycine</h4>
+          <p>Magnesium gekoppeld aan het aminozuur glycine &mdash; een chelaatvorm.</p>
+        </div>
+        <div class="oc-timeline-point">
+          <div class="oc-timeline-dot">&#x1F33F;</div>
+          <h4>Plantaardige capsule</h4>
+          <p>Een plantaardige capsule van HPMC (plantaardige cellulose).</p>
+        </div>
+        <div class="oc-timeline-point">
+          <div class="oc-timeline-dot">&#x1F6AB;</div>
+          <h4>Geen synthetica</h4>
+          <p>Geen vulstoffen, kleurstoffen of onnodige toevoegingen.</p>
+        </div>
+        <div class="oc-timeline-point">
+          <div class="oc-timeline-dot">2</div>
+          <h4>Twee ingredi&euml;nten</h4>
+          <p>Magnesium bisglycinaat en de capsule. Meer niet.</p>
+        </div>
+      </div>
+
+      <div class="oc-totox-note">
+        <h3>Waarom zo eenvoudig?</h3>
+        <p>Wij kozen bewust voor <strong>magnesium bisglycinaat</strong>: een vorm waarbij magnesium gebonden is aan het aminozuur glycine.</p>
+        <p>Onze formule bevat uitsluitend magnesiumbisglycinaat en een <strong>plantaardige capsule (HPMC)</strong>. Geen onnodige vulstoffen, kleurstoffen of andere synthetische toevoegingen.</p>
+        <p>Bij Oergezond geloven we dat <strong>minder vaak meer is</strong>. Daarom kozen we voor een minimalistische formule die aansluit bij een natuurlijke leefstijl.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========== 6. WAAROM KIEZEN ========== -->
+  <section class="oc-section oc-proof">
+    <div class="oc-container">
+      <div class="oc-section-header">
+        <span class="oc-eyebrow">Waarom kiezen</span>
+        <h2>Puur, hoogwaardig en <span class="oc-accent">eerlijk</span></h2>
+      </div>
+
+      <div class="oc-proof-grid">
+        <div class="oc-proof-card">
+          <div class="oc-proof-stars">&#x26A1;</div>
+          <p class="oc-proof-quote">De bisglycinaatvorm. Magnesium gebonden aan glycine &mdash; bewust gekozen, geen goedkope oxide of bulkvorm.</p>
+          <div class="oc-proof-author">
+            Hoogwaardig
+            <span class="oc-proof-badge">Slim</span>
+          </div>
+        </div>
+
+        <div class="oc-proof-card">
+          <div class="oc-proof-stars">&#x1F33F;</div>
+          <p class="oc-proof-quote">Plantaardige capsule. Een simpel omhulsel van HPMC (plantaardige cellulose) &mdash; neutraal en reukloos. Verder niks.</p>
+          <div class="oc-proof-author">
+            Plantaardig
+            <span class="oc-proof-badge">Puur</span>
+          </div>
+        </div>
+
+        <div class="oc-proof-card">
+          <div class="oc-proof-stars">&#x2728;</div>
+          <p class="oc-proof-quote">Twee ingredi&euml;nten, nul troep. Magnesium bisglycinaat en een plantaardige capsule. Zoals een supplement hoort te zijn.</p>
+          <div class="oc-proof-author">
+            Simpel &amp; eerlijk
+            <span class="oc-proof-badge">Oer</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="oc-proof-summary">
+        <div class="oc-proof-stat">
+          <div class="oc-proof-stat-num">2</div>
+          <div class="oc-proof-stat-label">Ingredi&euml;nten</div>
+        </div>
+        <div class="oc-proof-stat">
+          <div class="oc-proof-stat-num">120 mg</div>
+          <div class="oc-proof-stat-label">Elementair magnesium &mdash; 32% RI</div>
+        </div>
+        <div class="oc-proof-stat">
+          <div class="oc-proof-stat-num">Bisglycinaat</div>
+          <div class="oc-proof-stat-label">De hoogwaardige vorm</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========== 7. FAQ ========== -->
+  <section class="oc-section oc-faq">
+    <div class="oc-container">
+      <div class="oc-section-header">
+        <span class="oc-eyebrow">Veelgestelde vragen</span>
+        <h2>Nog vragen?</h2>
+      </div>
+
+      <div class="oc-faq-list">
+        <div class="oc-faq-item">
+          <button class="oc-faq-q">Waar is deze magnesium van gemaakt?</button>
+          <div class="oc-faq-a">Twee ingredi&euml;nten: magnesium bisglycinaat en een plantaardige capsule van HPMC. Dat is alles. Geen vulstoffen, geen kleurstoffen, geen synthetische toevoegingen.</div>
+        </div>
+        <div class="oc-faq-item">
+          <button class="oc-faq-q">Wat is magnesium bisglycinaat precies?</button>
+          <div class="oc-faq-a">Een vorm waarbij magnesium gebonden is aan het aminozuur glycine &mdash; een zogeheten chelaatvorm. Wij kozen hier bewust voor als hoogwaardige, milde variant in plaats van goedkope magnesiumoxide.</div>
+        </div>
+        <div class="oc-faq-item">
+          <button class="oc-faq-q">Hoeveel magnesium zit er per capsule?</button>
+          <div class="oc-faq-a">120 mg elementair magnesium per capsule, wat neerkomt op 32% van de dagelijkse referentie-inname (RI).</div>
+        </div>
+        <div class="oc-faq-item">
+          <button class="oc-faq-q">Waarom geen magnesiumoxide?</button>
+          <div class="oc-faq-a">Magnesiumoxide is een goedkope bulkvorm die veel merken gebruiken. Wij kozen bewust voor de bisglycinaatvorm: gebonden aan glycine en mild in gebruik.</div>
+        </div>
+        <div class="oc-faq-item">
+          <button class="oc-faq-q">Hoeveel neem ik per dag?</button>
+          <div class="oc-faq-a">1 capsule per dag, met een slok water. Eén capsule levert 120 mg elementair magnesium. Houd de aanbevolen dosering op de verpakking aan.</div>
+        </div>
+        <div class="oc-faq-item">
+          <button class="oc-faq-q">Waar is de capsule van gemaakt?</button>
+          <div class="oc-faq-a">De capsule is gemaakt van HPMC (plantaardige cellulose): een neutraal, reukloos omhulsel voor de magnesium.</div>
+        </div>
+        <div class="oc-faq-item">
+          <button class="oc-faq-q">Wanneer kan ik het het beste innemen?</button>
+          <div class="oc-faq-a">Dat mag op elk moment, met of zonder eten. Veel mensen nemen magnesium aan het einde van de dag &mdash; kies wat bij jouw ritme past. Gebruik je medicatie of ben je zwanger? Overleg dan even met je huisarts of apotheker.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========== 8. CTA ========== -->
+  <section class="oc-section oc-cta">
+    <div class="oc-container">
+      <h2>Klaar voor pure magnesium?</h2>
+      <p>Geen goedkope oxide, geen vulmiddelen. Magnesium bisglycinaat in een plantaardige capsule &mdash; puur en eerlijk.</p>
+      <a href="#" class="oc-btn" onclick="document.querySelector('[name=add]')?.click(); window.scrollTo({top: 0, behavior: 'smooth'}); return false;">Bestel Oergezond Magnesium</a>
+      <div class="oc-cta-trust">
+        <span>Bisglycinaatvorm</span>
+        <span>2 ingredi&euml;nten</span>
+        <span>Plantaardige capsule</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+
+<!-- ============================================================
+     JAVASCRIPT — FAQ toggle
+     ============================================================ -->
+<script>
+(function() {
+  document.querySelectorAll('.oc-faq-q').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var item = this.closest('.oc-faq-item');
+      var wasActive = item.classList.contains('active');
+      // close all
+      document.querySelectorAll('.oc-faq-item').forEach(function(i) { i.classList.remove('active'); });
+      // toggle clicked
+      if (!wasActive) item.classList.add('active');
+    });
+  });
+})();
+</script>

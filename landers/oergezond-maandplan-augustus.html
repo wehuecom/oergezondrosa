@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<title>Oergezond — Maandplan Augustus</title>
+<style>
+  @page { size: A4; margin: 16mm 16mm; }
+  :root { --cream:#FAF6F0; --warm:#F5EFE3; --forest:#1A2E1A; --terra:#C4714A; --dark:#2C1810; --gold:#D4A574; --zand:#C9BEA9; --soft:#4A4842; --red:#A63D2A; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Georgia','Times New Roman',serif; color:var(--dark); background:var(--cream); line-height:1.6; font-size:13.5px; }
+  .page { max-width:780px; margin:0 auto; padding:30px 36px; }
+
+  .head { text-align:center; background:var(--forest); border-radius:14px; padding:30px 24px; margin-bottom:26px; }
+  .head img { height:48px; width:auto; display:inline-block; }
+  .head .kicker { font-family:Arial,sans-serif; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); font-weight:bold; margin-top:12px; }
+  .head .date { font-size:12px; color:rgba(250,246,240,0.7); font-style:italic; margin-top:4px; }
+
+  h2 { font-family:'Georgia',serif; font-size:20px; color:var(--forest); margin:26px 0 10px; padding-bottom:6px; border-bottom:1px solid var(--zand); }
+  h2:first-of-type { margin-top:0; }
+  p { margin-bottom:12px; color:var(--soft); }
+  strong { color:var(--dark); }
+
+  table { width:100%; border-collapse:collapse; font-size:13px; margin:8px 0 14px; }
+  thead th { font-family:Arial,sans-serif; font-size:10px; letter-spacing:0.5px; text-transform:uppercase; color:var(--forest); text-align:left; padding:9px 8px; border-bottom:2px solid var(--zand); }
+  th.num, td.num { text-align:right; }
+  tbody td { padding:8px; border-bottom:1px solid #eee; color:var(--dark); }
+  tbody tr:nth-child(even){ background:rgba(201,190,169,0.10); }
+  .tot td { border-top:2px solid var(--zand); font-weight:bold; }
+  .pos { color:var(--forest); font-weight:bold; }
+  .neg { color:var(--red); }
+  .whole { color:var(--terra); font-weight:bold; }
+
+  .box { background:var(--warm); border:1px solid var(--zand); border-radius:10px; padding:16px 20px; margin:14px 0; }
+  .box.green { background:var(--forest); color:var(--cream); border:none; }
+  .box.green strong { color:var(--gold); }
+  .box.green p { color:rgba(250,246,240,0.9); }
+
+  .adv { display:flex; gap:12px; margin:12px 0; }
+  .adv .n { flex-shrink:0; width:30px; height:30px; background:var(--terra); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:Arial,sans-serif; font-weight:bold; font-size:14px; }
+  .adv .t { font-size:13.5px; }
+
+  .foot { margin-top:28px; border-top:2px solid var(--forest); padding-top:14px; text-align:center; font-size:12px; color:var(--soft); }
+  .foot a { color:var(--forest); }
+  .tag { display:inline-block; font-family:Arial,sans-serif; font-size:10px; font-weight:bold; padding:2px 8px; border-radius:100px; }
+  .tag.w { background:rgba(166,61,42,0.12); color:var(--red); }
+  .tag.r { background:rgba(212,165,116,0.25); color:#8a6a2f; }
+  .tag.b { background:rgba(45,74,45,0.12); color:var(--forest); }
+
+  @media print { body { background:#fff; } .page { padding:0; } h2 { page-break-after:avoid; } table { page-break-inside:avoid; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="head">
+    <img src="logo_oer3.png" alt="Oergezond">
+    <div class="kicker">Maandplan &amp; Prognoses</div>
+    <div class="date">Augustus 2026 &middot; intern</div>
+  </div>
+
+  <!-- STARTPOSITIE -->
+  <h2>1. Waar staan we nu?</h2>
+  <table>
+    <tbody>
+      <tr><td>Winst tot nu toe</td><td class="num pos">+ &euro;2.500</td></tr>
+      <tr><td>Boekhouding (kwartaal)</td><td class="num neg">&minus; &euro;500</td></tr>
+      <tr><td>Shopify-abonnement</td><td class="num neg">&minus; &euro;600</td></tr>
+      <tr><td>Klantenservice</td><td class="num neg">&minus; &euro;250</td></tr>
+      <tr><td>Schuld advertenties (oude rekening)</td><td class="num neg">&minus; &euro;1.000</td></tr>
+      <tr class="tot"><td>Vaste lasten samen</td><td class="num neg">&minus; &euro;2.350</td></tr>
+      <tr class="tot"><td>Over vóór loon</td><td class="num pos">= &euro;150</td></tr>
+    </tbody>
+  </table>
+  <div class="box">
+    <p style="margin:0;"><strong>De kern:</strong> alles wat we deze maand nog bóven die &euro;150 aan winst maken, is ons loon. De vraag is dus alleen: hoeveel extra winst halen we er nog uit?</p>
+  </div>
+
+  <!-- WERKELIJKE MARGE -->
+  <h2>2. Onze werkelijke marge (voorbeeld: 3-pack Oercrème &euro;77)</h2>
+  <table>
+    <tbody>
+      <tr><td>Klant betaalt</td><td class="num">&euro;77,00</td></tr>
+      <tr><td>Btw 21% eraf</td><td class="num neg">&minus; &euro;13,36</td></tr>
+      <tr><td>Omzet excl. btw</td><td class="num">&euro;63,64</td></tr>
+      <tr><td>Inkoop (3 &times; &euro;4,92 incl. verpakking)</td><td class="num neg">&minus; &euro;14,76</td></tr>
+      <tr><td>Verzending (gratis &gt;&euro;65, onze kosten)</td><td class="num neg">&minus; &euro;6,50</td></tr>
+      <tr><td>Transactiekosten (~2%)</td><td class="num neg">&minus; &euro;1,80</td></tr>
+      <tr class="tot"><td>Onze winst</td><td class="num pos">&asymp; &euro;40,58 &nbsp;(53%)</td></tr>
+    </tbody>
+  </table>
+  <p>Onze contributiemarge zit dus rond de <strong>50%</strong> van wat de klant betaalt. Belangrijk inzicht: omdat de <strong>btw ook van de korting afgaat</strong>, doet een sale minder pijn dan het lijkt. Bij 50% basismarge houden we effectief over: <strong>~38% bij 20% korting</strong>, <strong>~43% bij 15% korting</strong>.</p>
+  <div class="box">
+    <p style="margin:0;"><strong>Let op &mdash; gratis verzending &gt;&euro;65:</strong> elke order die daar net overheen komt kost ons ~&euro;6,50. Tijdens een sale zakken de prijzen, dus minder orders halen de &euro;65. Per saldo een wash, maar goed om te weten.</p>
+  </div>
+
+  <!-- PROGNOSES -->
+  <h2>3. De 3 prognoses — Back-to-Work Sale</h2>
+  <p>Looptijd ±1 week. &ldquo;Loon beschikbaar&rdquo; = extra winst + de &euro;150 die we al over hadden.</p>
+
+  <p style="margin-bottom:4px;"><strong>Optie A &mdash; 20% korting</strong> (winst &asymp; 38% van sale-omzet)</p>
+  <table>
+    <thead><tr><th>Scenario</th><th class="num">Extra omzet</th><th class="num">Extra winst</th><th class="num">Loon beschikbaar</th></tr></thead>
+    <tbody>
+      <tr><td><span class="tag w">Worst</span></td><td class="num">&euro;2.000</td><td class="num">&euro;760</td><td class="num pos">&euro;910</td></tr>
+      <tr><td><span class="tag r">Realistisch</span></td><td class="num">&euro;4.000</td><td class="num">&euro;1.520</td><td class="num pos">&euro;1.670</td></tr>
+      <tr><td><span class="tag b">Best</span></td><td class="num">&euro;7.000</td><td class="num">&euro;2.660</td><td class="num pos">&euro;2.810</td></tr>
+    </tbody>
+  </table>
+
+  <p style="margin-bottom:4px;"><strong>Optie B &mdash; 15% korting</strong> <span style="color:var(--terra); font-style:italic;">(ons advies)</span> (winst &asymp; 43%)</p>
+  <table>
+    <thead><tr><th>Scenario</th><th class="num">Extra omzet</th><th class="num">Extra winst</th><th class="num">Loon beschikbaar</th></tr></thead>
+    <tbody>
+      <tr><td><span class="tag w">Worst</span></td><td class="num">&euro;2.000</td><td class="num">&euro;860</td><td class="num pos">&euro;1.010</td></tr>
+      <tr><td><span class="tag r">Realistisch</span></td><td class="num">&euro;4.000</td><td class="num">&euro;1.720</td><td class="num pos">&euro;1.870</td></tr>
+      <tr><td><span class="tag b">Best</span></td><td class="num">&euro;7.000</td><td class="num">&euro;3.010</td><td class="num pos">&euro;3.160</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ADVIES -->
+  <h2>4. Advies</h2>
+  <p><strong>Ja, doe de sale</strong> &mdash; een &ldquo;Back to Work&rdquo;-actie geeft precies de reden-om-nu-te-kopen die we nodig hebben. Met twee aanpassingen:</p>
+
+  <div class="adv"><div class="n">1</div><div class="t"><strong>Maak er 15% van, geen 20%.</strong> Bij onze marge houden we effectief ~43% over i.p.v. ~38%, en de klant voelt het verschil nauwelijks. Scheelt honderden euro&rsquo;s winst.</div></div>
+  <div class="adv"><div class="n">2</div><div class="t"><strong>Eindig op 31 augustus (payday-weekend).</strong> Mensen krijgen dan salaris &mdash; perfecte timing. Een week is prima; langer dan ~10 dagen verwatert de urgentie. Zet een duidelijke einddatum + &ldquo;op = op&rdquo;.</div></div>
+
+  <div class="box green">
+    <p style="margin:0;"><strong>De echte hefboom:</strong> stuur de sale naar onze e-maillijst (gratis, warmste publiek) &eacute;n socials. D&aacute;&aacute;r zit het volume &mdash; niet in de korting zelf. Met 15% + goede e-mailpush: realistisch <strong>&euro;1.400&ndash;1.600 loon</strong>, bij een goede week richting <strong>&euro;2.300+</strong>.</p>
+  </div>
+
+  <!-- EXTRA IDEEEN -->
+  <h2>5. Extra winst-ideeën (zonder marge weg te geven)</h2>
+  <table>
+    <tbody>
+      <tr><td><strong>Winback-mail</strong></td><td>Naar klanten die 60&ndash;90 dagen niks kochten &mdash; laaghangend fruit.</td></tr>
+      <tr><td><strong>Gratis verzending vanaf &euro;X</strong></td><td>Drempel iets boven de gemiddelde order &rarr; mensen leggen 1 item extra bij.</td></tr>
+      <tr><td><strong>Bundel als held</strong></td><td>Een &ldquo;Oer-routine&rdquo;-set verhoogt de orderwaarde zonder korting.</td></tr>
+      <tr><td><strong>Schaarste-reel</strong></td><td>&ldquo;Bijna uitverkocht&rdquo; op onze hardloper &mdash; urgentie, gratis bereik.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="foot">
+    <strong>Oergezond</strong> &middot; intern maandplan augustus 2026 &middot; <a href="https://www.oergezond.com">www.oergezond.com</a><br>
+    Gerekend met werkelijke inkoopprijzen (Oercrème ~&euro;4,92/potje incl. verpakking), btw 21% en ~50% contributiemarge. Omzet-scenario&rsquo;s zijn schattingen.
+  </div>
+
+</div>
+</body>
+</html>

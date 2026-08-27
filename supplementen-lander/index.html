@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oergezond Supplementen — Early Access</title>
+<meta name="description" content="Onze eigen supplementenlijn komt eraan. Puur, zonder troep, zoals de natuur het bedoeld heeft. Schrijf je in voor Early Access.">
+<style>
+  /* ====== INSTELLINGEN: hier pas je makkelijk de kleuren aan ====== */
+  :root {
+    --creme: #F5F0E8;      /* warme achtergrond */
+    --groen: #3A4A2F;      /* diep olijfgroen */
+    --groen-donker: #2C3A24;
+    --bruin: #6B4F3A;      /* warm bruin accent */
+    --zand: #C9BEA9;       /* randen */
+    --tekst: #2B2B2B;
+    --tekst-zacht: #55524B;
+    --wit: #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background-color: var(--creme);
+    color: var(--tekst);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 620px; margin: 0 auto; padding: 0 24px; }
+
+  /* ====== HERO ====== */
+  .hero {
+    text-align: center;
+    padding: 72px 0 56px;
+  }
+  .badge {
+    display: inline-block;
+    background: var(--groen);
+    color: var(--creme);
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 7px 16px;
+    border-radius: 100px;
+    margin-bottom: 28px;
+    font-family: -apple-system, Helvetica, Arial, sans-serif;
+    font-weight: 600;
+  }
+  .hero h1 {
+    font-size: 40px;
+    line-height: 1.2;
+    color: var(--groen);
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  .hero p.sub {
+    font-size: 19px;
+    color: var(--tekst-zacht);
+    max-width: 500px;
+    margin: 0 auto 36px;
+  }
+
+  /* ====== KNOPPEN & CTA ====== */
+  .cta-btn {
+    display: inline-block;
+    background: var(--groen);
+    color: var(--creme);
+    font-family: -apple-system, Helvetica, Arial, sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    padding: 16px 34px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.25s ease, transform 0.1s ease;
+  }
+  .cta-btn:hover { background: var(--groen-donker); transform: translateY(-1px); }
+
+  /* ====== HERO FOTO ====== */
+  .hero-photo {
+    position: relative;
+    margin-top: 44px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--zand);
+    min-height: 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 34px rgba(0,0,0,0.10);
+  }
+  .hero-photo img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+  }
+  .photo-placeholder {
+    display: none;
+    color: var(--bruin);
+    font-family: -apple-system, Helvetica, Arial, sans-serif;
+    text-align: center;
+    font-size: 16px;
+    line-height: 1.5;
+    padding: 40px;
+  }
+  .hero-photo.leeg img { display: none; }
+  .hero-photo.leeg .photo-placeholder { display: block; }
+
+  /* ====== STORY / INFO ====== */
+  .story { text-align: center; }
+  .story p {
+    font-size: 18px;
+    color: var(--tekst-zacht);
+    margin-bottom: 18px;
+  }
+  .story p:last-child { margin-bottom: 0; }
+  .story .signoff {
+    font-style: italic;
+    color: var(--bruin);
+    font-size: 17px;
+  }
+
+  /* ====== SECTIES ====== */
+  section { padding: 44px 0; }
+  .divider { height: 1px; background: var(--zand); max-width: 620px; margin: 0 auto; opacity: 0.6; }
+
+  h2 {
+    font-size: 28px;
+    color: var(--groen);
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .benefits { list-style: none; }
+  .benefits li {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(201,190,169,0.4);
+  }
+  .benefits li:last-child { border-bottom: none; }
+  .benefits .check {
+    color: var(--groen);
+    font-size: 20px;
+    line-height: 1.4;
+    flex-shrink: 0;
+  }
+  .benefits strong { color: var(--tekst); }
+  .benefits span.desc { color: var(--tekst-zacht); font-size: 16px; }
+
+  /* ====== FORMULIER ====== */
+  .form-card {
+    background: var(--wit);
+    border: 1px solid var(--zand);
+    border-radius: 16px;
+    padding: 40px 32px;
+    box-shadow: 0 10px 34px rgba(0,0,0,0.07);
+    text-align: center;
+  }
+  .form-card h2 { margin-bottom: 10px; }
+  .form-card p.lead { color: var(--tekst-zacht); margin-bottom: 26px; font-size: 17px; }
+
+  form { display: flex; flex-direction: column; gap: 14px; }
+  input[type="email"] {
+    width: 100%;
+    padding: 16px 18px;
+    font-size: 16px;
+    font-family: -apple-system, Helvetica, Arial, sans-serif;
+    border: 1px solid var(--zand);
+    border-radius: 10px;
+    color: var(--tekst);
+    background: var(--creme);
+    transition: border-color 0.2s ease;
+  }
+  input[type="email"]:focus { outline: none; border-color: var(--groen); }
+
+  .form-msg { font-size: 15px; margin-top: 6px; min-height: 20px; font-family: -apple-system, Helvetica, Arial, sans-serif; }
+  .form-msg.ok { color: var(--groen); font-weight: 600; }
+  .form-msg.err { color: #B4462F; }
+  .privacy { font-size: 13px; color: var(--tekst-zacht); margin-top: 4px; font-family: -apple-system, Helvetica, Arial, sans-serif; }
+
+  /* ====== FAQ ====== */
+  .faq details {
+    border-bottom: 1px solid rgba(201,190,169,0.5);
+    padding: 16px 0;
+  }
+  .faq summary {
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--groen);
+    font-weight: 600;
+    list-style: none;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: '+'; float: right; color: var(--bruin); }
+  .faq details[open] summary::after { content: '–'; }
+  .faq p { color: var(--tekst-zacht); margin-top: 10px; font-size: 16px; }
+
+  /* ====== FOOTER ====== */
+  footer {
+    text-align: center;
+    padding: 40px 0 56px;
+    color: var(--tekst-zacht);
+    font-size: 14px;
+    font-family: -apple-system, Helvetica, Arial, sans-serif;
+  }
+  footer a { color: var(--groen); text-decoration: none; }
+
+  /* ====== MOBIEL ====== */
+  @media (max-width: 480px) {
+    .hero { padding: 52px 0 40px; }
+    .hero h1 { font-size: 31px; }
+    .hero p.sub { font-size: 17px; }
+    h2 { font-size: 24px; }
+    .form-card { padding: 32px 22px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ====== HERO ====== -->
+  <header class="hero">
+    <div class="wrap">
+      <span class="badge">Early Access · Binnenkort</span>
+      <h1>Onze eigen supplementen komen eraan</h1>
+      <p class="sub">Puur, zonder troep, zoals de natuur het bedoeld heeft. Schrijf je in en jij hoort het als eerste — nog vóór de rest.</p>
+      <a href="#inschrijven" class="cta-btn">Zet mij op de lijst</a>
+
+      <!-- ====== FOTO: vervang 'foto.jpg' door je eigen foto (zie uitleg in chat) ====== -->
+      <div class="hero-photo">
+        <img src="foto.jpg" alt="Oergezond supplementen" onerror="this.parentElement.classList.add('leeg')">
+        <span class="photo-placeholder">Zet hier je productfoto<br><small>(bestand: foto.jpg)</small></span>
+      </div>
+    </div>
+  </header>
+
+  <div class="divider"></div>
+
+  <!-- ====== STORY / INFO ====== -->
+  <section class="story">
+    <div class="wrap">
+      <h2>Waarom wij dit maken</h2>
+      <p>Wij zijn Jorn &amp; Rosa. We herstelden zelf van klachten waar we jarenlang mee liepen — niet met pillen die symptomen wegdrukken, maar door terug te gaan naar hoe de natuur het bedoeld heeft.</p>
+      <p>De supplementenmarkt staat vol met troep: vulstoffen, synthetische rommel, mooie beloftes op het etiket. Wij wilden iets anders. Puur, eerlijk, en gebaseerd op oerprincipes. Alleen wat je lichaam herkent en écht nodig heeft.</p>
+      <p class="signoff">Nu is het bijna zover. En jij mag er als eerste bij zijn.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ====== WAAROM ====== -->
+  <section>
+    <div class="wrap">
+      <h2>Geen troep. Gewoon wat werkt.</h2>
+      <ul class="benefits">
+        <li>
+          <span class="check">✓</span>
+          <div><strong>100% non-toxisch</strong><br><span class="desc">Geen onnodige vulstoffen, geen synthetische rommel. Alleen wat je lichaam herkent.</span></div>
+        </li>
+        <li>
+          <span class="check">✓</span>
+          <div><strong>Gebaseerd op oerprincipes</strong><br><span class="desc">Voeding zoals de natuur het bedoeld heeft — vertaald naar supplementen die kloppen.</span></div>
+        </li>
+        <li>
+          <span class="check">✓</span>
+          <div><strong>Herstel van binnenuit</strong><br><span class="desc">Ontwikkeld vanuit dezelfde filosofie waarmee wij zelf herstelden.</span></div>
+        </li>
+        <li>
+          <span class="check">✓</span>
+          <div><strong>Simpel maar effectief</strong><br><span class="desc">Geen kast vol potjes. Puur waar het om draait.</span></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ====== WAT KRIJG JE ====== -->
+  <section>
+    <div class="wrap">
+      <h2>Wat Early Access je oplevert</h2>
+      <ul class="benefits">
+        <li><span class="check">→</span><div><strong>Als eerste toegang</strong> — koop de supplementen vóór iedereen anders.</div></li>
+        <li><span class="check">→</span><div><strong>Voorrang bij beperkte voorraad</strong> — de eerste lichting is klein.</div></li>
+        <li><span class="check">→</span><div><strong>Jij hoort het direct</strong> — geen ruis, één mailtje zodra het zover is.</div></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ====== FORMULIER ====== -->
+  <section id="inschrijven">
+    <div class="wrap">
+      <div class="form-card">
+        <h2>Wees er als eerste bij</h2>
+        <p class="lead">Laat je e-mail achter. We tikken je aan zodra de supplementen er zijn.</p>
+        <form id="early-access-form" novalidate>
+          <input type="email" id="email" name="email" placeholder="jouw@email.nl" required autocomplete="email">
+          <button type="submit" class="cta-btn" id="submit-btn">Zet mij op de lijst</button>
+          <div class="form-msg" id="form-msg"></div>
+        </form>
+        <p class="privacy">Geen spam. Alleen een bericht als de supplementen live gaan. Uitschrijven kan altijd.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ====== FAQ ====== -->
+  <section class="faq">
+    <div class="wrap">
+      <h2>Veelgestelde vragen</h2>
+      <details>
+        <summary>Wanneer komen de supplementen uit?</summary>
+        <p>We werken hard aan de eerste lichting. Schrijf je in en je bent de eerste die de exacte datum hoort — nog voordat we het openbaar maken.</p>
+      </details>
+      <details>
+        <summary>Wat kost het om me in te schrijven?</summary>
+        <p>Niks. Inschrijven voor Early Access is gratis en vrijblijvend. Je verplicht je tot niks.</p>
+      </details>
+      <details>
+        <summary>Wat maakt jullie supplementen anders?</summary>
+        <p>Ze zijn ontwikkeld vanuit dezelfde oerprincipes als de rest van Oergezond: puur, non-toxisch, zonder onnodige troep. Zoals de natuur het bedoeld heeft.</p>
+      </details>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ====== FOOTER ====== -->
+  <footer>
+    <div class="wrap">
+      <p>Oergezond — zoals de natuur het bedoeld heeft.<br>
+      <a href="https://www.oergezond.com">www.oergezond.com</a></p>
+    </div>
+  </footer>
+
+<script>
+  /* ============================================================
+     KLAVIYO KOPPELING
+     Vul hieronder je twee gegevens in (uitleg staat in de chat):
+     ============================================================ */
+  const KLAVIYO_PUBLIC_KEY = "PLAK_HIER_JE_PUBLIEKE_SLEUTEL";  // 6 tekens, bv. "aBc123"
+  const KLAVIYO_LIST_ID    = "PLAK_HIER_JE_LIJST_ID";          // bv. "XyZ789"
+  /* ============================================================ */
+
+  const form = document.getElementById('early-access-form');
+  const emailInput = document.getElementById('email');
+  const msg = document.getElementById('form-msg');
+  const btn = document.getElementById('submit-btn');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = emailInput.value.trim();
+
+    // simpele check
+    if (!email || !email.includes('@') || !email.includes('.')) {
+      msg.className = 'form-msg err';
+      msg.textContent = 'Vul een geldig e-mailadres in.';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Bezig...';
+    msg.className = 'form-msg';
+    msg.textContent = '';
+
+    try {
+      const res = await fetch(
+        `https://a.klaviyo.com/client/subscriptions/?company_id=${KLAVIYO_PUBLIC_KEY}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'revision': '2024-10-15'
+          },
+          body: JSON.stringify({
+            data: {
+              type: 'subscription',
+              attributes: {
+                profile: {
+                  data: {
+                    type: 'profile',
+                    attributes: { email: email }
+                  }
+                }
+              },
+              relationships: {
+                list: { data: { type: 'list', id: KLAVIYO_LIST_ID } }
+              }
+            }
+          })
+        }
+      );
+
+      if (res.status === 202 || res.ok) {
+        form.reset();
+        msg.className = 'form-msg ok';
+        msg.textContent = 'Je staat erop. We tikken je aan zodra het zover is. ✓';
+        btn.style.display = 'none';
+      } else {
+        throw new Error('Klaviyo status ' + res.status);
+      }
+    } catch (err) {
+      msg.className = 'form-msg err';
+      msg.textContent = 'Er ging iets mis. Probeer het zo nog eens.';
+      btn.disabled = false;
+      btn.textContent = 'Zet mij op de lijst';
+    }
+  });
+</script>
+
+</body>
+</html>

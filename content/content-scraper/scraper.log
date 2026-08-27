@@ -1,0 +1,1600 @@
+[11:00:22] === Oergezond Content Scraper gestart ===
+[11:00:22] Scrapen van 10 competitor accounts...
+[11:00:22] Apify run starten...
+[11:00:22] Scrapen van 5 hashtags...
+[11:00:22] Apify run starten...
+[11:00:23] Apify run gestart: zz6ty2xGUhpC8IquX
+[11:00:23] Apify run gestart: 2DClhvnY2gBs8oNLO
+[11:00:32] Apify status: RUNNING
+[11:00:32] Apify status: RUNNING
+[11:00:40] Apify status: RUNNING
+[11:00:40] Apify status: RUNNING
+[11:00:48] Apify status: RUNNING
+[11:00:49] Apify status: RUNNING
+[11:00:57] Apify status: RUNNING
+[11:00:57] Apify status: RUNNING
+[11:01:05] Apify status: RUNNING
+[11:01:05] Apify status: RUNNING
+[11:01:13] Apify status: RUNNING
+[11:01:14] Apify status: RUNNING
+[11:01:22] Apify status: RUNNING
+[11:01:22] Apify status: RUNNING
+[11:01:30] Apify status: RUNNING
+[11:01:31] Apify status: RUNNING
+[11:01:39] Apify status: RUNNING
+[11:01:39] Apify status: RUNNING
+[11:01:47] Apify status: RUNNING
+[11:01:47] Apify status: RUNNING
+[11:01:55] Apify status: RUNNING
+[11:01:56] Apify status: RUNNING
+[11:02:04] Apify status: RUNNING
+[11:02:04] Apify status: RUNNING
+[11:02:12] Apify status: RUNNING
+[11:02:13] Apify status: RUNNING
+[11:02:21] Apify status: RUNNING
+[11:02:21] Apify status: RUNNING
+[11:02:29] Apify status: RUNNING
+[11:02:29] Apify status: RUNNING
+[11:02:38] Apify status: SUCCEEDED
+[11:02:38] Apify status: RUNNING
+[11:02:39] 75 posts opgehaald van hashtags
+[11:02:46] Apify status: RUNNING
+[11:02:55] Apify status: RUNNING
+[11:03:03] Apify status: RUNNING
+[11:03:11] Apify status: RUNNING
+[11:03:20] Apify status: RUNNING
+[11:03:28] Apify status: RUNNING
+[11:03:36] Apify status: RUNNING
+[11:03:45] Apify status: RUNNING
+[11:03:54] Apify status: RUNNING
+[11:04:02] Apify status: RUNNING
+[11:04:10] Apify status: RUNNING
+[11:04:19] Apify status: RUNNING
+[11:04:27] Apify status: RUNNING
+[11:04:35] Apify status: RUNNING
+[11:04:44] Apify status: RUNNING
+[11:04:52] Apify status: RUNNING
+[11:05:01] Apify status: RUNNING
+[11:05:09] Apify status: RUNNING
+[11:05:17] Apify status: RUNNING
+[11:05:26] Apify status: RUNNING
+[11:05:34] Apify status: RUNNING
+[11:05:43] Apify status: RUNNING
+[11:05:51] Apify status: RUNNING
+[11:05:59] Apify status: SUCCEEDED
+[11:06:01] 46 posts opgehaald van competitors
+[11:06:01] Totaal 121 posts verzameld
+[11:06:01] Top 20 posts geselecteerd op engagement
+[11:06:01] Claude om content ideeën vragen...
+[11:07:09] Carousel genereren...
+[11:07:26] Carousel verstuurd ✅
+[11:07:26] Nieuws post genereren...
+[11:08:00] Nieuws post verstuurd ✅
+[11:08:00] Tweet post genereren...
+[11:08:12] Tweet post verstuurd ✅
+[11:08:12] Alles verstuurd naar Telegram ✅
+[11:08:12] Luisteren naar knopreacties (20 min)...
+[11:28:19] Klaar met luisteren naar knopreacties.
+[15:01:02] === Oergezond Content Scraper gestart ===
+[15:01:02] Scrapen van 10 competitor accounts...
+[15:01:02] Apify run starten...
+[15:01:02] Scrapen van 5 hashtags...
+[15:01:02] Apify run starten...
+[15:01:03] Apify run gestart: 4BPiwzas9B8Zv96zU
+[15:01:03] Apify run gestart: SkxCJCfSJF573zuf4
+[15:01:11] Apify status: RUNNING
+[15:01:12] Apify status: RUNNING
+[15:01:20] Apify status: SUCCEEDED
+[15:01:20] Apify status: RUNNING
+[15:01:21] 75 posts opgehaald van hashtags
+[15:01:28] Apify status: RUNNING
+[15:01:37] Apify status: RUNNING
+[15:01:45] Apify status: RUNNING
+[15:01:54] Apify status: RUNNING
+[15:02:02] Apify status: RUNNING
+[15:02:11] Apify status: RUNNING
+[15:02:19] Apify status: RUNNING
+[15:02:28] Apify status: RUNNING
+[15:02:36] Apify status: RUNNING
+[15:02:44] Apify status: RUNNING
+[15:02:53] Apify status: RUNNING
+[15:03:01] Apify status: RUNNING
+[15:03:10] Apify status: RUNNING
+[15:03:18] Apify status: RUNNING
+[15:03:26] Apify status: RUNNING
+[15:03:35] Apify status: RUNNING
+[15:03:44] Apify status: RUNNING
+[15:03:52] Apify status: RUNNING
+[15:04:00] Apify status: RUNNING
+[15:04:09] Apify status: RUNNING
+[15:04:17] Apify status: RUNNING
+[15:04:26] Apify status: RUNNING
+[15:04:34] Apify status: RUNNING
+[15:04:43] Apify status: RUNNING
+[15:04:51] Apify status: RUNNING
+[15:04:59] Apify status: RUNNING
+[15:05:08] Apify status: RUNNING
+[15:05:17] Apify status: RUNNING
+[15:05:25] Apify status: RUNNING
+[15:05:33] Apify status: RUNNING
+[15:05:42] Apify status: RUNNING
+[15:05:50] Apify status: RUNNING
+[15:05:59] Apify status: RUNNING
+[15:06:07] Apify status: RUNNING
+[15:06:15] Apify status: RUNNING
+[15:06:24] Apify status: SUCCEEDED
+[15:06:25] 46 posts opgehaald van competitors
+[15:06:25] Totaal 121 posts verzameld
+[15:06:25] Top 20 posts geselecteerd op engagement
+[15:06:25] Claude om content ideeën vragen...
+[15:07:32] Carousel genereren...
+[15:07:59] Carousel verstuurd ✅
+[15:07:59] Nieuws post genereren...
+[15:08:31] Nieuws post verstuurd ✅
+[15:08:31] Tweet post genereren...
+[15:08:45] Tweet post verstuurd ✅
+[15:08:45] Alles verstuurd naar Telegram ✅
+[08:10:38] === Oergezond Content Scraper gestart ===
+[08:10:38] Scrapen van 10 competitor accounts...
+[08:10:38] Apify run starten...
+[08:10:38] Scrapen van 5 hashtags...
+[08:10:38] Apify run starten...
+[08:10:38] Apify run gestart: SmcxUPRNEYG0tFBXJ
+[08:10:39] Apify run gestart: dlCRms81iLanBY14d
+[08:10:47] Apify status: RUNNING
+[08:10:47] Apify status: RUNNING
+[08:10:55] Apify status: SUCCEEDED
+[08:10:55] Apify status: RUNNING
+[08:10:56] 75 posts opgehaald van hashtags
+[08:11:04] Apify status: RUNNING
+[08:11:12] Apify status: RUNNING
+[08:11:20] Apify status: RUNNING
+[08:11:29] Apify status: RUNNING
+[08:11:37] Apify status: RUNNING
+[08:11:46] Apify status: RUNNING
+[08:11:54] Apify status: RUNNING
+[08:12:03] Apify status: RUNNING
+[08:12:11] Apify status: RUNNING
+[08:12:19] Apify status: RUNNING
+[08:12:28] Apify status: RUNNING
+[08:12:36] Apify status: RUNNING
+[08:12:44] Apify status: RUNNING
+[08:12:53] Apify status: RUNNING
+[08:13:01] Apify status: RUNNING
+[08:13:10] Apify status: RUNNING
+[08:13:18] Apify status: RUNNING
+[08:13:26] Apify status: RUNNING
+[08:13:35] Apify status: SUCCEEDED
+[08:13:36] 46 posts opgehaald van competitors
+[08:13:36] Totaal 121 posts verzameld
+[08:13:36] Top 20 posts geselecteerd op engagement
+[08:13:36] Claude om content ideeën vragen...
+[08:14:53] Carousel genereren...
+[08:15:34] Carousel verstuurd ✅
+[08:15:34] Nieuws post genereren...
+[08:16:30] Nieuws post verstuurd ✅
+[08:16:30] Tweet post genereren...
+[08:16:48] Tweet post verstuurd ✅
+[08:16:48] Alles verstuurd naar Telegram ✅
+[17:43:54] === Oergezond Content Scraper gestart ===
+[17:43:54] Scrapen van 10 competitor accounts...
+[17:43:54] Apify run starten...
+[17:43:54] Scrapen van 5 hashtags...
+[17:43:54] Apify run starten...
+[17:43:54] Apify run gestart: dVmv0vElb1o584rNa
+[17:43:54] Apify run gestart: 9ugJJeLUaMw6K4eE3
+[17:44:03] Apify status: RUNNING
+[17:44:03] Apify status: SUCCEEDED
+[17:44:04] 47 posts opgehaald van hashtags
+[17:44:11] Apify status: RUNNING
+[17:44:20] Apify status: RUNNING
+[17:44:28] Apify status: RUNNING
+[17:44:37] Apify status: RUNNING
+[17:44:45] Apify status: RUNNING
+[17:44:54] Apify status: RUNNING
+[17:45:02] Apify status: ABORTED
+[17:45:02] FOUT: Apify run mislukt: ABORTED
+'craper.js' is not recognized as an internal or external command,
+operable program or batch file.
+[08:20:44] === Oergezond Content Scraper gestart ===
+[08:20:45] Scrapen van 10 competitor accounts...
+[08:20:45] Apify run starten...
+[08:20:45] Scrapen van 5 hashtags...
+[08:20:45] Apify run starten...
+[08:20:45] FOUT: Apify start mislukt: {"error":{"type":"platform-feature-disabled","message":"Monthly usage hard limit exceeded"}}
+[14:15:34] === Oergezond Content Scraper gestart ===
+[14:15:34] Scrapen van 10 competitor accounts...
+[14:15:34]   [IG] @carnivoreaurelius: profiel 429 — overgeslagen
+[14:15:37]   [IG] @gewoonbalans: profiel 429 — overgeslagen
+[14:15:40]   [IG] @vitallymelanie: profiel 429 — overgeslagen
+[14:15:43]   [IG] @drmarkhyman: profiel 429 — overgeslagen
+[14:15:46]   [IG] @natural_living00: profiel 429 — overgeslagen
+[14:15:49]   [IG] @seedoilscout: profiel 429 — overgeslagen
+[14:15:52]   [IG] @holistichealths: profiel 429 — overgeslagen
+[14:15:55]   [IG] @niallkiddle: profiel 429 — overgeslagen
+[14:15:58]   [IG] @thehealthymail: profiel 429 — overgeslagen
+[14:16:01]   [IG] @feelwellbyanna: profiel 429 — overgeslagen
+[14:16:04] 0 posts opgehaald van competitors
+[14:16:04] Scrapen van 5 hashtags...
+[14:16:08]   [IG] #animalbased: 30 posts
+[14:16:14]   [IG] #supermarkttips: 30 posts
+[14:16:20]   [IG] #holistichealth: 30 posts
+[14:16:26]   [IG] #gezondheid: 27 posts
+[14:16:31]   [IG] #health: 30 posts
+[14:16:34] 25 posts opgehaald van hashtags
+[14:16:34] Totaal 25 posts verzameld
+[14:16:34] Top 15 posts geselecteerd op engagement
+[14:16:34] 56 eerder gebruikte onderwerpen geladen
+[14:16:34] Claude om content ideeën vragen...
+[14:18:15] Carousel genereren...
+[14:19:16] Carousel verstuurd ✅
+[14:19:17] Nieuws post 1/5 genereren (Borium en botgezondheid)...
+[14:19:49] Nieuws post 1 verstuurd ✅
+[14:19:50] Nieuws post 2/5 genereren (Taurine en hartgezondheid)...
+[14:20:21] Nieuws post 2 verstuurd ✅
+[14:20:22] Nieuws post 3/5 genereren (Lavendel en hormoonontregeling bij jongens)...
+[14:20:54] Nieuws post 3 verstuurd ✅
+[14:20:55] Nieuws post 4/5 genereren (Oil pulling en mondgezondheid)...
+[14:21:27] Nieuws post 4 verstuurd ✅
+[14:21:28] Nieuws post 5/5 genereren (Shilajit en mitochondriale functie)...
+[14:22:01] Nieuws post 5 verstuurd ✅
+[14:22:03] Tweet post 1/5 genereren (Vitamine K2 en hartcalcificatie)...
+[14:22:13] Tweet post 1 verstuurd ✅
+[14:22:14] Tweet post 2/5 genereren (Slaapschuld en insulineresistentie)...
+[14:22:25] Tweet post 2 verstuurd ✅
+[14:22:26] Tweet post 3/5 genereren (Koude blootstelling en bruin vet)...
+[14:22:37] Tweet post 3 verstuurd ✅
+[14:22:38] Tweet post 4/5 genereren (Triphala en darmmotiliteit)...
+[14:22:49] Tweet post 4 verstuurd ✅
+[14:22:50] Tweet post 5/5 genereren (Rood licht en schildklierfunctie)...
+[14:23:04] Tweet post 5 verstuurd ✅
+[14:23:05] Alles verstuurd naar Telegram ✅
+[14:23:05] 10 onderwerpen opgeslagen voor volgende run
+[10:03:20] === Oergezond Content Scraper gestart ===
+[10:03:20] Scrapen van 10 competitor accounts...
+[10:03:20]   [IG] @carnivoreaurelius: profiel 429 — overgeslagen
+[10:03:23]   [IG] @gewoonbalans: profiel 429 — overgeslagen
+[10:03:26]   [IG] @vitallymelanie: profiel 429 — overgeslagen
+[10:03:29]   [IG] @drmarkhyman: profiel 429 — overgeslagen
+[10:03:32]   [IG] @natural_living00: profiel 429 — overgeslagen
+[10:03:35]   [IG] @seedoilscout: profiel 429 — overgeslagen
+[10:03:38]   [IG] @holistichealths: profiel 429 — overgeslagen
+[10:03:41]   [IG] @niallkiddle: profiel 429 — overgeslagen
+[10:03:44]   [IG] @thehealthymail: profiel 429 — overgeslagen
+[10:03:47]   [IG] @feelwellbyanna: profiel 429 — overgeslagen
+[10:03:50] 0 posts opgehaald van competitors
+[10:03:50] Scrapen van 5 hashtags...
+[10:03:53]   [IG] #animalbased: 30 posts
+[10:04:00]   [IG] #supermarkttips: 30 posts
+[10:04:05]   [IG] #holistichealth: 30 posts
+[10:04:11]   [IG] #gezondheid: 30 posts
+[10:04:16]   [IG] #health: 30 posts
+[10:04:19] 25 posts opgehaald van hashtags
+[10:04:19] Totaal 25 posts verzameld
+[10:04:19] Top 15 posts geselecteerd op engagement
+[10:04:20] 60 eerder gebruikte onderwerpen geladen
+[10:04:20] Claude om content ideeën vragen...
+[10:05:51] Carousel genereren...
+[10:06:29] Carousel verstuurd ✅
+[10:06:29] Nieuws post 1/5 genereren (geoxideerde zaadoliën)...
+Freepik niet beschikbaar voor nieuws post: Freepik Mystic timeout na 150s
+[10:09:17] Nieuws post 1 verstuurd ✅
+[10:09:18] Nieuws post 2/5 genereren (antibiotica en kinderen)...
+[10:11:28] Nieuws post 2 verstuurd ✅
+[10:11:29] Nieuws post 3/5 genereren (suikerlobby en voedingsrichtlijnen)...
+[10:13:43] Nieuws post 3 verstuurd ✅
+[10:13:44] Nieuws post 4/5 genereren (SIBO en rosacea)...
+[10:15:38] Nieuws post 4 verstuurd ✅
+[10:15:39] Nieuws post 5/5 genereren (shilajit en mitochondriën)...
+[10:16:58] Nieuws post 5 verstuurd ✅
+[10:17:00] Tweet post 1/5 genereren (statines en spierschade)...
+[10:17:15] Tweet post 1 verstuurd ✅
+[10:17:16] Tweet post 2/5 genereren (tarwe en darmontsteking)...
+[10:17:28] Tweet post 2 verstuurd ✅
+[10:17:29] Tweet post 3/5 genereren (ochtendzon en cortisolpiek)...
+[10:17:41] Tweet post 3 verstuurd ✅
+[10:17:42] Tweet post 4/5 genereren (lavendel en hormoonontregeling bij jongens)...
+[10:17:53] Tweet post 4 verstuurd ✅
+[10:17:54] Tweet post 5/5 genereren (processed meat en kanker — contextfraude WHO)...
+[10:18:06] Tweet post 5 verstuurd ✅
+[10:18:07] Alles verstuurd naar Telegram ✅
+[10:18:07] 10 onderwerpen opgeslagen voor volgende run
+[14:49:34] === Oergezond Content Scraper gestart ===
+[14:49:34] Scrapen van 10 competitor accounts...
+[14:49:34]   [IG] @carnivoreaurelius: profiel 429 — overgeslagen
+[14:49:37]   [IG] @gewoonbalans: profiel 429 — overgeslagen
+[14:49:40]   [IG] @vitallymelanie: profiel 429 — overgeslagen
+[14:49:43]   [IG] @drmarkhyman: profiel 429 — overgeslagen
+[14:49:46]   [IG] @natural_living00: profiel 429 — overgeslagen
+[14:49:49]   [IG] @seedoilscout: profiel 429 — overgeslagen
+[14:49:52]   [IG] @holistichealths: profiel 429 — overgeslagen
+[14:49:55]   [IG] @niallkiddle: profiel 429 — overgeslagen
+[14:49:58]   [IG] @thehealthymail: profiel 429 — overgeslagen
+[14:50:01]   [IG] @feelwellbyanna: profiel 429 — overgeslagen
+[14:50:04] 0 posts opgehaald van competitors
+[14:50:04] Scrapen van 5 hashtags...
+[14:50:08]   [IG] #animalbased: 30 posts
+[14:50:14]   [IG] #supermarkttips: 30 posts
+[14:50:20]   [IG] #holistichealth: 30 posts
+[14:50:26]   [IG] #gezondheid: 30 posts
+[14:50:32]   [IG] #health: 30 posts
+[14:50:35] 25 posts opgehaald van hashtags
+[14:50:35] Totaal 25 posts verzameld
+[14:50:35] Top 15 posts geselecteerd op engagement
+[14:50:35] 60 eerder gebruikte onderwerpen geladen
+[14:50:35] Claude om content ideeën vragen...
+[14:52:04] Carousel genereren...
+[14:52:57] Carousel verstuurd ✅
+[14:52:58] Nieuws post 1/5 genereren (microplastics en bloed)...
+[14:53:33] Nieuws post 1 verstuurd ✅
+[14:53:34] Nieuws post 2/5 genereren (linolzuur en celschade)...
+[14:54:19] Nieuws post 2 verstuurd ✅
+[14:54:20] Nieuws post 3/5 genereren (magnesium en slaap)...
+[14:56:05] Nieuws post 3 verstuurd ✅
+[14:56:06] Nieuws post 4/5 genereren (farmaceutische lobby en voedingsrichtlijnen)...
+[14:56:39] Nieuws post 4 verstuurd ✅
+[14:56:41] Nieuws post 5/5 genereren (blauw licht en melatonine kinderen)...
+[14:57:11] Nieuws post 5 verstuurd ✅
+[14:57:13] Tweet post 1/5 genereren (ultrabewerkt voedsel en vroege dood)...
+[14:57:24] Tweet post 1 verstuurd ✅
+[14:57:25] Tweet post 2/5 genereren (insuline en vetopslag)...
+[14:57:35] Tweet post 2 verstuurd ✅
+[14:57:36] Tweet post 3/5 genereren (borium en testosteron)...
+[14:57:48] Tweet post 3 verstuurd ✅
+[14:57:49] Tweet post 4/5 genereren (kunstmatige zoetstoffen en microbioom)...
+[14:58:02] Tweet post 4 verstuurd ✅
+[14:58:03] Tweet post 5/5 genereren (grounding en ontsteking)...
+[14:58:15] Tweet post 5 verstuurd ✅
+[14:58:16] Alles verstuurd naar Telegram ✅
+[14:58:16] 10 onderwerpen opgeslagen voor volgende run
+[08:38:03] === Oergezond Content Scraper gestart ===
+[08:38:04] Scrapen van 10 competitor accounts...
+[08:38:04]   [IG] @carnivoreaurelius: profiel 429 — overgeslagen
+[08:38:07]   [IG] @gewoonbalans: profiel 429 — overgeslagen
+[08:38:10]   [IG] @vitallymelanie: profiel 429 — overgeslagen
+[08:38:13]   [IG] @drmarkhyman: profiel 429 — overgeslagen
+[08:38:16]   [IG] @natural_living00: profiel 429 — overgeslagen
+[08:38:19]   [IG] @seedoilscout: profiel 429 — overgeslagen
+[08:38:22]   [IG] @holistichealths: profiel 429 — overgeslagen
+[08:38:25]   [IG] @niallkiddle: profiel 429 — overgeslagen
+[08:38:28]   [IG] @thehealthymail: profiel 429 — overgeslagen
+[08:38:31]   [IG] @feelwellbyanna: profiel 429 — overgeslagen
+[08:38:34] 0 posts opgehaald van competitors
+[08:38:34] Scrapen van 5 hashtags...
+[08:38:37]   [IG] #animalbased: 30 posts
+[08:38:42]   [IG] #supermarkttips: 30 posts
+[08:38:48]   [IG] #holistichealth: 30 posts
+[08:38:54]   [IG] #gezondheid: 30 posts
+[08:38:59]   [IG] #health: 30 posts
+[08:39:02] 25 posts opgehaald van hashtags
+[08:39:02] Totaal 25 posts verzameld
+[08:39:03] Top 15 posts geselecteerd op engagement
+[08:39:03] 60 eerder gebruikte onderwerpen geladen
+[08:39:03] Claude om content ideeën vragen...
+[08:40:30] Carousel genereren...
+[08:41:35] Carousel verstuurd ✅
+[08:41:36] Nieuws post 1/5 genereren (Vogelgriep en kip)...
+[08:42:11] Nieuws post 1 verstuurd ✅
+[08:42:12] Nieuws post 2/5 genereren (Protonpompremmers en magnesiumtekort)...
+[08:42:50] Nieuws post 2 verstuurd ✅
+[08:42:51] Nieuws post 3/5 genereren (Fluoride en schildklier)...
+[08:43:20] Nieuws post 3 verstuurd ✅
+[08:43:21] Nieuws post 4/5 genereren (Aluminium in deodorant)...
+[08:43:57] Nieuws post 4 verstuurd ✅
+[08:43:58] Nieuws post 5/5 genereren (Ultrabewerkt voedsel en vroege puberteit)...
+[08:44:34] Nieuws post 5 verstuurd ✅
+[08:44:36] Tweet post 1/5 genereren (Beweging en overheid)...
+[08:44:47] Tweet post 1 verstuurd ✅
+[08:44:48] Tweet post 2/5 genereren (Rauw melk en pasteurisatie)...
+[08:44:59] Tweet post 2 verstuurd ✅
+[08:45:00] Tweet post 3/5 genereren (Ghee en vetoplosbare vitamines)...
+[08:45:12] Tweet post 3 verstuurd ✅
+[08:45:13] Tweet post 4/5 genereren (Mounjaro en misbruik)...
+[08:45:24] Tweet post 4 verstuurd ✅
+[08:45:25] Tweet post 5/5 genereren (Olie pulling en mondgezondheid)...
+[08:45:36] Tweet post 5 verstuurd ✅
+[08:45:37] Alles verstuurd naar Telegram ✅
+[08:45:37] 10 onderwerpen opgeslagen voor volgende run
+[19:45:54] === Oergezond Content Scraper gestart ===
+[19:45:55] Scrapen van 10 competitor accounts...
+[19:46:00]   [IG] @carnivoreaurelius: 4 posts
+[19:46:10]   [IG] @gewoonbalans: 4 posts
+[19:46:17]   [IG] @vitallymelanie: 3 posts
+[19:46:24]   [IG] @drmarkhyman: 4 posts
+[19:46:35]   [IG] @natural_living00: 3 posts
+[19:46:46]   [IG] @seedoilscout: 3 posts
+[19:46:53]   [IG] @holistichealths: 3 posts
+[19:47:04]   [IG] @niallkiddle: 3 posts
+[19:47:18]   [IG] @thehealthymail: 4 posts
+[19:47:26]   [IG] @feelwellbyanna: 3 posts
+[19:47:29] 34 posts opgehaald van competitors
+[19:47:29] Scrapen van 5 hashtags...
+[19:47:33]   [IG] #animalbased: 30 posts
+[19:47:39]   [IG] #supermarkttips: 30 posts
+[19:47:45]   [IG] #holistichealth: 30 posts
+[19:47:51]   [IG] #gezondheid: 30 posts
+[19:47:57]   [IG] #health: 30 posts
+[19:48:00] 25 posts opgehaald van hashtags
+[19:48:00] Totaal 59 posts verzameld
+[19:48:00] Top 15 posts geselecteerd op engagement
+[19:48:00] 60 eerder gebruikte onderwerpen geladen
+[19:48:00] Claude om content ideeën vragen...
+[19:49:21] Carousel genereren...
+[19:50:07] Carousel verstuurd ✅
+[19:50:08] Nieuws post 1/5 genereren (fructose en leververvetting)...
+[19:50:45] Nieuws post 1 verstuurd ✅
+[19:50:46] Nieuws post 2/5 genereren (cholesterol mythe en LDL)...
+[19:51:17] Nieuws post 2 verstuurd ✅
+[19:51:18] Nieuws post 3/5 genereren (antidepressiva en onttrekkingsverschijnselen)...
+[19:51:50] Nieuws post 3 verstuurd ✅
+[19:51:51] Nieuws post 4/5 genereren (vitamine D en immuunsysteem)...
+[19:52:23] Nieuws post 4 verstuurd ✅
+[19:52:24] Nieuws post 5/5 genereren (pesticiden en darmflora)...
+[19:53:02] Nieuws post 5 verstuurd ✅
+[19:53:04] Tweet post 1/5 genereren (insuline en vetopslag)...
+[19:53:16] Tweet post 1 verstuurd ✅
+[19:53:17] Tweet post 2/5 genereren (zink en testosteron)...
+[19:53:30] Tweet post 2 verstuurd ✅
+[19:53:31] Tweet post 3/5 genereren (slaapschuld en metabolisme)...
+[19:53:42] Tweet post 3 verstuurd ✅
+[19:53:43] Tweet post 4/5 genereren (kunstmatige kleurstofffen en kindergedrag)...
+[19:53:54] Tweet post 4 verstuurd ✅
+[19:53:55] Tweet post 5/5 genereren (grounding en ontstekingsmarkers)...
+[19:54:10] Tweet post 5 verstuurd ✅
+[19:54:11] Alles verstuurd naar Telegram ✅
+[19:54:11] 10 onderwerpen opgeslagen voor volgende run
+[08:21:41] === Oergezond Content Scraper gestart ===
+[08:21:41] Scrapen van 10 competitor accounts...
+[08:21:42]   [IG] @carnivoreaurelius fout: getaddrinfo ENOTFOUND i.instagram.com
+[08:21:49]   [IG] @gewoonbalans: 4 posts
+[08:21:56]   [IG] @vitallymelanie: 3 posts
+[08:22:04]   [IG] @drmarkhyman: 4 posts
+[08:22:11]   [IG] @natural_living00: 3 posts
+[08:22:18]   [IG] @seedoilscout: 3 posts
+[08:22:25]   [IG] @holistichealths: 3 posts
+[08:22:32]   [IG] @niallkiddle: 3 posts
+[08:22:39]   [IG] @thehealthymail: 4 posts
+[08:22:46]   [IG] @feelwellbyanna: 3 posts
+[08:22:49] 30 posts opgehaald van competitors
+[08:22:49] Scrapen van 5 hashtags...
+[08:22:52]   [IG] #animalbased: 30 posts
+[08:23:50]   [IG] #supermarkttips fout: read ECONNRESET
+[08:23:53]   [IG] #holistichealth fout: getaddrinfo ENOTFOUND i.instagram.com
+[08:36:35]   [IG] #gezondheid fout: getaddrinfo ENOTFOUND i.instagram.com
+[08:36:38]   [IG] #health fout: getaddrinfo ENOTFOUND i.instagram.com
+[08:36:41] 5 posts opgehaald van hashtags
+[08:36:41] Totaal 35 posts verzameld
+[08:36:41] Top 15 posts geselecteerd op engagement
+[08:36:41] 60 eerder gebruikte onderwerpen geladen
+[08:36:41] Claude om content ideeën vragen...
+[17:07:36] FOUT: read ECONNRESET
+[10:43:07] === Oergezond Content Scraper gestart ===
+[10:43:07] Scrapen van 10 competitor accounts...
+[10:43:12]   [IG] @carnivoreaurelius: 4 posts
+[10:43:20]   [IG] @gewoonbalans: 4 posts
+[10:43:27]   [IG] @vitallymelanie: 3 posts
+[10:43:34]   [IG] @drmarkhyman: 4 posts
+[10:43:41]   [IG] @natural_living00: 3 posts
+[10:43:48]   [IG] @seedoilscout: 3 posts
+[10:43:55]   [IG] @holistichealths: 3 posts
+[10:44:02]   [IG] @niallkiddle: 3 posts
+[10:44:09]   [IG] @thehealthymail: 4 posts
+[10:44:17]   [IG] @feelwellbyanna: 3 posts
+[10:44:20] 34 posts opgehaald van competitors
+[10:44:20] Scrapen van 5 hashtags...
+[10:44:23]   [IG] #animalbased: 30 posts
+[10:44:29]   [IG] #supermarkttips: 30 posts
+[10:44:36]   [IG] #holistichealth: 30 posts
+[10:44:42]   [IG] #gezondheid: 27 posts
+[10:44:48]   [IG] #health: 30 posts
+[10:44:51] 25 posts opgehaald van hashtags
+[10:44:51] Totaal 59 posts verzameld
+[10:44:51] Top 15 posts geselecteerd op engagement
+[10:44:51] 60 eerder gebruikte onderwerpen geladen
+[10:44:51] Claude om content ideeën vragen...
+[10:46:19] Carousel genereren...
+[10:46:43] Carousel verstuurd ✅
+[10:46:44] Nieuws post 1/5 genereren (lectines en darmschade)...
+[10:47:19] Nieuws post 1 verstuurd ✅
+[10:47:20] Nieuws post 2/5 genereren (oestrogeendominantie en leverontgifting)...
+[10:47:59] Nieuws post 2 verstuurd ✅
+[10:48:00] Nieuws post 3/5 genereren (borium en hormonen)...
+[10:48:40] Nieuws post 3 verstuurd ✅
+[10:48:41] Nieuws post 4/5 genereren (orgaanvlees en voedingsdichtheid)...
+[10:49:21] Nieuws post 4 verstuurd ✅
+[10:49:22] Nieuws post 5/5 genereren (ftalaten en testosteronverlies)...
+[10:49:58] Nieuws post 5 verstuurd ✅
+[10:49:59] Tweet post 1/5 genereren (berberine en bloedsuiker)...
+[10:50:10] Tweet post 1 verstuurd ✅
+[10:50:11] Tweet post 2/5 genereren (ashwagandha en cortisolreductie)...
+[10:50:23] Tweet post 2 verstuurd ✅
+[10:50:24] Tweet post 3/5 genereren (chloor in leidingwater en schildklier)...
+[10:50:36] Tweet post 3 verstuurd ✅
+[10:50:37] Tweet post 4/5 genereren (omega-3 en omega-6 verhouding)...
+[10:50:51] Tweet post 4 verstuurd ✅
+[10:50:52] Tweet post 5/5 genereren (lithium orotaat en hersenvolume)...
+[10:51:04] Tweet post 5 verstuurd ✅
+[10:51:05] Alles verstuurd naar Telegram ✅
+[10:51:05] 10 onderwerpen opgeslagen voor volgende run
+[08:40:59] === Oergezond Content Scraper gestart ===
+[08:41:01] Scrapen van 10 competitor accounts...
+[08:41:06]   [IG] @carnivoreaurelius: 4 posts
+[08:41:13]   [IG] @gewoonbalans: 4 posts
+[08:41:19]   [IG] @vitallymelanie: 3 posts
+[08:41:26]   [IG] @drmarkhyman: 4 posts
+[08:41:33]   [IG] @natural_living00: 3 posts
+[08:41:40]   [IG] @seedoilscout: 3 posts
+[08:41:47]   [IG] @holistichealths: 3 posts
+[08:41:54]   [IG] @niallkiddle: 3 posts
+[08:42:01]   [IG] @thehealthymail: 4 posts
+[08:42:08]   [IG] @feelwellbyanna: 3 posts
+[08:42:11] 34 posts opgehaald van competitors
+[08:42:11] Scrapen van 5 hashtags...
+[08:42:14]   [IG] #animalbased: 30 posts
+[08:42:21]   [IG] #supermarkttips: 30 posts
+[08:42:26]   [IG] #holistichealth: 27 posts
+[08:42:32]   [IG] #gezondheid: 27 posts
+[08:42:37]   [IG] #health: 30 posts
+[08:42:40] 25 posts opgehaald van hashtags
+[08:42:40] Totaal 59 posts verzameld
+[08:42:40] Top 15 posts geselecteerd op engagement
+[08:42:40] 60 eerder gebruikte onderwerpen geladen
+[08:42:40] Claude om content ideeën vragen...
+[17:13:48] FOUT: read ECONNRESET
+[08:19:21] === Oergezond Content Scraper gestart ===
+[08:19:21] Scrapen van 10 competitor accounts...
+[08:19:26]   [IG] @carnivoreaurelius: 4 posts
+[08:19:34]   [IG] @gewoonbalans: 4 posts
+[08:19:42]   [IG] @vitallymelanie: 3 posts
+[08:19:48]   [IG] @drmarkhyman: 4 posts
+[08:19:56]   [IG] @natural_living00: 3 posts
+[08:20:02]   [IG] @seedoilscout: 3 posts
+[08:20:09]   [IG] @holistichealths: 3 posts
+[08:20:18]   [IG] @niallkiddle: 3 posts
+[08:20:25]   [IG] @thehealthymail: 4 posts
+[08:20:32]   [IG] @feelwellbyanna: 3 posts
+[08:20:35] 34 posts opgehaald van competitors
+[08:20:35] Scrapen van 5 hashtags...
+[08:20:39]   [IG] #animalbased: 30 posts
+[08:20:46]   [IG] #supermarkttips: 30 posts
+[08:20:51]   [IG] #holistichealth: 27 posts
+[08:20:58]   [IG] #gezondheid: 30 posts
+[08:21:04]   [IG] #health: 30 posts
+[08:21:07] 25 posts opgehaald van hashtags
+[08:21:07] Totaal 59 posts verzameld
+[08:21:07] Top 15 posts geselecteerd op engagement
+[08:21:07] 60 eerder gebruikte onderwerpen geladen
+[08:21:07] Claude om content ideeën vragen...
+[08:22:40] Carousel genereren...
+[13:56:32] FOUT: Timed out after 90000 ms while waiting for the WS endpoint URL to appear in stdout!
+[07:50:38] === Oergezond Content Scraper gestart ===
+[07:50:47] Scrapen van 10 competitor accounts...
+[07:50:48]   [IG] @carnivoreaurelius: profiel 429 — overgeslagen
+[07:50:54]   [IG] @gewoonbalans: profiel 429 — overgeslagen
+[07:50:57]   [IG] @vitallymelanie: profiel 429 — overgeslagen
+[07:51:01]   [IG] @drmarkhyman: profiel 429 — overgeslagen
+[07:51:04]   [IG] @natural_living00: profiel 429 — overgeslagen
+[07:51:07]   [IG] @seedoilscout: profiel 429 — overgeslagen
+[07:51:10]   [IG] @holistichealths: profiel 429 — overgeslagen
+[07:51:13]   [IG] @niallkiddle: profiel 429 — overgeslagen
+[07:51:16]   [IG] @thehealthymail: profiel 429 — overgeslagen
+[07:51:19]   [IG] @feelwellbyanna: profiel 429 — overgeslagen
+[07:51:22] 0 posts opgehaald van competitors
+[07:51:22] Scrapen van 5 hashtags...
+[07:51:26]   [IG] #animalbased: 30 posts
+[07:51:32]   [IG] #supermarkttips: 30 posts
+[07:51:37]   [IG] #holistichealth: 27 posts
+[07:51:44]   [IG] #gezondheid: 30 posts
+[07:51:50]   [IG] #health: 30 posts
+[07:51:53] 25 posts opgehaald van hashtags
+[07:51:53] Totaal 25 posts verzameld
+[07:51:53] Top 15 posts geselecteerd op engagement
+[07:51:53] 60 eerder gebruikte onderwerpen geladen
+[07:51:53] Claude om content ideeën vragen...
+[07:53:22] Carousel genereren...
+[07:54:21] Carousel verstuurd ✅
+[07:54:22] Nieuws post 1/5 genereren (kunstmatige zoetstofffen en darmbacteriën)...
+[07:56:10] Nieuws post 1 verstuurd ✅
+[07:56:11] Nieuws post 2/5 genereren (intermittent fasting en insulinegevoeligheid)...
+[07:56:46] Nieuws post 2 verstuurd ✅
+[07:56:47] Nieuws post 3/5 genereren (non-stick pannen en PTFE-dampen)...
+[07:57:20] Nieuws post 3 verstuurd ✅
+[07:57:21] Nieuws post 4/5 genereren (cortisol en buikvet)...
+[07:57:54] Nieuws post 4 verstuurd ✅
+[07:57:55] Nieuws post 5/5 genereren (bottenbouillon en darmwandherstel)...
+[07:58:26] Nieuws post 5 verstuurd ✅
+[07:58:27] Tweet post 1/5 genereren (Lion's mane en zenuwgroei)...
+[07:58:38] Tweet post 1 verstuurd ✅
+[07:58:39] Tweet post 2/5 genereren (Vitamine K2 en aderverkalking)...
+[07:58:50] Tweet post 2 verstuurd ✅
+[07:58:51] Tweet post 3/5 genereren (Taurine en veroudering)...
+[07:59:04] Tweet post 3 verstuurd ✅
+[07:59:06] Tweet post 4/5 genereren (Paracetamol en empathie)...
+[07:59:17] Tweet post 4 verstuurd ✅
+[07:59:18] Tweet post 5/5 genereren (Zonlicht en serotonine)...
+[07:59:31] Tweet post 5 verstuurd ✅
+[07:59:32] Alles verstuurd naar Telegram ✅
+[07:59:32] 10 onderwerpen opgeslagen voor volgende run
+[08:11:08] === Oergezond Content Scraper gestart ===
+[08:11:09] Scrapen van 10 competitor accounts...
+[08:11:09]   [IG] @carnivoreaurelius: profiel 429 — overgeslagen
+[08:11:12]   [IG] @gewoonbalans: profiel 429 — overgeslagen
+[08:11:15]   [IG] @vitallymelanie: profiel 429 — overgeslagen
+[08:11:19]   [IG] @drmarkhyman: profiel 429 — overgeslagen
+[08:11:22]   [IG] @natural_living00: profiel 429 — overgeslagen
+[08:11:25]   [IG] @seedoilscout: profiel 429 — overgeslagen
+[08:11:28]   [IG] @holistichealths: profiel 429 — overgeslagen
+[08:11:31]   [IG] @niallkiddle: profiel 429 — overgeslagen
+[08:11:34]   [IG] @thehealthymail: profiel 429 — overgeslagen
+[08:11:37]   [IG] @feelwellbyanna: profiel 429 — overgeslagen
+[08:11:40] 0 posts opgehaald van competitors
+[08:11:40] Scrapen van 5 hashtags...
+[08:11:43]   [IG] #animalbased: 30 posts
+[08:11:50]   [IG] #supermarkttips: 30 posts
+[08:11:56]   [IG] #holistichealth: 27 posts
+[08:12:02]   [IG] #gezondheid: 30 posts
+[08:12:08]   [IG] #health: 30 posts
+[08:12:11] 25 posts opgehaald van hashtags
+[08:12:11] Totaal 25 posts verzameld
+[08:12:11] Top 15 posts geselecteerd op engagement
+[08:12:11] 60 eerder gebruikte onderwerpen geladen
+[08:12:11] Claude om content ideeën vragen...
+[08:13:36] Carousel genereren...
+[08:14:28] Carousel verstuurd ✅
+[08:14:29] Nieuws post 1/5 genereren (Zaadoliën en oestrogeen)...
+[08:15:25] Nieuws post 1 verstuurd ✅
+[08:15:26] Nieuws post 2/5 genereren (Schildklier en selenium)...
+[08:16:59] Nieuws post 2 verstuurd ✅
+[08:17:00] Nieuws post 3/5 genereren (Coca-Cola chlooraat terugroepactie)...
+[08:18:03] Nieuws post 3 verstuurd ✅
+[08:18:04] Nieuws post 4/5 genereren (Antibiotica en microbioom kinderen)...
+[08:19:01] Nieuws post 4 verstuurd ✅
+[08:19:02] Nieuws post 5/5 genereren (Shilajit en mitochondriën)...
+[08:19:52] Nieuws post 5 verstuurd ✅
+[08:19:54] Tweet post 1/5 genereren (Statines en CoQ10)...
+[08:20:06] Tweet post 1 verstuurd ✅
+[08:20:07] Tweet post 2/5 genereren (Glyfosaat en darmbacteriën)...
+[08:20:19] Tweet post 2 verstuurd ✅
+[08:20:20] Tweet post 3/5 genereren (Myopie en buiten spelen)...
+[08:20:30] Tweet post 3 verstuurd ✅
+[08:20:31] Tweet post 4/5 genereren (Fructose en levervet)...
+[08:20:43] Tweet post 4 verstuurd ✅
+[08:20:44] Tweet post 5/5 genereren (Tulsi en cortisol)...
+[08:20:56] Tweet post 5 verstuurd ✅
+[08:20:58] Alles verstuurd naar Telegram ✅
+[08:20:58] 10 onderwerpen opgeslagen voor volgende run
+[09:27:12] === Oergezond Content Scraper gestart ===
+[09:27:12] Scrapen van 10 competitor accounts...
+[09:27:12]   [IG] @carnivoreaurelius: profiel 429 — overgeslagen
+[09:27:15]   [IG] @gewoonbalans: profiel 429 — overgeslagen
+[09:27:18]   [IG] @vitallymelanie: profiel 429 — overgeslagen
+[09:27:21]   [IG] @drmarkhyman: profiel 429 — overgeslagen
+[09:27:24]   [IG] @natural_living00: profiel 429 — overgeslagen
+[09:27:27]   [IG] @seedoilscout: profiel 429 — overgeslagen
+[09:27:30]   [IG] @holistichealths: profiel 429 — overgeslagen
+[09:27:33]   [IG] @niallkiddle: profiel 429 — overgeslagen
+[09:27:36]   [IG] @thehealthymail: profiel 429 — overgeslagen
+[09:27:39]   [IG] @feelwellbyanna: profiel 429 — overgeslagen
+[09:27:42] 0 posts opgehaald van competitors
+[09:27:42] Scrapen van 5 hashtags...
+[09:27:46]   [IG] #animalbased: 30 posts
+[09:27:53]   [IG] #supermarkttips: 27 posts
+[09:28:00]   [IG] #holistichealth: 27 posts
+[09:28:07]   [IG] #gezondheid: 30 posts
+[09:28:13]   [IG] #health: 30 posts
+[09:28:16] 25 posts opgehaald van hashtags
+[09:28:16] Totaal 25 posts verzameld
+[09:28:16] Top 15 posts geselecteerd op engagement
+[09:28:16] 60 eerder gebruikte onderwerpen geladen
+[09:28:16] Claude om content ideeën vragen...
+[09:29:42] Carousel genereren...
+[09:30:25] Carousel verstuurd ✅
+[09:30:26] Nieuws post 1/5 genereren (microplastics in bloed)...
+[09:32:47] Nieuws post 1 verstuurd ✅
+[09:32:48] Nieuws post 2/5 genereren (formulevoeding en insulinepiek)...
+[09:34:02] Nieuws post 2 verstuurd ✅
+[09:34:03] Nieuws post 3/5 genereren (BPA en hormoonontregeling)...
+[09:34:59] Nieuws post 3 verstuurd ✅
+[09:35:00] Nieuws post 4/5 genereren (PFAS in bloed en schildklier)...
+[09:35:51] Nieuws post 4 verstuurd ✅
+[09:35:52] Nieuws post 5/5 genereren (progesteron en slaap)...
+[09:37:32] Nieuws post 5 verstuurd ✅
+[09:37:34] Tweet post 1/5 genereren (statines en spierschade)...
+[09:37:46] Tweet post 1 verstuurd ✅
+[09:37:47] Tweet post 2/5 genereren (tarwe en darmpermeabiliteit)...
+[09:37:59] Tweet post 2 verstuurd ✅
+[09:38:00] Tweet post 3/5 genereren (retinol en huidveroudering)...
+[09:38:13] Tweet post 3 verstuurd ✅
+[09:38:14] Tweet post 4/5 genereren (suikerlobby en voedingsrichtlijnen)...
+[09:38:25] Tweet post 4 verstuurd ✅
+[09:38:26] Tweet post 5/5 genereren (lactoferrine in rauw melk)...
+[09:38:38] Tweet post 5 verstuurd ✅
+[09:38:39] Statics verstuurd naar Telegram ✅
+[09:38:39] Viral Reels Report genereren...
+[09:38:39] [reels-report] Verwerk 8 reels...
+[09:38:39] [reels-report] [1/8] Deep research: @erikscherder...
+[09:38:57] [reels-report] [1/8] Script genereren: @erikscherder...
+[09:39:12] [reels-report] [2/8] Deep research: @holistic.zora...
+[09:39:32] [reels-report] [2/8] Script genereren: @holistic.zora...
+[09:39:47] [reels-report] [3/8] Deep research: @manonsfoodfacts...
+[09:40:07] [reels-report]   ⏭️ @manonsfoodfacts overgeslagen — niet relevant: De reel draait puur om supermarkttips en budget-shoppen bij Lidl, zonder verdieping in oervoeding, hormoonvriendelijk eten, zaadoliën, huidverzorging of andere kernthema's van Oergezond. De kans is groot dat de aanbevolen Lidl-producten juist zaadoliën, additieven of ultra-processed ingrediënten bevatten die Oergezond actief afraadt — waardoor namaking de merkidentiteit zou ondermijnen. Het format zelf (supermarkthaul/aanbevelingen) is technisch makkelijk na te maken met een iPhone, maar de inhoudelijke mismatch met Oergezondswaarden maakt dit geen zinvolle contentstrategie.
+[09:40:09] [reels-report] [4/8] Deep research: @bbctamil...
+[09:40:29] [reels-report] [4/8] Script genereren: @bbctamil...
+[09:40:43] [reels-report] [5/8] Deep research: @jessyknijn...
+[09:41:04] [reels-report] [5/8] Script genereren: @jessyknijn...
+[09:41:19] [reels-report] [6/8] Deep research: @tarifamazonian...
+[09:41:41] [reels-report] [6/8] Script genereren: @tarifamazonian...
+[09:41:56] [reels-report] [7/8] Deep research: @scottybrizzle...
+[09:42:17] [reels-report] [7/8] Script genereren: @scottybrizzle...
+[09:42:33] [reels-report] [8/8] Deep research: @akiko.tanaka.wellness...
+[09:42:47] [reels-report]   ⏭️ @akiko.tanaka.wellness overgeslagen — niet relevant: De reel is gepositioneerd als generieke US-based wellness content zonder aantoonbare link aan de kernthema's van Oergezond zoals oervoeding, tallow huidverzorging, zaadoliën vermijden, hormoonbalans of circadiaans ritme. Daarnaast is de inhoud van de reel niet toegankelijk via de opgegeven link voor analyse, waardoor het onmogelijk is te bevestigen of het onderwerp aansluit. Op basis van de beschikbare metadata (caption, hashtags, accountnaam) is er onvoldoende overlap met Oergezondes specifieke doelgroep en inhoudsstrategie om dit als relevante inspiratiebron te markeren.
+[09:42:47] [reels-report] PDF genereren...
+[09:42:53] [reels-report] PDF gegenereerd: 789 KB
+[09:42:53] [reels-report] PDF versturen naar Telegram...
+[09:42:54] [reels-report] PDF verstuurd naar Telegram
+[09:42:54] Viral Reels Report verstuurd ✅
+[09:42:54] Alles verstuurd naar Telegram ✅
+[09:42:54] 10 onderwerpen opgeslagen voor volgende run
+[08:20:38] === Oergezond Content Scraper gestart ===
+[08:20:41] Scrapen van 10 competitor accounts...
+[08:20:42]   [IG] @carnivoreaurelius: profiel 429 — overgeslagen
+[08:20:50]   [IG] @gewoonbalans: profiel 429 — overgeslagen
+[08:20:59]   [IG] @vitallymelanie: profiel 429 — overgeslagen
+[08:21:06]   [IG] @drmarkhyman: profiel 429 — overgeslagen
+[08:21:14]   [IG] @natural_living00: profiel 429 — overgeslagen
+[08:21:21]   [IG] @seedoilscout: profiel 429 — overgeslagen
+[08:21:29]   [IG] @holistichealths: profiel 429 — overgeslagen
+[08:21:36]   [IG] @niallkiddle: profiel 429 — overgeslagen
+[08:21:43]   [IG] @thehealthymail: profiel 429 — overgeslagen
+[08:21:50]   [IG] @feelwellbyanna: profiel 429 — overgeslagen
+[08:21:57] 0 posts opgehaald van competitors
+[08:21:57] Scrapen van 5 hashtags...
+[08:22:01]   [IG] #animalbased: 30 posts
+[08:22:08]   [IG] #supermarkttips: 27 posts
+[08:22:16]   [IG] #holistichealth: 27 posts
+[08:26:14]   [IG] #gezondheid fout: read ECONNRESET
+[08:26:21]   [IG] #health: 30 posts
+[08:26:25] 20 posts opgehaald van hashtags
+[08:26:25] Totaal 20 posts verzameld
+[08:26:26] 20 posts opgeslagen in Supabase
+[08:26:26] Top 15 posts geselecteerd op engagement
+[08:26:26] 0 eerder gebruikte onderwerpen geladen (Supabase)
+[08:26:26] Claude om content ideeën vragen...
+[08:28:03] Carousel genereren...
+[08:28:25] Carousel verstuurd ✅
+[08:28:26] Nieuws post 1/5 genereren (Zaadoliën en hormoonontregeling)...
+[08:29:17] Nieuws post 1 verstuurd ✅
+[08:29:18] Nieuws post 2/5 genereren (Fluoride en schildklierfunctie)...
+[08:30:33] Nieuws post 2 verstuurd ✅
+[08:30:34] Nieuws post 3/5 genereren (Protonpompremmers en magnesiumtekort)...
+[08:31:46] Nieuws post 3 verstuurd ✅
+[08:31:47] Nieuws post 4/5 genereren (Blauw licht en melatonineaanmaak bij kinderen)...
+[08:32:59] Nieuws post 4 verstuurd ✅
+[08:33:00] Nieuws post 5/5 genereren (Microplastics in menselijk bloed)...
+[08:33:48] Nieuws post 5 verstuurd ✅
+[08:33:50] Tweet post 1/5 genereren (Statines en CoQ10-uitputting)...
+[08:34:01] Tweet post 1 verstuurd ✅
+[08:34:02] Tweet post 2/5 genereren (Fytinezuur in granen en mineralenopname)...
+[08:34:12] Tweet post 2 verstuurd ✅
+[08:34:13] Tweet post 3/5 genereren (Ashwagandha en cortisoloverlast)...
+[08:34:24] Tweet post 3 verstuurd ✅
+[08:34:25] Tweet post 4/5 genereren (Non-stick pannen en PFAS-uitstoot)...
+[08:34:36] Tweet post 4 verstuurd ✅
+[08:34:37] Tweet post 5/5 genereren (Vitamine K2 en botgezondheid)...
+[08:34:49] Tweet post 5 verstuurd ✅
+[08:34:50] Statics verstuurd naar Telegram ✅
+[08:34:50] === VIRAL REELS RAPPORT ===
+[08:34:50] 0 eerder verstuurde reels in geheugen
+[08:34:50] Extra hashtags scrapen voor reels (16 tags)...
+[08:34:53]   [IG] #metabolichealth: 30 posts
+[08:35:00]   [IG] #cortisol: 30 posts
+[08:35:07]   [IG] #insulinresistance: 30 posts
+[08:35:14]   [IG] #circadianrhythm: 30 posts
+[08:35:20]   [IG] #rawmilk: 27 posts
+[08:35:26]   [IG] #carnivoreresults: 30 posts
+[08:35:33]   [IG] #nontoxicliving: 30 posts
+[08:35:39]   [IG] #functionalnutrition: 30 posts
+[08:35:46]   [IG] #ancestralliving: 30 posts
+[08:35:58]   [IG] #noseedoils: 30 posts
+[08:36:04]   [IG] #bloodsugarbalance: 30 posts
+[08:36:11]   [IG] #hormonalhealth: 30 posts
+[08:36:18]   [IG] #guthealth: 30 posts
+[08:36:24]   [IG] #biohacking: 30 posts
+[08:36:30]   [IG] #antiinflammatory: 27 posts
+[08:36:36]   [IG] #hormonebalance: 30 posts
+[08:36:39] 80 extra posts opgehaald
+[08:36:39] 10 nieuwe reels gevonden
+[08:36:39] [reels-report] Verwerk 8 reels...
+[08:36:39] [reels-report] [1/8] Deep research: @vitafitnow...
+[08:37:07] [reels-report] [1/8] Script genereren: @vitafitnow...
+[08:37:22] [reels-report] [2/8] Deep research: @neerudawradietician...
+[08:37:44] [reels-report] [2/8] Script genereren: @neerudawradietician...
+[08:37:58] [reels-report] [3/8] Deep research: @dietitian_mahnoor_...
+[08:38:22] [reels-report]   ⛔ @dietitian_mahnoor_ overgeslagen — fact-check gefaald: De centrale claim — dat deze specifieke mix van zaadballen PCOS 'naturally manages' en hormonen 'balanceert' — is feitelijk overdreven en misleidend. Er bestaat geen peer-reviewed klinisch bewijs dat seed cycling of deze specifieke combinatie PCOS beheert of hormoonbalans herstelt. De afzonderlijke ingrediënten hebben wel nuttige micronutriënten (lignanen, zink, vitamine E), maar de gecombineerde claim is een vereenvoudiging die kwetsbare vrouwen met een medische aandoening op het verkeerde been kan zetten. Oergezond zou dit onderwerp alleen kunnen aanraken als de claims significant afgezwakt worden.
+[08:38:24] [reels-report] [4/8] Deep research: @nourishing...
+[08:38:48] [reels-report] [4/8] Script genereren: @nourishing...
+[08:39:05] [reels-report] [5/8] Deep research: @ferielcontrerasnutricionista...
+[08:39:30] [reels-report] [5/8] Script genereren: @ferielcontrerasnutricionista...
+[08:39:46] [reels-report] [6/8] Deep research: @diana.beyond...
+[08:40:11] [reels-report] [6/8] Script genereren: @diana.beyond...
+[08:40:29] [reels-report] [7/8] Deep research: @brookeweinst...
+[08:40:52] [reels-report] [7/8] Script genereren: @brookeweinst...
+[08:41:09] [reels-report] [8/8] Deep research: @mamalee.med...
+[08:41:36] [reels-report]   ⏭️ @mamalee.med overgeslagen — niet relevant: Hoewel ancestrale voeding en traditionele gezondheidskennis wel degelijk bij Oergezond passen, is deze specifieke reel primair gedreven door engagement-bait en niet door educatieve inhoud. De 'Chinese medicine'-invalshoek past niet naadloos bij het oervoeding/ancestrale-gezondheid-framework van Oergezond (dat meer Westers-paleo/Weston A. Price georiënteerd is). Bovendien is de virality hier bijna volledig te danken aan de call-to-action-techniek, niet aan de inhoudskwaliteit — een aanpak die op lange termijn het vertrouwen van Oergezond's publiek schaadt. Het formaat is wel na te maken met een iPhone, maar de strategische en inhoudelijke fit is te zwak.
+[08:41:36] [reels-report] PDF genereren...
+[08:41:39] [reels-report] PDF gegenereerd: 764 KB
+[08:41:39] [reels-report] PDF versturen naar Telegram...
+[08:41:40] [reels-report] PDF verstuurd naar Telegram
+[08:41:40] Viral Reels Report verstuurd ✅
+[08:41:40] Alles verstuurd naar Telegram ✅
+[08:41:40] FOUT: Cannot read properties of null (reading 'newsPosts')
+[21:49:50] === Oergezond Content Scraper gestart ===
+[21:49:50] Scrapen van 10 competitor accounts...
+[21:49:50]   [IG] @carnivoreaurelius: profiel 429 — overgeslagen
+[21:49:57]   [IG] @gewoonbalans: profiel 429 — overgeslagen
+[21:50:04]   [IG] @vitallymelanie: profiel 429 — overgeslagen
+[21:50:11]   [IG] @drmarkhyman: profiel 429 — overgeslagen
+[21:50:18]   [IG] @natural_living00: profiel 429 — overgeslagen
+[21:50:25]   [IG] @seedoilscout: profiel 429 — overgeslagen
+[21:50:33]   [IG] @holistichealths: profiel 429 — overgeslagen
+[21:50:40]   [IG] @niallkiddle: profiel 429 — overgeslagen
+[21:50:47]   [IG] @thehealthymail: profiel 429 — overgeslagen
+[21:50:54]   [IG] @feelwellbyanna: profiel 429 — overgeslagen
+[21:51:01] 0 posts opgehaald van competitors
+[21:51:01] Scrapen van 5 hashtags...
+[21:51:10]   [IG] #animalbased: 30 posts
+[21:51:18]   [IG] #supermarkttips: 30 posts
+[21:51:26]   [IG] #holistichealth: 30 posts
+[21:51:33]   [IG] #gezondheid: 30 posts
+[21:51:40]   [IG] #health: 27 posts
+[21:51:44] 25 posts opgehaald van hashtags
+[21:51:44] Totaal 25 posts verzameld
+[21:51:45] 25 posts opgeslagen in Supabase
+[21:51:45] Top 15 posts geselecteerd op engagement
+[21:51:45] 0 eerder gebruikte onderwerpen geladen (Supabase)
+[21:51:45] Claude om content ideeën vragen...
+[21:53:18] Carousel genereren...
+[21:54:05] Carousel verstuurd ✅
+[21:54:05] Nieuws post 1/5 genereren (zaadoliën en linolzuur)...
+[21:54:38] Nieuws post 1 verstuurd ✅
+[21:54:39] Nieuws post 2/5 genereren (statines en spierschade)...
+[21:55:11] Nieuws post 2 verstuurd ✅
+[21:55:12] Nieuws post 3/5 genereren (fluoride en schildklier)...
+[21:55:44] Nieuws post 3 verstuurd ✅
+[21:55:45] Nieuws post 4/5 genereren (microplastics in bloed)...
+[21:56:16] Nieuws post 4 verstuurd ✅
+[21:56:17] Nieuws post 5/5 genereren (vitamine D en borstkanker)...
+[21:56:49] Nieuws post 5 verstuurd ✅
+[21:56:50] Tweet post 1/5 genereren (cholesterol mythe en voedingsrichtlijnen)...
+[21:57:03] Tweet post 1 verstuurd ✅
+[21:57:04] Tweet post 2/5 genereren (protonpompremmers en magnesiumtekort)...
+[21:57:16] Tweet post 2 verstuurd ✅
+[21:57:17] Tweet post 3/5 genereren (blauw licht en melatonine bij kinderen)...
+[21:57:27] Tweet post 3 verstuurd ✅
+[21:57:28] Tweet post 4/5 genereren (antibiotica en microbioom kinderen)...
+[21:57:40] Tweet post 4 verstuurd ✅
+[21:57:41] Tweet post 5/5 genereren (insulinepiek door babyvoeding)...
+[21:57:53] Tweet post 5 verstuurd ✅
+[21:57:54] Statics verstuurd naar Telegram ✅
+[21:57:54] === VIRAL REELS RAPPORT ===
+[21:57:54] 10 eerder verstuurde reels in geheugen
+[21:57:54] Extra hashtags scrapen voor reels (16 tags)...
+[21:57:58]   [IG] #metabolichealth: 30 posts
+[21:58:05]   [IG] #cortisol: 27 posts
+[21:58:11]   [IG] #insulinresistance: 30 posts
+[21:58:18]   [IG] #circadianrhythm: 30 posts
+[21:58:25]   [IG] #rawmilk: 30 posts
+[21:58:31]   [IG] #carnivoreresults: 30 posts
+[21:58:38]   [IG] #nontoxicliving: 27 posts
+[21:58:45]   [IG] #functionalnutrition: 30 posts
+[21:58:51]   [IG] #ancestralliving: 27 posts
+[21:58:58]   [IG] #noseedoils: 30 posts
+[21:59:05]   [IG] #bloodsugarbalance: 30 posts
+[21:59:11]   [IG] #hormonalhealth: 30 posts
+[21:59:17]   [IG] #guthealth: 30 posts
+[21:59:24]   [IG] #biohacking: 30 posts
+[21:59:31]   [IG] #antiinflammatory: 27 posts
+[21:59:37]   [IG] #hormonebalance: 30 posts
+[21:59:40] 80 extra posts opgehaald
+[21:59:40] 10 nieuwe reels gevonden
+[21:59:40] [reels-report] Verwerk 8 reels...
+[21:59:40] [reels-report] [1/8] Deep research: @woo.chenwellness...
+[21:59:58] [reels-report]   ⏭️ @woo.chenwellness overgeslagen — niet relevant: De daadwerkelijke inhoud van de reel is niet verifieerbaar zonder toegang tot de video, waardoor het onmogelijk is te beoordelen of het onderwerp aansluit bij Oergezond's thema's zoals oervoeding, hormonen, huidverzorging of circadiaans ritme. De vaagheid van de caption is een redactioneel risico — Oergezond's geloofwaardigheid staat op het spel als zij content baseren op een ongecontroleerde bron. Aanbeveling: bekijk de video zelf, identificeer de exacte claim, en voer daarna een nieuwe analyse uit.
+[22:00:00] [reels-report] [2/8] Deep research: @samaatv...
+[22:00:22] [reels-report] [2/8] Script genereren: @samaatv...
+[22:00:42] [reels-report] [3/8] Deep research: @okinawagrandma...
+[22:01:07] [reels-report]   ⛔ @okinawagrandma overgeslagen — fact-check gefaald: De onderliggende boodschap dat het darmmicrobioom verandert na de 40 door hormonale verschuivingen is wetenschappelijk onderbouwd. Echter: het account promoot een specifiek 'protocol' dat niet openbaar is en pas na comment-interactie gedeeld wordt — dit is een bekende lead-generation tactiek waarbij de daadwerkelijke inhoud van het protocol niet geverifieerd kan worden. De koppeling aan 'Okinawa grandma' is een marketing persona, geen bewijs van ancestrale authenticiteit. Omdat de kernclaim van het protocol zelf niet te fact-checken is en de presentatie misleidend commercieel is, wordt feitelijkJuist op false gezet.
+[22:01:09] [reels-report] [4/8] Deep research: @chad.wellness...
+[22:01:39] [reels-report]   ⛔ @chad.wellness overgeslagen — fact-check gefaald: De specifieke claims rondom bieten (bloeddruk, doorbloeding) zijn wetenschappelijk redelijk onderbouwd. Echter, de overkoepelende boodschap 'your body heals when you stop feeding it garbage' is een ongenuanceerde en niet-falsifieerbare uitspraak die de indruk wekt dat chronische aandoeningen volledig omkeerbaar zijn met dieetaanpassingen alleen — dit is misleidend en potentieel schadelijk voor mensen met serieuze gezondheidsproblemen. De 'lever detox'-claim is bijzonder problematisch: de lever heeft geen externe 'detox' nodig en deze term is wetenschappelijk niet geaccepteerd. Feitelijk juist is gezet op false vanwege de combinatie van overdreven generalisaties, de ongefundeerde detox-claim en het gebruik van gezondheidsbeloften als engagement-bait zonder medische onderbouwing.
+[22:01:41] [reels-report] [5/8] Deep research: @pcos.weightloss...
+[22:02:03] [reels-report] [5/8] Script genereren: @pcos.weightloss...
+[22:02:19] [reels-report] [6/8] Deep research: @dt.ramitakaur...
+[22:02:46] [reels-report] [6/8] Script genereren: @dt.ramitakaur...
+[22:03:02] [reels-report] [7/8] Deep research: @healthh.hacksss...
+[22:03:29] [reels-report]   ⛔ @healthh.hacksss overgeslagen — fact-check gefaald: De kerngedachte dat chronische stress en cortisol lichamelijke veranderingen veroorzaken is wetenschappelijk onderbouwd, maar virale content over 'cortisol-gezichten' is vaak overdreven: de zichtbare effecten (moon face, buffelrug, centrale obesitas) treden klinisch pas op bij significant pathologisch verhoogd cortisol zoals bij de ziekte van Cushing, niet bij alledaagse leefstijlstress. Het framen alsof 'gewoon gestressede mensen' eruitzien als Cushing-patiënten is misleidend en medisch onnauwkeurig. Oergezond doet er verstandig aan de nuance te bewaken: leefstijlstress beïnvloedt cortisol en gezondheid wél, maar de visuele claims zijn fors overdreven.
+[22:03:31] [reels-report] [8/8] Deep research: @balapa739...
+[22:03:56] [reels-report]   ⛔ @balapa739 overgeslagen — fact-check gefaald: De reel claimt impliciet dat één specifieke 'natural juice' spermcount doet toenemen, zonder de juice te benoemen, zonder dosering, zonder context en zonder wetenschappelijke referentie. Dit is een overdreven, misleidende claim: voeding kan sperma-kwaliteit ondersteunen als onderdeel van een brede leefstijl, maar geen enkele juice heeft bewezen effect als standalone interventie op spermcount bij gezonde mannen. De CTA-structuur ('comment HEALTH') suggereert bovendien een verkoopfunnel, wat de objectiviteit verder ondermijnt. feitelijkJuist is false.
+[22:03:56] [reels-report] PDF genereren...
+[22:04:00] [reels-report] PDF gegenereerd: 634 KB
+[22:04:00] [reels-report] PDF versturen naar Telegram...
+[22:04:02] [reels-report] PDF verstuurd naar Telegram
+[22:04:02] Viral Reels Report verstuurd ✅
+[22:04:02] Alles verstuurd naar Telegram ✅
+[22:04:02] FOUT: Cannot read properties of null (reading 'newsPosts')
+[08:35:43] === Oergezond Content Scraper gestart ===
+[08:35:43] Scrapen van 10 competitor accounts...
+[08:35:43]   [IG] @carnivoreaurelius: profiel 429 — overgeslagen
+[08:35:50]   [IG] @gewoonbalans: profiel 429 — overgeslagen
+[08:35:58]   [IG] @vitallymelanie: profiel 429 — overgeslagen
+[08:36:05]   [IG] @drmarkhyman: profiel 429 — overgeslagen
+[08:36:12]   [IG] @natural_living00: profiel 429 — overgeslagen
+[08:36:19]   [IG] @seedoilscout: profiel 429 — overgeslagen
+[08:36:26]   [IG] @holistichealths: profiel 429 — overgeslagen
+[08:36:33]   [IG] @niallkiddle: profiel 429 — overgeslagen
+[08:36:40]   [IG] @thehealthymail: profiel 429 — overgeslagen
+[08:36:47]   [IG] @feelwellbyanna: profiel 429 — overgeslagen
+[08:36:54] 0 posts opgehaald van competitors
+[08:36:54] Scrapen van 5 hashtags...
+[08:36:58]   [IG] #animalbased: 30 posts
+[08:37:05]   [IG] #supermarkttips: 30 posts
+[08:37:12]   [IG] #holistichealth: 30 posts
+[08:37:19]   [IG] #gezondheid: 30 posts
+[08:37:26]   [IG] #health: 27 posts
+[08:37:30] 25 posts opgehaald van hashtags
+[08:37:30] Totaal 25 posts verzameld
+[08:37:31] 25 posts opgeslagen in Supabase
+[08:37:31] Top 15 posts geselecteerd op engagement
+[08:37:31] 0 eerder gebruikte onderwerpen geladen (Supabase)
+[08:37:31] Claude om content ideeën vragen...
+[08:38:52] Carousel genereren...
+[08:39:33] Carousel verstuurd ✅
+[08:39:34] Nieuws post 1/5 genereren (statines)...
+[08:40:05] Nieuws post 1 verstuurd ✅
+[08:40:06] Nieuws post 2/5 genereren (microplastics)...
+[08:40:37] Nieuws post 2 verstuurd ✅
+[08:40:38] Nieuws post 3/5 genereren (linolzuur)...
+[08:41:09] Nieuws post 3 verstuurd ✅
+[08:41:10] Nieuws post 4/5 genereren (protonpompremmers)...
+[08:41:43] Nieuws post 4 verstuurd ✅
+[08:41:44] Nieuws post 5/5 genereren (blauw licht en melatonine)...
+[08:42:15] Nieuws post 5 verstuurd ✅
+[08:42:16] Tweet post 1/5 genereren (suikerlobby en voedingsrichtlijnen)...
+[08:42:28] Tweet post 1 verstuurd ✅
+[08:42:29] Tweet post 2/5 genereren (antibiotica en kinderen)...
+[08:42:41] Tweet post 2 verstuurd ✅
+[08:42:42] Tweet post 3/5 genereren (cortisol en slaap)...
+[08:42:52] Tweet post 3 verstuurd ✅
+[08:42:53] Tweet post 4/5 genereren (ftalaten en testosteron)...
+[08:43:05] Tweet post 4 verstuurd ✅
+[08:43:06] Tweet post 5/5 genereren (bottenbouillon en darmherstel)...
+[08:43:17] Tweet post 5 verstuurd ✅
+[08:43:18] Statics verstuurd naar Telegram ✅
+[08:43:18] === VIRAL REELS RAPPORT ===
+[08:43:18] 20 eerder verstuurde reels in geheugen
+[08:43:18] Extra hashtags scrapen voor reels (16 tags)...
+[08:43:22]   [IG] #metabolichealth: 30 posts
+[08:43:28]   [IG] #cortisol: 27 posts
+[08:43:34]   [IG] #insulinresistance: 30 posts
+[08:43:40]   [IG] #circadianrhythm: 30 posts
+[08:43:47]   [IG] #rawmilk: 27 posts
+[08:43:53]   [IG] #carnivoreresults: 30 posts
+[08:44:00]   [IG] #nontoxicliving: 27 posts
+[08:44:07]   [IG] #functionalnutrition: 30 posts
+[08:44:14]   [IG] #ancestralliving: 30 posts
+[08:44:21]   [IG] #noseedoils: 30 posts
+[08:44:28]   [IG] #bloodsugarbalance: 30 posts
+[08:44:35]   [IG] #hormonalhealth: 30 posts
+[08:44:41]   [IG] #guthealth: 30 posts
+[08:44:47]   [IG] #biohacking: 30 posts
+[08:44:53]   [IG] #antiinflammatory: 27 posts
+[08:44:59]   [IG] #hormonebalance: 30 posts
+[08:45:02] 80 extra posts opgehaald
+[08:45:02] 10 nieuwe reels gevonden
+[08:45:02] [reels-report] Verwerk 8 reels...
+[08:45:02] [reels-report] [1/8] Deep research: @_hinterfragt...
+[08:45:29] [reels-report] [1/8] Script genereren: @_hinterfragt...
+[08:45:45] [reels-report] [2/8] Deep research: @fityoufix...
+[08:46:11] [reels-report]   ⛔ @fityoufix overgeslagen — fact-check gefaald: De overkoepelende claim dat een 'natural drink' bloedsuiker 'balanceert' in 90 dagen is te breed en niet wetenschappelijk onderbouwd als geheel. De specifieke ingrediënten zijn niet zichtbaar in de caption, waardoor de claim oncontroleerbaar is. Bovendien is de formulering ('elke keer als haar bloedsuiker stijgt, werkt dit') anekdotisch en potentieel gevaarlijk voor mensen met diabetes die hierdoor medicatie zouden kunnen vermijden. Het patroon van de account (weinig likes bij veel views, hoge commentaren) wijst op mogelijk misleidende of clickbait-gezondheidscontent. Oergezond kan wél eerlijk content maken over specifieke, onderbouwde ingrediënten, maar moet de brede balanceringsclaim vermijden.
+[08:46:13] [reels-report] [3/8] Deep research: @ultimatewellness.miami...
+[08:46:37] [reels-report]   ⏭️ @ultimatewellness.miami overgeslagen — niet relevant: Dit is in essentie een evenementspromotie voor een luxe conferentie in Miami Beach — niet een educatief inhoudsformat dat Oergezond kan adapteren. Er is geen concrete gezondheidsboodschap, geen hack, geen tip, geen methode die Jorn & Rosa kunnen vertalen naar een iPhone-reel in hun keuken of buiten. De thema's (longevity, functionele geneeskunde) zijn wel relevant voor de Oergezond-doelgroep, maar deze specifieke reel biedt geen bruikbare contentstrategie of boodschap om na te maken. Overweeg in plaats hiervan een eigen reel te maken over een specifiek longevity-principe zoals circadiaans eten of hormoonvriendelijk leven.
+[08:46:39] [reels-report] [4/8] Deep research: @healthh.hacksss...
+[08:47:08] [reels-report]   ⛔ @healthh.hacksss overgeslagen — fact-check gefaald: De brede claim dat cortisol vetopslag beïnvloedt is wetenschappelijk onderbouwd, maar de specifieke claim dat 'dikke armen' een directe en herkenbare indicator zijn van hoge cortisol is niet onderbouwd door peer-reviewed onderzoek. Vetdistributie in de armen wordt primair bepaald door genetica, geslacht, totale vetmassa en leeftijd — niet specifiek door cortisolniveaus. De reel suggereert een te directe en simplistische causale relatie die misleidend is voor kijkers. Feitelijkjuist wordt op false gezet omdat de kernhook (armen = cortisol) wetenschappelijk niet houdbaar is als geïsoleerde claim.
+[08:47:10] [reels-report] [5/8] Deep research: @thugtai...
+[08:47:32] [reels-report] [5/8] Script genereren: @thugtai...
+[08:47:46] [reels-report] [6/8] Deep research: @deepakchopra...
+[08:48:10] [reels-report] [6/8] Script genereren: @deepakchopra...
+[08:48:23] [reels-report] [7/8] Deep research: @erikscherder...
+[08:48:48] [reels-report]   ⏭️ @erikscherder overgeslagen — niet relevant: De kernboodschap over beweging als gezondheidsinstrument is op zichzelf relevant voor een ancestraal/hormoonvriendelijk publiek, maar de invalshoek van deze reel is primair politiek-maatschappelijk (kritiek op kabinetsbeleid). Dit past niet bij het merk en de positionering van Oergezond, dat zich richt op praktische, tijdloze gezondheidsadviezen zonder politieke lading. Bovendien is Erik Scherders geloofwaardigheid hier sterk afhankelijk van zijn status als hersenwetenschapper/professor — een vergelijkbare politieke kritiekreel van Jorn & Rosa met een iPhone zou die autoriteit missen en eerder als ongegronde mening overkomen. Het onderwerp beweging zelf is wel na te maken, maar dan in een volledig andere, apolitieke framing.
+[08:48:50] [reels-report] [8/8] Deep research: @midlifefitclub...
+[08:49:15] [reels-report] [8/8] Script genereren: @midlifefitclub...
+[08:49:28] [reels-report] PDF genereren...
+[08:49:32] [reels-report] PDF gegenereerd: 791 KB
+[08:49:32] [reels-report] PDF versturen naar Telegram...
+[08:49:32] [reels-report] PDF verstuurd naar Telegram
+[08:49:32] Viral Reels Report verstuurd ✅
+[08:49:32] Alles verstuurd naar Telegram ✅
+[08:49:32] FOUT: Cannot read properties of null (reading 'newsPosts')
+[08:12:57] === Oergezond Content Scraper gestart ===
+[08:12:58] Scrapen van 10 competitor accounts...
+[08:12:58]   [IG] @carnivoreaurelius: profiel 429 — overgeslagen
+[08:13:05]   [IG] @gewoonbalans: profiel 429 — overgeslagen
+[08:13:12]   [IG] @vitallymelanie: profiel 429 — overgeslagen
+[08:13:19]   [IG] @drmarkhyman: profiel 429 — overgeslagen
+[08:13:26]   [IG] @natural_living00: profiel 429 — overgeslagen
+[08:13:33]   [IG] @seedoilscout: profiel 429 — overgeslagen
+[08:13:41]   [IG] @holistichealths: profiel 429 — overgeslagen
+[08:13:48]   [IG] @niallkiddle: profiel 429 — overgeslagen
+[08:13:55]   [IG] @thehealthymail: profiel 429 — overgeslagen
+[08:14:01]   [IG] @feelwellbyanna: profiel 429 — overgeslagen
+[08:14:08] 0 posts opgehaald van competitors
+[08:14:08] Scrapen van 5 hashtags...
+[08:14:11]   [IG] #animalbased: 30 posts
+[08:14:18]   [IG] #supermarkttips: 30 posts
+[08:14:25]   [IG] #holistichealth: 30 posts
+[08:14:32]   [IG] #gezondheid: 30 posts
+[08:14:39]   [IG] #health: 30 posts
+[08:14:43] 25 posts opgehaald van hashtags
+[08:14:43] Totaal 25 posts verzameld
+[08:14:44] 25 posts opgeslagen in Supabase
+[08:14:44] Top 15 posts geselecteerd op engagement
+[08:14:44] 0 eerder gebruikte onderwerpen geladen (Supabase)
+[08:14:44] Claude om content ideeën vragen...
+[08:16:09] Carousel genereren...
+[08:16:31] Carousel verstuurd ✅
+[08:16:32] Nieuws post 1/5 genereren (zaadoliën)...
+[08:17:19] Nieuws post 1 verstuurd ✅
+[08:17:20] Nieuws post 2/5 genereren (statines)...
+[08:18:05] Nieuws post 2 verstuurd ✅
+[08:18:06] Nieuws post 3/5 genereren (ADHD en voeding)...
+[08:18:53] Nieuws post 3 verstuurd ✅
+[08:18:55] Nieuws post 4/5 genereren (fluoride)...
+[08:19:29] Nieuws post 4 verstuurd ✅
+[08:19:30] Nieuws post 5/5 genereren (microplastics)...
+[08:20:07] Nieuws post 5 verstuurd ✅
+[08:20:08] Tweet post 1/5 genereren (protonpompremmers)...
+[08:20:19] Tweet post 1 verstuurd ✅
+[08:20:20] Tweet post 2/5 genereren (vitamine D en infectieziekten)...
+[08:20:30] Tweet post 2 verstuurd ✅
+[08:20:31] Tweet post 3/5 genereren (slaap en insulineresistentie)...
+[08:20:41] Tweet post 3 verstuurd ✅
+[08:20:42] Tweet post 4/5 genereren (ochtendzon en cortisol)...
+[08:20:54] Tweet post 4 verstuurd ✅
+[08:20:56] Tweet post 5/5 genereren (aluminium in deodorant)...
+[08:21:07] Tweet post 5 verstuurd ✅
+[08:21:08] Statics verstuurd naar Telegram ✅
+[08:21:08] === VIRAL REELS RAPPORT ===
+[08:21:08] 30 eerder verstuurde reels in geheugen
+[08:21:08] Extra hashtags scrapen voor reels (16 tags)...
+[08:21:11]   [IG] #metabolichealth: 30 posts
+[08:21:17]   [IG] #cortisol: 30 posts
+[08:21:23]   [IG] #insulinresistance: 30 posts
+[08:21:30]   [IG] #circadianrhythm: 30 posts
+[08:21:36]   [IG] #rawmilk: 30 posts
+[08:21:43]   [IG] #carnivoreresults: 27 posts
+[08:21:50]   [IG] #nontoxicliving: 30 posts
+[08:21:57]   [IG] #functionalnutrition: 30 posts
+[08:22:04]   [IG] #ancestralliving: 30 posts
+[08:22:11]   [IG] #noseedoils: 30 posts
+[08:22:17]   [IG] #bloodsugarbalance: 30 posts
+[08:22:31]   [IG] #hormonalhealth fout: read ECONNRESET
+[08:22:34]   [IG] #guthealth fout: getaddrinfo ENOTFOUND i.instagram.com
+[08:22:37]   [IG] #biohacking fout: getaddrinfo ENOTFOUND i.instagram.com
+[08:22:40]   [IG] #antiinflammatory fout: getaddrinfo ENOTFOUND i.instagram.com
+[08:22:43]   [IG] #hormonebalance fout: getaddrinfo ENOTFOUND i.instagram.com
+[08:22:46] 55 extra posts opgehaald
+[08:22:46] 10 nieuwe reels gevonden
+[08:22:46] [reels-report] Verwerk 8 reels...
+[08:22:46] [reels-report] [1/8] Deep research: @mari.trilogy...
+[08:22:46] [reels-report]   Research mislukt voor @mari.trilogy: getaddrinfo ENOTFOUND api.anthropic.com
+[08:22:48] [reels-report] [1/8] Script genereren: @mari.trilogy...
+[08:22:48] [reels-report]   Script mislukt voor @mari.trilogy: getaddrinfo ENOTFOUND api.anthropic.com
+[supabase] Reel script opslaan fout: TypeError: fetch failed
+[08:22:51] [reels-report] [2/8] Deep research: @wellness_lilly...
+[08:22:51] [reels-report]   Research mislukt voor @wellness_lilly: getaddrinfo ENOTFOUND api.anthropic.com
+[08:22:53] [reels-report] [2/8] Script genereren: @wellness_lilly...
+[08:22:53] [reels-report]   Script mislukt voor @wellness_lilly: getaddrinfo ENOTFOUND api.anthropic.com
+[supabase] Reel script opslaan fout: TypeError: fetch failed
+[08:22:56] [reels-report] [3/8] Deep research: @nourishedbynutrition...
+[08:22:56] [reels-report]   Research mislukt voor @nourishedbynutrition: getaddrinfo ENOTFOUND api.anthropic.com
+[08:22:58] [reels-report] [3/8] Script genereren: @nourishedbynutrition...
+[08:22:58] [reels-report]   Script mislukt voor @nourishedbynutrition: getaddrinfo ENOTFOUND api.anthropic.com
+[supabase] Reel script opslaan fout: TypeError: fetch failed
+[08:23:01] [reels-report] [4/8] Deep research: @healthsaathi_ai...
+[08:23:01] [reels-report]   Research mislukt voor @healthsaathi_ai: getaddrinfo ENOTFOUND api.anthropic.com
+[08:23:03] [reels-report] [4/8] Script genereren: @healthsaathi_ai...
+[08:23:03] [reels-report]   Script mislukt voor @healthsaathi_ai: getaddrinfo ENOTFOUND api.anthropic.com
+[supabase] Reel script opslaan fout: TypeError: fetch failed
+[08:23:06] [reels-report] [5/8] Deep research: @nourishedbynutrition...
+[08:23:06] [reels-report]   Research mislukt voor @nourishedbynutrition: getaddrinfo ENOTFOUND api.anthropic.com
+[08:23:08] [reels-report] [5/8] Script genereren: @nourishedbynutrition...
+[08:23:08] [reels-report]   Script mislukt voor @nourishedbynutrition: getaddrinfo ENOTFOUND api.anthropic.com
+[supabase] Reel script opslaan fout: TypeError: fetch failed
+[08:23:11] [reels-report] [6/8] Deep research: @dr.jacktraveller...
+[08:23:11] [reels-report]   Research mislukt voor @dr.jacktraveller: getaddrinfo ENOTFOUND api.anthropic.com
+[08:23:14] [reels-report] [6/8] Script genereren: @dr.jacktraveller...
+[08:23:14] [reels-report]   Script mislukt voor @dr.jacktraveller: getaddrinfo ENOTFOUND api.anthropic.com
+[supabase] Reel script opslaan fout: TypeError: fetch failed
+[08:23:17] [reels-report] [7/8] Deep research: @thebloomphilosophy...
+[08:23:17] [reels-report]   Research mislukt voor @thebloomphilosophy: getaddrinfo ENOTFOUND api.anthropic.com
+[08:23:19] [reels-report] [7/8] Script genereren: @thebloomphilosophy...
+[08:23:19] [reels-report]   Script mislukt voor @thebloomphilosophy: getaddrinfo ENOTFOUND api.anthropic.com
+[supabase] Reel script opslaan fout: TypeError: fetch failed
+[08:23:22] [reels-report] [8/8] Deep research: @zzzlim.de...
+[08:23:22] [reels-report]   Research mislukt voor @zzzlim.de: getaddrinfo ENOTFOUND api.anthropic.com
+[08:23:24] [reels-report] [8/8] Script genereren: @zzzlim.de...
+[08:23:24] [reels-report]   Script mislukt voor @zzzlim.de: getaddrinfo ENOTFOUND api.anthropic.com
+[supabase] Reel script opslaan fout: TypeError: fetch failed
+[08:23:24] [reels-report] PDF genereren...
+[08:23:27] [reels-report] PDF gegenereerd: 394 KB
+[08:23:27] [reels-report] PDF versturen naar Telegram...
+[08:23:27] [reels-report] Telegram versturen mislukt: getaddrinfo ENOTFOUND api.telegram.org
+[08:23:27] Viral Reels Report verstuurd ✅
+[08:23:27] Alles verstuurd naar Telegram ✅
+[08:23:27] FOUT: Cannot read properties of null (reading 'newsPosts')
+[11:20:35] === Oergezond Content Scraper gestart ===
+[11:20:35] Scrapen van 10 competitor accounts...
+[11:20:36]   [IG] @carnivoreaurelius fout: getaddrinfo ENOTFOUND i.instagram.com
+[11:20:43]   [IG] @gewoonbalans: profiel 429 — overgeslagen
+[11:20:50]   [IG] @vitallymelanie: profiel 429 — overgeslagen
+[11:20:57]   [IG] @drmarkhyman: profiel 429 — overgeslagen
+[11:21:04]   [IG] @natural_living00: profiel 429 — overgeslagen
+[11:21:11]   [IG] @seedoilscout: profiel 429 — overgeslagen
+[11:21:18]   [IG] @holistichealths: profiel 429 — overgeslagen
+[11:21:25]   [IG] @niallkiddle: profiel 429 — overgeslagen
+[11:21:32]   [IG] @thehealthymail: profiel 429 — overgeslagen
+[11:21:39]   [IG] @feelwellbyanna: profiel 429 — overgeslagen
+[11:21:46] 0 posts opgehaald van competitors
+[11:21:46] Scrapen van 5 hashtags...
+[11:21:50]   [IG] #animalbased: 30 posts
+[11:21:58]   [IG] #supermarkttips: 30 posts
+[11:22:04]   [IG] #holistichealth: 30 posts
+[11:22:12]   [IG] #gezondheid: 30 posts
+[11:22:18]   [IG] #health: 30 posts
+[11:22:22] 25 posts opgehaald van hashtags
+[11:22:22] Totaal 25 posts verzameld
+[11:22:24] 25 posts opgeslagen in Supabase
+[11:22:24] Top 15 posts geselecteerd op engagement
+[11:22:24] 0 eerder gebruikte onderwerpen geladen (Supabase)
+[11:22:24] Claude om content ideeën vragen...
+[13:47:02] Statics mislukt: read ECONNRESET
+[13:47:03] === VIRAL REELS RAPPORT ===
+[13:47:03] 40 eerder verstuurde reels in geheugen
+[13:47:03] Extra hashtags scrapen voor reels (16 tags)...
+[13:47:07]   [IG] #metabolichealth: 30 posts
+[13:47:13]   [IG] #cortisol: 30 posts
+[13:47:19]   [IG] #insulinresistance: 30 posts
+[13:47:27]   [IG] #circadianrhythm: 30 posts
+[13:47:32]   [IG] #rawmilk: 27 posts
+[13:47:39]   [IG] #carnivoreresults: 30 posts
+[13:47:45]   [IG] #nontoxicliving: 30 posts
+[13:47:52]   [IG] #functionalnutrition: 30 posts
+[13:47:58]   [IG] #ancestralliving: 30 posts
+[13:48:06]   [IG] #noseedoils: 30 posts
+[13:48:12]   [IG] #bloodsugarbalance: 30 posts
+[13:48:18]   [IG] #hormonalhealth: 30 posts
+[13:48:25]   [IG] #guthealth: 30 posts
+[13:48:33]   [IG] #biohacking: 30 posts
+[13:48:39]   [IG] #antiinflammatory: 27 posts
+[13:48:44]   [IG] #hormonebalance: 30 posts
+[13:48:47] 80 extra posts opgehaald
+[13:48:47] 10 nieuwe reels gevonden
+[13:48:47] [reels-report] Verwerk 8 reels...
+[13:48:47] [reels-report] [1/8] Deep research: @holistic.wellness.tips...
+[13:49:11] [reels-report]   ⏭️ @holistic.wellness.tips overgeslagen — niet relevant: Hoewel uien als oervoedsel thematisch passen bij Oergezond, is de specifieke claim in deze reel feitelijk onjuist en zou het plaatsen ervan Oergezondsgeloofwaardigheid schaden. Het conspiracy-frame ('they don't want you to know') past ook niet bij de serieuze, onderbouwde toon die Oergezond hanteert. Een afgeleide reel over de wél bewezen gezondheidsvoordelen van ui bij consumptie (quercetine, prebiotische werking, anti-inflammatoir) zou wel passen en is eenvoudig op te nemen in de keuken met een iPhone.
+[13:49:13] [reels-report] [2/8] Deep research: @anti_inflammatoryeats...
+[13:49:36] [reels-report] [2/8] Script genereren: @anti_inflammatoryeats...
+[13:49:53] [reels-report] [3/8] Deep research: @welpr.app...
+[13:50:17] [reels-report] [3/8] Script genereren: @welpr.app...
+[13:50:35] [reels-report] [4/8] Deep research: @eat2flourish...
+[13:51:02] [reels-report] [4/8] Script genereren: @eat2flourish...
+[13:51:18] [reels-report] [5/8] Deep research: @kosmatology...
+[13:51:43] [reels-report] [5/8] Script genereren: @kosmatology...
+[13:51:57] [reels-report] [6/8] Deep research: @shreevarma_tamil...
+[13:52:19] [reels-report] [6/8] Script genereren: @shreevarma_tamil...
+[13:52:34] [reels-report] [7/8] Deep research: @cvcwellness...
+[13:52:58] [reels-report] [7/8] Script genereren: @cvcwellness...
+[13:53:14] [reels-report] [8/8] Deep research: @ancestralnutritionfdn...
+[13:53:40] [reels-report] [8/8] Script genereren: @ancestralnutritionfdn...
+[13:53:54] [reels-report] PDF genereren...
+[13:54:20] [reels-report] PDF gegenereerd: 1318 KB
+[13:54:20] [reels-report] PDF versturen naar Telegram...
+[13:54:22] [reels-report] PDF verstuurd naar Telegram
+[13:54:22] Viral Reels Report verstuurd ✅
+[13:54:22] Alles verstuurd naar Telegram ✅
+[13:54:22] FOUT: Cannot read properties of null (reading 'newsPosts')
+[08:47:36] === Oergezond Content Scraper gestart ===
+[08:47:36] Scrapen van 10 competitor accounts...
+[08:47:41]   [IG] @carnivoreaurelius fout: IG request timeout
+[08:47:48]   [IG] @gewoonbalans fout: getaddrinfo ENOTFOUND i.instagram.com
+[08:47:55]   [IG] @vitallymelanie fout: getaddrinfo ENOTFOUND i.instagram.com
+[08:48:03]   [IG] @drmarkhyman fout: getaddrinfo ENOTFOUND i.instagram.com
+[08:48:10]   [IG] @natural_living00 fout: getaddrinfo ENOTFOUND i.instagram.com
+[08:48:17]   [IG] @seedoilscout fout: getaddrinfo ENOTFOUND i.instagram.com
+[08:48:25]   [IG] @holistichealths fout: getaddrinfo ENOTFOUND i.instagram.com
+[08:48:33]   [IG] @niallkiddle fout: getaddrinfo ENOTFOUND i.instagram.com
+[08:48:45]   [IG] @thehealthymail fout: IG request timeout
+[08:48:58]   [IG] @feelwellbyanna fout: IG request timeout
+[08:49:05] 0 posts opgehaald van competitors
+[08:49:05] Scrapen van 5 hashtags...
+[08:49:10]   [IG] #animalbased fout: IG request timeout
+[08:49:19]   [IG] #supermarkttips fout: IG request timeout
+[08:49:28]   [IG] #holistichealth fout: IG request timeout
+[08:49:38]   [IG] #gezondheid fout: IG request timeout
+[08:49:47]   [IG] #health fout: IG request timeout
+[08:49:51] 0 posts opgehaald van hashtags
+[08:49:51] Totaal 0 posts verzameld
+[08:49:51] 0 posts opgeslagen in Supabase
+[08:49:51] Geen virale posts beschikbaar — content wordt puur op basis van topicpool gegenereerd
+[08:49:59] 0 eerder gebruikte onderwerpen geladen (Supabase)
+[08:49:59] Claude om content ideeën vragen...
+[08:50:59] Carousel genereren...
+[08:53:39] Carousel verstuurd ✅
+[08:53:40] Nieuws post 1/5 genereren (statines bijwerkingen)...
+[08:54:18] Nieuws post 1 verstuurd ✅
+[08:54:19] Nieuws post 2/5 genereren (linolzuur en celopbouw)...
+[08:54:54] Nieuws post 2 verstuurd ✅
+[08:54:55] Nieuws post 3/5 genereren (fluoride en IQ kinderen)...
+[08:55:30] Nieuws post 3 verstuurd ✅
+[08:55:31] Nieuws post 4/5 genereren (protonpompremmers en magnesiumbrek)...
+[08:56:10] Nieuws post 4 verstuurd ✅
+[08:56:11] Nieuws post 5/5 genereren (blauw licht en melatonine)...
+[08:56:42] Nieuws post 5 verstuurd ✅
+[08:56:44] Tweet post 1/5 genereren (verzadigd vet mythe en Ancel Keys)...
+[08:57:00] Tweet post 1 verstuurd ✅
+[08:57:01] Tweet post 2/5 genereren (rauw melk en enzymen)...
+[08:57:15] Tweet post 2 verstuurd ✅
+[08:57:16] Tweet post 3/5 genereren (microplastics in bloed)...
+[08:57:36] Tweet post 3 verstuurd ✅
+[08:57:37] Tweet post 4/5 genereren (vitamine K2 en calciumgeleiding)...
+[08:57:52] Tweet post 4 verstuurd ✅
+[08:57:53] Tweet post 5/5 genereren (zonnebrand en vitamine D blokkade)...
+[08:58:12] Tweet post 5 verstuurd ✅
+[08:58:13] Statics verstuurd naar Telegram ✅
+[08:58:13] === VIRAL REELS RAPPORT ===
+[08:58:13] 50 eerder verstuurde reels in geheugen
+[08:58:13] Extra hashtags scrapen voor reels (16 tags)...
+[08:58:19]   [IG] #metabolichealth: 30 posts
+[08:58:26]   [IG] #cortisol: 27 posts
+[08:58:32]   [IG] #insulinresistance: 27 posts
+[08:58:39]   [IG] #circadianrhythm: 30 posts
+[08:58:45]   [IG] #rawmilk: 27 posts
+[08:58:51]   [IG] #carnivoreresults: 30 posts
+[08:58:58]   [IG] #nontoxicliving: 30 posts
+[08:59:04]   [IG] #functionalnutrition: 30 posts
+[08:59:11]   [IG] #ancestralliving: 30 posts
+[08:59:18]   [IG] #noseedoils: 30 posts
+[08:59:24]   [IG] #bloodsugarbalance: 30 posts
+[08:59:31]   [IG] #hormonalhealth: 30 posts
+[08:59:38]   [IG] #guthealth: 30 posts
+[08:59:45]   [IG] #biohacking: 30 posts
+[08:59:51]   [IG] #antiinflammatory: 27 posts
+[08:59:57]   [IG] #hormonebalance: 27 posts
+[09:00:00] 80 extra posts opgehaald
+[09:00:00] 10 nieuwe reels gevonden
+[09:00:00] [reels-report] Verwerk 8 reels...
+[09:00:00] [reels-report] [1/8] Deep research: @shreemwell_official...
+[09:00:28] [reels-report]   ⛔ @shreemwell_official overgeslagen — fact-check gefaald: De originele reel suggereert dat deze 6 drankjes gut health, digestion en bloating actief kunnen 'supporten', wat op zichzelf niet volledig onjuist is — maar de framing ('vanavond drinken = morgen licht en actief voelen') is overdreven en misleidend. Er is geen sterk klinisch bewijs dat nachtdrankjes op korte termijn een merkbaar verschil maken in bloating of energieniveau. De effecten van individuele kruidentheeën zijn bescheiden en wisselend per persoon. De claim is daarmee te sterk voor de beschikbare wetenschap — feitelijkJuist wordt op false gezet.
+[09:00:30] [reels-report] [2/8] Deep research: @livevitae...
+[09:00:59] [reels-report]   ⛔ @livevitae overgeslagen — fact-check gefaald: De kernboodschap van de originele reel is misleidend omdat zij impliciet suggereert dat deze dranken medicatie kunnen vervangen ('instead of relying on medications'). Voor hibiscusthee bij bloeddruk bestaat matig bewijs voor een mild effect (gemiddeld -7 mmHg systolisch), maar dit is bij de meeste patiënten onvoldoende als vervanging van antihypertensiva. Voor groene thee en gember bij urinezuur is het humane bewijs zeer zwak en inconsistent. De claim is daarmee overdreven en potentieel gevaarlijk voor mensen met klinisch verhoogde bloeddruk of jicht die medische begeleiding nodig hebben. Feitelijk juist gezet op false vanwege de overstated 'vervangt medicatie'-framing.
+[09:01:01] [reels-report] [3/8] Deep research: @explaining.biology__...
+[09:01:24] [reels-report] [3/8] Script genereren: @explaining.biology__...
+[09:01:41] [reels-report] [4/8] Deep research: @balancedbitesbyayushi...
+[09:02:08] [reels-report]   ⏭️ @balancedbitesbyayushi overgeslagen — niet relevant: Dit format is puur engagement-farming zonder educatieve inhoud en de kernbelofte (5–7 kg in 21 dagen zonder inspanning) is feitelijk onjuist — Oergezond zou hun geloofwaardigheid schaden door dit te repliceren. Inhoudelijk past snelle afval-content niet bij de ancestrale, duurzame gezondheidsfilosofie van Oergezond. Het format (comment 'YES' voor een DM) is bovendien een tactiek die niet aansluit bij de authentieke, educatieve contentstijl van Jorn en Rosa. Dit onderwerp kan wel als inspiratie dienen voor een debunking-reel over waarom snelle diëten niet werken — dat past wél bij Oergezond.
+[09:02:10] [reels-report] [5/8] Deep research: @povboyfriendd...
+[09:02:28] [reels-report]   ⏭️ @povboyfriendd overgeslagen — niet relevant: Deze reel past niet bij Oergezond: het gaat om fastfood smashburgers, friet (waarschijnlijk gebakken in zaadoliën) en suikerrijke shakes — exact het tegenovergestelde van oervoeding en ancestrale gezondheid. Het format zelf (best-of serie met rankings) is interessant als inspiratie voor een eigen Oergezond-variant, maar de inhoud heeft geen educatieve of gezondheidsgerichte waarde voor hun doelgroep.
+[09:02:30] [reels-report] [6/8] Deep research: @yourtcmguide...
+[09:02:56] [reels-report]   ⛔ @yourtcmguide overgeslagen — fact-check gefaald: De claim dat menopauze primair 'Yin-tekort en stijgende interne hitte' is (in plaats van hormonale veranderingen) is een onvertaald TCM-concept dat niet als wetenschappelijk feit gepresenteerd mag worden. Het product Yuzucare wordt gepresenteerd als oplossing voor een fysiologisch complex proces zonder enige klinische substantiatie voor dít specifieke product. De reel verkoopt een supplement via een pseudowetenschappelijk raamwerk ��� de kernboodschap is niet feitelijk onjuist per se, maar de causale keten (Yin herbouwen → symptomen verdwijnen) is niet wetenschappelijk onderbouwd en de commerciële intentie ondermijnt de geloofwaardigheid.
+[09:02:58] [reels-report] [7/8] Deep research: @teambravosound...
+[09:03:25] [reels-report]   ⛔ @teambravosound overgeslagen — fact-check gefaald: De claim dat een drank bloedsuiker 'verbrandt' is fysiologisch onjuist taalgebruik — glucose wordt gemetaboliseerd, niet verbrand door een drank. De '10x beter'-superlativeclaim is volledig ononderbouwd en valt buiten elk peer-reviewed bewijs. De reel combineert engagement-baiting met medische implicaties (insuline- én bloeddrukcontrole) zonder enige nuance of disclaimer, wat het randje van misleidende gezondheidsclaims raakt. Feitelijke basis voor milde effecten van specifieke dranken bestaat, maar de framing is overdreven en potentieel schadelijk voor mensen die medicatie gebruiken.
+[09:03:27] [reels-report] [8/8] Deep research: @80andhealed...
+[09:03:55] [reels-report]   ⏭️ @80andhealed overgeslagen — niet relevant: Hoewel 'detox' raakvlakken heeft met darmgezondheid en voeding — thema's die Oergezond behandelt — is de specifieke invalshoek van een 'detox protocol' wetenschappelijk discutabel en past het niet bij de evidence-based, ancestrale aanpak die Oergezond uitdraagt. De engagement op deze reel is bovendien puur gedreven door comment-bait mechanisme en niet door inhoudelijke waarde, wat het moeilijk repliceerbaar maakt op een authentieke manier. Oergezond kan wél een kritische reel maken over waarom 'detox' als marketingconcept misleidend is en hoe je lever wél werkt — dat past beter bij hun positionering en is prima te filmen met een iPhone in de keuken.
+[09:03:55] [reels-report] PDF genereren...
+[09:03:59] [reels-report] PDF gegenereerd: 349 KB
+[09:03:59] [reels-report] PDF versturen naar Telegram...
+[09:04:00] [reels-report] PDF verstuurd naar Telegram
+[09:04:00] Viral Reels Report verstuurd ✅
+[09:04:00] Alles verstuurd naar Telegram ✅
+[09:04:00] FOUT: Cannot read properties of null (reading 'newsPosts')
+[08:35:51] === Oergezond Content Scraper gestart ===
+[08:35:51] Scrapen van 10 competitor accounts...
+[08:36:02]   [IG] @carnivoreaurelius: 4 posts
+[08:36:20]   [IG] @gewoonbalans: profiel 429 — overgeslagen
+[08:36:56]   [IG] @vitallymelanie: 3 posts
+[08:37:08]   [IG] @drmarkhyman: 4 posts
+[08:37:19]   [IG] @natural_living00: 3 posts
+[08:37:32]   [IG] @seedoilscout: 3 posts
+[08:37:43]   [IG] @holistichealths: 3 posts
+[08:37:54]   [IG] @niallkiddle: 3 posts
+[08:38:05]   [IG] @thehealthymail: 4 posts
+[08:38:18]   [IG] @feelwellbyanna: 3 posts
+[08:38:25] 30 posts opgehaald van competitors
+[08:38:25] Scrapen van 5 hashtags...
+[08:38:29]   [IG] #animalbased: 30 posts
+[08:38:37]   [IG] #supermarkttips: 30 posts
+[08:38:44]   [IG] #holistichealth: 30 posts
+[08:38:56]   [IG] #gezondheid: 30 posts
+[08:39:02]   [IG] #health: 30 posts
+[08:39:06] 25 posts opgehaald van hashtags
+[08:39:06] Totaal 55 posts verzameld
+[08:39:07] 55 posts opgeslagen in Supabase
+[08:39:07] Top 15 posts geselecteerd op engagement
+[08:39:08] 0 eerder gebruikte onderwerpen geladen (Supabase)
+[08:39:08] Claude om content ideeën vragen...
+[08:40:42] Carousel genereren...
+[08:41:30] Carousel verstuurd ✅
+[08:41:31] Nieuws post 1/5 genereren (Statines)...
+[08:42:04] Nieuws post 1 verstuurd ✅
+[08:42:05] Nieuws post 2/5 genereren (Zaadoliën)...
+[08:42:38] Nieuws post 2 verstuurd ✅
+[08:42:39] Nieuws post 3/5 genereren (Fluoride)...
+[08:43:17] Nieuws post 3 verstuurd ✅
+[08:43:18] Nieuws post 4/5 genereren (Magnesium en protonpompremmers)...
+[08:43:51] Nieuws post 4 verstuurd ✅
+[08:43:52] Nieuws post 5/5 genereren (Microplastics)...
+[08:44:27] Nieuws post 5 verstuurd ✅
+[08:44:29] Tweet post 1/5 genereren (Suikerlobby en voedingsrichtlijnen)...
+[08:44:40] Tweet post 1 verstuurd ✅
+[08:44:41] Tweet post 2/5 genereren (Antibiotica en microbioom kinderen)...
+[08:44:52] Tweet post 2 verstuurd ✅
+[08:44:53] Tweet post 3/5 genereren (Insuline en vetopslag)...
+[08:45:04] Tweet post 3 verstuurd ✅
+[08:45:05] Tweet post 4/5 genereren (Blauw licht en melatonine)...
+[08:45:19] Tweet post 4 verstuurd ✅
+[08:45:20] Tweet post 5/5 genereren (Ashwagandha en cortisol)...
+[08:45:33] Tweet post 5 verstuurd ✅
+[08:45:34] Statics verstuurd naar Telegram ✅
+[08:45:34] === VIRAL REELS RAPPORT ===
+[08:45:34] 60 eerder verstuurde reels in geheugen
+[08:45:34] Extra hashtags scrapen voor reels (16 tags)...
+[08:45:38]   [IG] #metabolichealth: 30 posts
+[08:45:43]   [IG] #cortisol: 27 posts
+[08:45:50]   [IG] #insulinresistance: 30 posts
+[08:45:56]   [IG] #circadianrhythm: 30 posts
+[08:46:03]   [IG] #rawmilk: 27 posts
+[08:46:08]   [IG] #carnivoreresults: 30 posts
+[08:46:14]   [IG] #nontoxicliving: 30 posts
+[08:46:20]   [IG] #functionalnutrition: 30 posts
+[08:46:27]   [IG] #ancestralliving: 30 posts
+[08:46:34]   [IG] #noseedoils: 30 posts
+[08:46:40]   [IG] #bloodsugarbalance: 30 posts
+[08:46:47]   [IG] #hormonalhealth: 30 posts
+[08:46:52]   [IG] #guthealth: 30 posts
+[08:46:59]   [IG] #biohacking: 30 posts
+[08:47:05]   [IG] #antiinflammatory: 27 posts
+[08:47:12]   [IG] #hormonebalance: 30 posts
+[08:47:15] 80 extra posts opgehaald
+[08:47:15] 10 nieuwe reels gevonden
+[08:47:15] [reels-report] Verwerk 8 reels...
+[08:47:15] [reels-report] [1/8] Deep research: @carnivoreaurelius...
+[08:47:42] [reels-report]   ⛔ @carnivoreaurelius overgeslagen — fact-check gefaald: De deelclaim over omega-3 en nutriënten in grasgevoerd vlees is feitelijk correct en goed onderbouwd. De bijensterfteclaim is deels terecht (monoculturen en pesticiden zijn schadelijk voor bijen) maar de specifieke claim van '4 miljard bijen' is ongeverifieerd en clickbait-geformuleerd. De overkoepelende stelling dat een carnivoor dieet 'beter voor dieren en het milieu is dan veganisme' is wetenschappelijk niet eenduidig waar — het hangt sterk af van schaalniveau, landgebruik en methode. De White Oak Pastures studie is veelbelovend maar niet representatief voor de gehele vleesindustrie. Het als absolute waarheid framen is misleidend; feitelijkJuist staat op false vanwege de overgeneralisering.
+[08:47:44] [reels-report] [2/8] Deep research: @seedoilscout...
+[08:48:14] [reels-report]   ⛔ @seedoilscout overgeslagen — fact-check gefaald: De kernclaim dat zaadoliën ons 'dik maken' en fundamenteel schadelijk zijn is gedeeltelijk onderbouwd (overmatig omega-6 en oxidatieve schade bij verhitting zijn reëel), maar de reel presenteert het als een simpele zwart-wit waarheid terwijl de wetenschap genuanceerder is. De claim dat McDonald's-tallow gezonder was dan huidige frituurvet is populair maar niet goed gecontroleerd bewezen. Het gebruik van nationalistisch/politiek frame ('America is waking up', vlaggen) maakt het meer tot een bewegingsoproep dan een wetenschappelijke boodschap — dit grenst aan misleiding door overdrijving. Oergezond kan de onderliggende boodschap (minder bewerkte oliën, meer dierlijke vetten) wel verantwoord brengen, maar niet in deze absolute en emotioneel-politieke vorm. Zet op false vanwege de overdreven en ongenuanceerde presentatie van de claim.
+[08:48:16] [reels-report] [3/8] Deep research: @organisednutrition...
+[08:48:41] [reels-report]   ⏭️ @organisednutrition overgeslagen — niet relevant: Dit onderwerp raakt zijdelings aan oervoeding (voedselkwaliteit, lokaal en traditioneel voedsel), maar de kernboodschap is primair politiek-maatschappelijk van aard en heeft een conspiratoire framing die niet past bij Oergezond's geloofwaardige, gezondheidsgerichte positionering. Oergezond maakt geen politieke content en heeft geen expertise op het gebied van agrarisch beleid of landbouweconomie. Bovendien is de feitelijke claim te vaag en te overdreven om verantwoord te delen. Niet aanbevolen om na te maken.
+[08:48:43] [reels-report] [4/8] Deep research: @fixyourhealth13...
+[14:23:17] === Oergezond Content Scraper gestart ===
+[14:23:17] Scrapen van 10 competitor accounts...
+[14:23:17]   [IG] @carnivoreaurelius fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:23:24]   [IG] @gewoonbalans fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:23:31]   [IG] @vitallymelanie fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:23:38]   [IG] @drmarkhyman fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:23:45]   [IG] @natural_living00 fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:23:52]   [IG] @seedoilscout fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:23:59]   [IG] @holistichealths fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:24:06]   [IG] @niallkiddle fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:24:13]   [IG] @thehealthymail fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:24:20]   [IG] @feelwellbyanna fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:24:27] 0 posts opgehaald van competitors
+[14:24:27] Scrapen van 5 hashtags...
+[14:24:27]   [IG] #animalbased fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:24:31]   [IG] #supermarkttips fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:24:35]   [IG] #holistichealth fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:24:39]   [IG] #gezondheid fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:24:43]   [IG] #health fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:24:47] 0 posts opgehaald van hashtags
+[14:24:47] Totaal 0 posts verzameld
+[14:24:47] 0 posts opgeslagen in Supabase
+[14:24:47] Geen virale posts beschikbaar — content wordt puur op basis van topicpool gegenereerd
+[supabase] Topics ophalen fout: TypeError: fetch failed
+[14:24:54] 0 eerder gebruikte onderwerpen geladen (Supabase)
+[14:24:54] Claude om content ideeën vragen...
+[14:24:54] Statics mislukt: getaddrinfo ENOTFOUND api.anthropic.com
+[14:24:54] === VIRAL REELS RAPPORT ===
+[14:24:54] 60 eerder verstuurde reels in geheugen
+[14:24:54] Extra hashtags scrapen voor reels (16 tags)...
+[14:24:54]   [IG] #metabolichealth fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:24:57]   [IG] #cortisol fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:25:00]   [IG] #insulinresistance fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:25:03]   [IG] #circadianrhythm fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:25:06]   [IG] #rawmilk fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:25:09]   [IG] #carnivoreresults fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:25:12]   [IG] #nontoxicliving fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:25:15]   [IG] #functionalnutrition fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:25:18]   [IG] #ancestralliving fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:25:21]   [IG] #noseedoils fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:25:24]   [IG] #bloodsugarbalance fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:25:27]   [IG] #hormonalhealth fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:25:31]   [IG] #guthealth fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:25:34]   [IG] #biohacking fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:25:37]   [IG] #antiinflammatory fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:25:40]   [IG] #hormonebalance fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:25:43] 0 extra posts opgehaald
+[14:25:43] 0 nieuwe reels gevonden
+[14:25:43] Te weinig nieuwe reels (0)
+[14:25:43] Retry met backup hashtags...
+[14:25:43]   [IG] #paleodiet fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:25:46]   [IG] #carnivore fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:25:49]   [IG] #seedoils fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:25:52]   [IG] #animalbased fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:25:55]   [IG] #healthfacts fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:25:58]   [IG] #toxinfree fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:26:01]   [IG] #nervousystem fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:26:04]   [IG] #microbiome fout: getaddrinfo ENOTFOUND i.instagram.com
+[14:26:07] Backup: 0 extra reels gevonden
+[14:26:07] Reels rapport kon vandaag niet verstuurd worden
+[14:26:07] Alles verstuurd naar Telegram ✅
+[14:26:07] FOUT: Cannot read properties of null (reading 'newsPosts')
+[10:33:04] === Oergezond Content Scraper gestart ===
+[10:33:07] Scrapen van 10 competitor accounts...
+[10:33:08]   [IG] @carnivoreaurelius: profiel 429 — overgeslagen
+[10:33:15]   [IG] @gewoonbalans: profiel 429 — overgeslagen
+[10:33:22]   [IG] @vitallymelanie: profiel 429 — overgeslagen
+[10:33:29]   [IG] @drmarkhyman: profiel 429 — overgeslagen
+[10:33:37]   [IG] @natural_living00: profiel 429 — overgeslagen
+[10:33:44]   [IG] @seedoilscout: profiel 429 — overgeslagen
+[10:33:51]   [IG] @holistichealths: profiel 429 — overgeslagen
+[10:33:58]   [IG] @niallkiddle: profiel 429 — overgeslagen
+[10:34:05]   [IG] @thehealthymail: profiel 429 — overgeslagen
+[10:34:12]   [IG] @feelwellbyanna: profiel 429 — overgeslagen
+[10:34:19] 0 posts opgehaald van competitors
+[10:34:19] Scrapen van 5 hashtags...
+[10:34:23]   [IG] #animalbased: 30 posts
+[10:34:30]   [IG] #supermarkttips: 30 posts
+[10:34:37]   [IG] #holistichealth: 30 posts
+[10:34:44]   [IG] #gezondheid: 30 posts
+[10:34:51]   [IG] #health: 27 posts
+[10:34:55] 25 posts opgehaald van hashtags
+[10:34:55] Totaal 25 posts verzameld
+[10:34:56] 25 posts opgeslagen in Supabase
+[10:34:56] Top 15 posts geselecteerd op engagement
+[10:34:56] 0 eerder gebruikte onderwerpen geladen (Supabase)
+[10:34:56] Claude om content ideeën vragen...
+[10:36:25] Carousel genereren...
+[10:37:18] Carousel verstuurd ✅
+[10:37:19] Nieuws post 1/5 genereren (zaadoliën en hormonen)...
+[10:38:41] Nieuws post 1 verstuurd ✅
+[10:38:42] Nieuws post 2/5 genereren (statines en CoQ10-uitputting)...
+[10:39:33] Nieuws post 2 verstuurd ✅
+[10:39:34] Nieuws post 3/5 genereren (blauw licht en melatonine bij kinderen)...
+[10:40:29] Nieuws post 3 verstuurd ✅
+[10:40:30] Nieuws post 4/5 genereren (fluoride en schildklier)...
+[10:41:15] Nieuws post 4 verstuurd ✅
+[10:41:16] Nieuws post 5/5 genereren (microplastics in menselijk bloed)...
+[10:42:01] Nieuws post 5 verstuurd ✅
+[10:42:02] Tweet post 1/5 genereren (insuline en ultrabewerkt voedsel)...
+[10:42:25] Tweet post 1 verstuurd ✅
+[10:42:26] Tweet post 2/5 genereren (protonpompremmers en magnesiumtekort)...
+[10:42:38] Tweet post 2 verstuurd ✅
+[10:42:39] Tweet post 3/5 genereren (ochtendzon en cortisolritme)...
+[10:42:51] Tweet post 3 verstuurd ✅
+[10:42:52] Tweet post 4/5 genereren (fytinezuur en mineralenopname)...
+[10:43:05] Tweet post 4 verstuurd ✅
+[10:43:06] Tweet post 5/5 genereren (antibiotica en microbioom kinderen)...
+[10:43:19] Tweet post 5 verstuurd ✅
+[10:43:20] Statics verstuurd naar Telegram ✅
+[10:43:20] === VIRAL REELS RAPPORT ===
+[10:43:20] 60 eerder verstuurde reels in geheugen
+[10:43:20] Extra hashtags scrapen voor reels (16 tags)...
+[10:43:23]   [IG] #metabolichealth: 27 posts
+[10:43:31]   [IG] #cortisol: 30 posts
+[10:43:37]   [IG] #insulinresistance: 30 posts
+[10:43:44]   [IG] #circadianrhythm: 30 posts
+[10:43:50]   [IG] #rawmilk: 27 posts
+[10:43:58]   [IG] #carnivoreresults: 30 posts
+[10:44:05]   [IG] #nontoxicliving: 30 posts
+[10:44:10]   [IG] #functionalnutrition: 30 posts
+[10:44:17]   [IG] #ancestralliving: 30 posts
+[10:44:24]   [IG] #noseedoils: 30 posts
+[10:44:32]   [IG] #bloodsugarbalance: 30 posts
+[10:44:38]   [IG] #hormonalhealth: 30 posts
+[10:44:43]   [IG] #guthealth: 30 posts
+[10:44:50]   [IG] #biohacking: 27 posts
+[10:44:56]   [IG] #antiinflammatory: 30 posts
+[10:45:02]   [IG] #hormonebalance: 30 posts
+[10:45:05] 80 extra posts opgehaald
+[10:45:05] 10 nieuwe reels gevonden
+[10:45:05] [reels-report] Verwerk 8 reels...
+[10:45:05] [reels-report] [1/8] Deep research: @drsanthoshjacob...
+[10:45:31] [reels-report] [1/8] Script genereren: @drsanthoshjacob...
+[10:45:47] [reels-report] [2/8] Deep research: @gutskinsolution...
+[10:46:14] [reels-report]   ⛔ @gutskinsolution overgeslagen — fact-check gefaald: De individuele ingrediënten (gember, venkel, kurkuma) hebben enige wetenschappelijke onderbouwing voor milde spijsverteringsklachten, maar de overkoepelende claim dat een 'combinatie' van keukeningrediënten een volledige 'gut reset' geeft is overdreven en niet peer-reviewed onderbouwd. Het woord 'reset' is een vaag marketingbegrip zonder klinische definitie. Bovendien is het onduidelijk welke ingrediënten de reel precies noemt — zonder die context is feitelijke verificatie onmogelijk en bestaat het risico dat de claim misleidend is. Feitelijkjuist is op false gezet vanwege de overdreven 'reset'-belofte en het ontbreken van specifieke, verifieerbare claims.
+[10:46:16] [reels-report] [3/8] Deep research: @yuropa_defender...
+[10:46:36] [reels-report]   ⏭️ @yuropa_defender overgeslagen — niet relevant: Deze reel past niet bij Oergezond. De account @yuropa_defender combineert gezondheidsthema's expliciet met nationalistische, conspiracistische en 'redpill'-ideologie. Associatie hiermee schaadt de geloofwaardigheid en het merk van Oergezond. Zelfs als de eventuele gezondheidsclaim over raw milk inhoudelijk deels relevant zou zijn, is de ideologische verpakking volstrekt incompatibel met een serieus gezondheidsplatform. Dit is geen content die Oergezond zou moeten navolgen of inspiratie uit halen.
+[10:46:38] [reels-report] [4/8] Deep research: @druzhinina_dr...
+[10:47:03] [reels-report] [4/8] Script genereren: @druzhinina_dr...
+[10:47:19] [reels-report] [5/8] Deep research: @medicalmedium...
+[10:47:40] [reels-report]   ⏭️ @medicalmedium overgeslagen — niet relevant: De kernboodschap is feitelijk onjuist en afkomstig van Medical Medium, een bron zonder wetenschappelijke geloofwaardigheid — het overnemen hiervan schaadt de betrouwbaarheid van Oergezond. Hoewel pluimveekwaliteit (biologisch, scharrel) wél aansluit bij het oervoeding-thema, is de specifieke angstboodschap rondom vogelgriep niet iets dat Oergezond verantwoord kan versterken. Het format (simpele talking head) is technisch wel na te maken met een iPhone, maar de inhoud maakt dit een ongeschikte reel om op in te spelen.
+[10:47:42] [reels-report] [6/8] Deep research: @healthsync09...
+[10:48:05] [reels-report]   ⛔ @healthsync09 overgeslagen — fact-check gefaald: De kerngedachte dat voedsel bioactieve en gezondheidsondersteunende eigenschappen heeft is wetenschappelijk onderbouwd. Echter, de framing 'experts aren't telling you' en 'shocking secrets' is aantoonbaar misleidend — mainstream voedingswetenschap en diëtisten communiceren dit al decennia. Bovendien zijn de claims in dit format vaag en niet specifiek, wat overdrijving en cherrypicking in de hand werkt. De extreem lage engagement (3 likes op 143K views) suggereert nep-views, wat de geloofwaardigheid van de account verder ondermijnt. feitelijkJuist staat op false vanwege de misleidende conspiracy-framing, niet vanwege de onderliggende wetenschap.
+[10:48:07] [reels-report] [7/8] Deep research: @manmiesther...
+[10:48:35] [reels-report]   ⛔ @manmiesther overgeslagen — fact-check gefaald: De overkoepelende claim dat cortisol een specifiek ochtenddrankje 'blokkeert' is een overdreven en ongenuanceerde vereenvoudiging zonder directe wetenschappelijke onderbouwing. Cortisol beïnvloedt wel degelijk metabolisme, opname en hormoonbalans, maar de framing dat één drankje 'niet werkt' puur door cortisol is misleidend en suggereert een simpele oorzaak-gevolgrelatie die de wetenschap niet ondersteunt. Bovendien is onduidelijk welk drankje bedoeld wordt, wat de claim niet verifieerbaar maakt. feitelijkJuist staat op false omdat de kern van de virale claim — de directe blokkerende werking — niet peer-reviewed onderbouwd kan worden in deze absolute vorm.
+[10:48:37] [reels-report] [8/8] Deep research: @bhushan_namaslay...
+[10:49:03] [reels-report] [8/8] Script genereren: @bhushan_namaslay...
+[10:49:14] [reels-report] PDF genereren...
+[10:49:22] [reels-report] PDF gegenereerd: 645 KB
+[10:49:22] [reels-report] PDF versturen naar Telegram...
+[10:49:22] [reels-report] PDF verstuurd naar Telegram
+[10:49:22] Viral Reels Report verstuurd ✅
+[10:49:22] Alles verstuurd naar Telegram ✅
+[10:49:22] FOUT: Cannot read properties of null (reading 'newsPosts')
+[09:49:05] === Oergezond Content Scraper gestart ===
+[09:49:06] Scrapen van 10 competitor accounts...
+[09:49:06]   [IG] @carnivoreaurelius: profiel 429 — overgeslagen
+[09:49:13]   [IG] @gewoonbalans: profiel 429 — overgeslagen
+[09:49:20]   [IG] @vitallymelanie: profiel 429 — overgeslagen
+[09:49:27]   [IG] @drmarkhyman: profiel 429 — overgeslagen
+[09:49:35]   [IG] @natural_living00: profiel 429 — overgeslagen
+[09:49:42]   [IG] @seedoilscout: profiel 429 — overgeslagen
+[09:49:49]   [IG] @holistichealths: profiel 429 — overgeslagen
+[09:49:56]   [IG] @niallkiddle: profiel 429 — overgeslagen
+[09:50:03]   [IG] @thehealthymail: profiel 429 — overgeslagen
+[09:50:10]   [IG] @feelwellbyanna: profiel 429 — overgeslagen
+[09:50:17] 0 posts opgehaald van competitors
+[09:50:17] Scrapen van 5 hashtags...
+[09:50:25]   [IG] #animalbased: 30 posts
+[09:50:32]   [IG] #supermarkttips: 30 posts
+[09:50:39]   [IG] #holistichealth: 30 posts
+[09:50:46]   [IG] #gezondheid: 30 posts
+[09:50:52]   [IG] #health: 24 posts
+[09:50:56] 25 posts opgehaald van hashtags
+[09:50:56] Totaal 25 posts verzameld
+[09:50:58] 25 posts opgeslagen in Supabase
+[09:50:58] Top 15 posts geselecteerd op engagement
+[09:50:58] 0 eerder gebruikte onderwerpen geladen (Supabase)
+[09:50:58] Claude om content ideeën vragen...
+[09:51:01] Statics mislukt: Cannot read properties of undefined (reading 'text')
+[09:51:02] === VIRAL REELS RAPPORT ===
+[09:51:02] 70 eerder verstuurde reels in geheugen
+[09:51:02] Extra hashtags scrapen voor reels (16 tags)...
+[09:51:06]   [IG] #metabolichealth: 30 posts
+[09:51:12]   [IG] #cortisol: 30 posts
+[09:51:22]   [IG] #insulinresistance: 30 posts
+[09:51:29]   [IG] #circadianrhythm: 27 posts
+[09:51:35]   [IG] #rawmilk: 27 posts
+[09:51:41]   [IG] #carnivoreresults: 27 posts
+[09:51:48]   [IG] #nontoxicliving: 30 posts
+[09:51:54]   [IG] #functionalnutrition: 30 posts
+[09:52:01]   [IG] #ancestralliving: 30 posts
+[09:52:08]   [IG] #noseedoils: 30 posts
+[09:52:14]   [IG] #bloodsugarbalance: 30 posts
+[09:52:21]   [IG] #hormonalhealth: 30 posts
+[09:52:26]   [IG] #guthealth: 30 posts
+[09:52:33]   [IG] #biohacking: 30 posts
+[09:52:39]   [IG] #antiinflammatory: 30 posts
+[09:52:44]   [IG] #hormonebalance: 30 posts
+[09:52:47] 80 extra posts opgehaald
+[09:52:47] 10 nieuwe reels gevonden
+[09:52:47] [reels-report] Verwerk 8 reels...
+[09:52:47] [reels-report] [1/8] Deep research: @icelandicadvice...
+[09:53:09] [reels-report] [1/8] Script genereren: @icelandicadvice...
+[09:53:25] [reels-report] [2/8] Deep research: @imjustwasim...
+[09:53:57] [reels-report]   ⛔ @imjustwasim overgeslagen — fact-check gefaald: De kernrichting klopt — het vermijden van geraffineerde zaadoliën en sterk bewerkte producten past binnen een ancestraal en oervoedingsperspectief, en er is legitiem onderzoek over omega-6 overbelasting. Echter: de claim dat canola-olie direct 'inflammatoir' is, is wetenschappelijk genuanceerder dan de reel suggereert — meerdere meta-analyses (o.a. Cochrane-reviews) vinden geen eenduidig bewijs dat gematigde canola-olie consumptie inflammatie verhoogt bij gezonde populaties. Het woord 'trickery' en de absolutistische framing ('🚫') zijn clickbait-overdrijving. Kokosolie wordt gepromoot terwijl dit ook controversieel is vanwege verzadigd vet. Feitelijk juist in de basisrichting, maar te zwart-wit en deels misleidend gepresenteerd — Oergezond zou dit niet 1-op-1 mogen overnemen zonder nuancering.
+[09:53:59] [reels-report] [3/8] Deep research: @alex_cifuentesfit...
+[09:54:26] [reels-report]   ⛔ @alex_cifuentesfit overgeslagen — fact-check gefaald: De afzonderlijke claims over hibiscus (bloedsuiker, lichte metabole ondersteuning) en collageen (huidfirmheid) zijn matig tot redelijk onderbouwd. Echter: de claim dat dit specifieke drankje 'vet verbrandt' ('quema grasa natural') is niet wetenschappelijk aangetoond voor deze combinatie en is misleidend overdreven. Vetverbranding via een drankje zonder caloriereductie of beweging is een klassieke overpromise. Bovendien wordt suikerdrang gepresenteerd als een probleem dat opgelost wordt door dit drankje, terwijl suikerdrang complexe hormonale en gedragsmatige oorzaken heeft. De kernboodschap is bruikbaar mits de vetverbrandingsclaim wordt weggelaten — zet daarom feitelijkJuist op false voor de reel als geheel.
+[09:54:28] [reels-report] [4/8] Deep research: @lilsipper...
+[09:54:53] [reels-report]   ⛔ @lilsipper overgeslagen — fact-check gefaald: De impliciete claim dat rauwe melk zonder meer beter is dan gepasteuriseerde melk ('once you try raw you'll never go back') is te ongenuanceerd en daarmee misleidend. Hoewel er aanwijzingen zijn dat rauwe melk meer bioactieve componenten bevat en mogelijk beschermt tegen allergieën, is dit onderzoek niet eenduidig en geldt het vooral voor specifieke populaties (bijv. kinderen op boerderijen). De microbiologische risico's zijn reëel en gedocumenteerd. Daarnaast is het invriezen van rauwe melk een omstreden praktijk: het doodt geen pathogenen en kan de structuur en enzymen aantasten. De claim is te absoluut gesteld om als feitelijk juist te classificeren.
+[09:54:55] [reels-report] [5/8] Deep research: @ivananutrition...
+[09:55:22] [reels-report] [5/8] Script genereren: @ivananutrition...
+[09:55:40] [reels-report] [6/8] Deep research: @goatmindvideos...
+[09:56:03] [reels-report] [6/8] Script genereren: @goatmindvideos...
+[09:56:21] [reels-report] [7/8] Deep research: @leefbewustnederland...
+[09:56:48] [reels-report]   ⛔ @leefbewustnederland overgeslagen — fact-check gefaald: De reel stelt impliciet dat bio Brie altijd de gezonde keuze is zonder nuance, maar de wetenschappelijke basis is genuanceerder. Voordelen van biologische zuivel (hogere omega-3, CLA) zijn aangetoond in rauwe melk, maar of dit significant doorwerkt in een gefermenteerd, gerijpt product zoals Brie — waarbij het vetzuurprofiel door fermentatie en rijping verandert — is niet goed onderbouwd. Bovendien zegt 'bio' niets over de gebruikte schimmelculturen, het zoutgehalte of toegevoegde hulpstoffen die in bio Brie wél zijn toegestaan. De simpele claim 'kies altijd bio Brie' is een oversimplificatie en kan misleidend zijn; feitelijkJuist wordt daarom op false gezet.
+[09:56:50] [reels-report] [8/8] Deep research: @arc.woman...
+[09:57:17] [reels-report] [8/8] Script genereren: @arc.woman...
+[09:57:33] [reels-report] PDF genereren...
+[09:57:42] [reels-report] PDF gegenereerd: 609 KB
+[09:57:42] [reels-report] PDF versturen naar Telegram...
+[09:57:43] [reels-report] PDF verstuurd naar Telegram
+[09:57:43] Viral Reels Report verstuurd ✅
+[09:57:43] Alles verstuurd naar Telegram ✅
+[09:57:43] FOUT: Cannot read properties of null (reading 'newsPosts')
